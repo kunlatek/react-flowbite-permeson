@@ -32,13 +32,12 @@ export default function KuToast() {
 
         return (
           <FlowbiteToast key={toast.id}>
+            <div className="mx-3 text-sm font-normal">{toast.message}</div>
             <div
               className={`inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-${config.color}-100 text-${config.color}-500 dark:bg-${config.color}-800 dark:text-${config.color}-200`}
             >
               <Icon className="h-5 w-5" />
             </div>
-            <div className="ml-3 text-sm font-normal">{toast.message}</div>
-            <FlowbiteToast.Toggle onDismiss={() => removeToast(toast.id)} />
           </FlowbiteToast>
         );
       })}

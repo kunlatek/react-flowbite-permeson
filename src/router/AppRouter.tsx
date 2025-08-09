@@ -3,7 +3,6 @@ import LoginPage from "@/pages/login/LoginPage";
 import HomePage from "@/pages/home/HomePage";
 import DashboardPage from "@/pages/dashboard/DashboardPage";
 import RegisterPage from "@/pages/auth/RegisterPage";
-import RegisterCompletionPage from "@/pages/auth/RegisterCompletionPage";
 import ForgotPasswordPage from "@/pages/auth/ForgotPasswordPage";
 import ResetPasswordPage from "@/pages/auth/ResetPasswordPage";
 import ProfileSelectPage from "@/pages/profile/select/ProfileSelectPage";
@@ -16,6 +15,7 @@ import InvitationListPage from "@/pages/invitation/InvitationListPage";
 import CreateInvitationPage from "@/pages/invitation/CreateInvitationPage";
 import EditInvitationPage from "@/pages/invitation/EditInvitationPage";
 import MainLayout from "@/components/layout/MainLayout";
+import DashboardLayout from "@/components/layout/DashboardLayout";
 import AuthLayout from "@/components/layout/AuthLayout";
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -31,10 +31,6 @@ export default function AppRouter() {
       <Route element={<AuthLayout />}>
         <Route path="/auth/login" element={<LoginPage />} />
         <Route path="/auth/register" element={<RegisterPage />} />
-        <Route
-          path="/auth/register-completion"
-          element={<RegisterCompletionPage />}
-        />
         <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
         <Route
           path="/auth/reset-password/:token"
@@ -44,8 +40,13 @@ export default function AppRouter() {
 
       {/* Rotas Protegidas */}
       <Route element={<ProtectedRoute />}>
-        <Route element={<MainLayout />}>
+        {/* Dashboard com Layout Próprio */}
+        <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
+        </Route>
+
+        {/* Outras Rotas Protegidas com Layout Principal */}
+        <Route element={<MainLayout />}>
           <Route path="/settings" element={<SettingsPage />} />
 
           <Route path="/profile/select" element={<ProfileSelectPage />} />

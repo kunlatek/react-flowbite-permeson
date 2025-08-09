@@ -1,29 +1,73 @@
 import { Footer } from "flowbite-react";
+import { useTranslation } from "react-i18next";
 
 export default function KuFooter() {
+  const { t } = useTranslation();
+
   return (
-    <Footer container className="rounded-none">
-      <div className="w-full text-center">
-        <div className="w-full justify-between sm:flex sm:items-center sm:justify-between">
-          <Footer.Brand
-            href="/"
-            src="/src/assets/images/logo.png"
-            alt="Logo"
-            name="Rapida Quickstart"
-          />
-          <Footer.LinkGroup>
-            <Footer.Link href="#">Sobre</Footer.Link>
-            <Footer.Link href="#">Política de Privacidade</Footer.Link>
-            <Footer.Link href="#">Licenciamento</Footer.Link>
-            <Footer.Link href="#">Contato</Footer.Link>
-          </Footer.LinkGroup>
+    <Footer container className="rounded-none bg-gray-50 dark:bg-gray-900">
+      <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+        <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
+          <div className="mb-4 md:mb-0">
+            <Footer.Brand
+              href="/"
+              src="/src/assets/images/logo.png"
+              alt="Logo"
+              name={t("footer.brand_name")}
+              className="flex items-center space-x-3"
+            />
+            <p className="mt-4 text-sm text-gray-600 dark:text-gray-400 max-w-sm">
+              {t("footer.company_description")}
+            </p>
+          </div>
+          <div className="grid grid-cols-2 gap-8 sm:gap-6 sm:grid-cols-3">
+            <div>
+              <Footer.Title title={t("footer.company_title")} className="text-gray-900 dark:text-white" />
+              <Footer.LinkGroup col>
+                <Footer.Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                  {t("footer.company_link1")}
+                </Footer.Link>
+                <Footer.Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                  {t("footer.company_link2")}
+                </Footer.Link>
+                <Footer.Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                  {t("footer.company_link3")}
+                </Footer.Link>
+              </Footer.LinkGroup>
+            </div>
+            <div>
+              <Footer.Title title={t("footer.legal_title")} className="text-gray-900 dark:text-white" />
+              <Footer.LinkGroup col>
+                <Footer.Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                  {t("footer.legal_link1")}
+                </Footer.Link>
+                <Footer.Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                  {t("footer.legal_link2")}
+                </Footer.Link>
+              </Footer.LinkGroup>
+            </div>
+            <div>
+              <Footer.Title title={t("footer.support_title")} className="text-gray-900 dark:text-white" />
+              <Footer.LinkGroup col>
+                <Footer.Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                  {t("footer.support_link1")}
+                </Footer.Link>
+                <Footer.Link href="#" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+                  {t("footer.support_link2")}
+                </Footer.Link>
+              </Footer.LinkGroup>
+            </div>
+          </div>
         </div>
-        <Footer.Divider />
-        <Footer.Copyright
-          href="#"
-          by="Rapida Quickstart™"
-          year={new Date().getFullYear()}
-        />
+        <Footer.Divider className="my-6 border-gray-200 dark:border-gray-700" />
+        <div className="w-full sm:flex sm:items-center sm:justify-between">
+          <Footer.Copyright
+            href="#"
+            by={t("footer.copyright")}
+            year={new Date().getFullYear()}
+            className="text-gray-600 dark:text-gray-400"
+          />
+        </div>
       </div>
     </Footer>
   );

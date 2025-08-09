@@ -1,137 +1,139 @@
-import {
-  useState,
-  useEffect,
-  type ReactNode,
-  type FC,
-  useCallback,
-} from "react";
-import { jwtDecode } from "jwt-decode";
-import axios from "axios";
-import { type AuthUser } from "@/models/auth";
-import { authService } from "@/services/authService";
-import { browser } from "@/utils/browser";
-import { AuthContext } from "./AuthContext";
+import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from './AuthContext';
+import type { AuthContextType, AuthUser } from '@/models/auth';
+import { login as loginApi } from '@/api/auth';
+import { useToast } from '@/hooks/useToast';
 
-interface JwtPayload {
-  sub: string;
-  email: string;
-  activeRole?: string;
-  availableRoles?: string[];
-  exp: number;
+interface AuthProviderProps {
+  children: ReactNode;
 }
 
-export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<AuthUser | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  
+  const navigate = useNavigate();
+  const toast = useToast();
 
+  // Check for existing token on mount
   useEffect(() => {
-    if (browser) {
-      try {
-        const storedToken = localStorage.getItem("token");
-        const storedUser = localStorage.getItem("user");
-
-        if (storedToken && storedUser) {
-          const decodedToken = jwtDecode<JwtPayload>(storedToken);
-          if (decodedToken.exp * 1000 > Date.now()) {
-            setToken(storedToken);
-            setUser(JSON.parse(storedUser));
-            setIsAuthenticated(true);
-          } else {
-            localStorage.clear();
-          }
-        }
-      } catch (e) {
-        console.error("Failed to initialize auth state from storage", e);
-        localStorage.clear();
-      } finally {
-        setLoading(false);
+    const checkAuth = () => {
+      const storedToken = localStorage.getItem('token');
+      if (storedToken) {
+        setToken(storedToken);
+        setIsAuthenticated(true);
+        // Mock user data for now
+        const mockUser: AuthUser = {
+          userId: '1',
+          email: 'user@example.com',
+          activeRole: 'person',
+          availableRoles: ['person', 'company']
+        };
+        setUser(mockUser);
       }
-    } else {
       setLoading(false);
-    }
+    };
+
+    checkAuth();
   }, []);
 
   const setSession = (accessToken: string): AuthUser => {
-    const decoded = jwtDecode<JwtPayload>(accessToken);
-    const userData: AuthUser = {
-      userId: decoded.sub,
-      email: decoded.email,
-      activeRole: decoded.activeRole || null,
-      availableRoles: decoded.availableRoles || [],
-    };
-
-    if (browser) {
-      localStorage.setItem("token", accessToken);
-      localStorage.setItem("user", JSON.stringify(userData));
-    }
-
+    // Save token to localStorage
+    localStorage.setItem('token', accessToken);
     setToken(accessToken);
-    setUser(userData);
     setIsAuthenticated(true);
+    
+    // Mock user data - you can decode JWT or fetch user data here
+    const mockUser: AuthUser = {
+      userId: '1',
+      email: 'user@example.com',
+      activeRole: 'person',
+      availableRoles: ['person', 'company']
+    };
+    
+    setUser(mockUser);
     setError(null);
-    return userData;
+    
+    return mockUser;
+  };
+
+  const logout = () => {
+    // Clear all auth data
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setToken(null);
+    setIsAuthenticated(false);
+    setUser(null);
+    setError(null);
+    
+    // Redirect to home
+    navigate('/');
+    
+    toast.success('Logout realizado com sucesso!');
+  };
+
+  const switchRole = (role: string) => {
+    if (user) {
+      setUser({
+        ...user,
+        activeRole: role
+      });
+      toast.success(`Papel alterado para: ${role === 'company' ? 'Empresa' : 'Pessoa'}`);
+    }
   };
 
   const login = async (email: string, password: string) => {
-    setLoading(true);
-    setError(null);
     try {
-      const data = await authService.login(email, password);
-      return setSession(data.access_token);
-    } catch (err: unknown) {
-      let errorMessage = "Login failed";
-      if (axios.isAxiosError(err) && err.response?.data?.message) {
-        errorMessage = err.response.data.message;
-      } else if (err instanceof Error) {
-        errorMessage = err.message;
+      setLoading(true);
+      setError(null);
+      
+      const response = await loginApi(email, password);
+      
+      if (response.statusCode === 200 && response.data?.access_token) {
+        const user = setSession(response.data.access_token);
+        toast.success(response.message || 'Login realizado com sucesso!');
+        navigate('/dashboard');
+        return true;
+      } else {
+        throw new Error(response.message || 'Erro no login');
       }
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.message || err.message || 'Erro ao fazer login';
       setError(errorMessage);
-      throw err;
+      toast.error(errorMessage);
+      return false;
     } finally {
       setLoading(false);
     }
   };
 
-  const logout = () => {
-    if (browser) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-    }
-    setUser(null);
-    setToken(null);
-    setIsAuthenticated(false);
-  };
-
-  const switchRole = useCallback(async (role: string) => {
-    try {
-      const data = await authService.switchRole(role);
-      if (data && data.access_token) {
-        setSession(data.access_token);
-        window.location.reload();
-      }
-    } catch (err) {
-      console.error("Failed to switch role", err);
-    }
-  }, []);
-
-  const value = {
+  const value: AuthContextType = {
     isAuthenticated,
     user,
     token,
-    login,
-    logout,
     setSession,
-    switchRole,
     loading,
     error,
+    logout,
+    switchRole,
+    login
   };
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {children}
     </AuthContext.Provider>
   );
+};
+
+export const useAuth = (): AuthContextType => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error('useAuth must be used within an AuthProvider');
+  }
+  return context;
 };

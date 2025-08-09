@@ -1,43 +1,23 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Alert } from "flowbite-react";
-import axios from "axios";
-import { authService } from "@/services/authService";
+import { useTranslation } from "react-i18next";
 import KuInput from "@/components/form/KuInput";
 import KuButton from "@/components/form/KuButton";
+import { useSignup } from "@/hooks/useAuth";
 
 export default function RegisterPage() {
-  const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [success, setSuccess] = useState(false);
+  const signup = useSignup();
+  const { t } = useTranslation();
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setLoading(true);
-    setErrorMessage("");
-
-    if (!email) {
-      setErrorMessage("Email é obrigatório");
-      setLoading(false);
-      return;
-    }
-
-    try {
-      await authService.registerInit(email);
-      setSuccess(true);
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
-        setErrorMessage(
-          error.response?.data?.message || "Erro ao enviar email de registro."
-        );
-      } else {
-        setErrorMessage("Ocorreu um erro inesperado.");
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+  // Validation helpers
+  const passwordLength = signup.password.length >= 8;
+  const passwordsMatch = signup.password === signup.confirmPassword;
+  const formIsValid = 
+    signup.email && 
+    signup.password && 
+    signup.confirmPassword && 
+    passwordLength && 
+    passwordsMatch;
 
   return (
     <div className="w-full max-w-md bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 md:p-8">
@@ -48,50 +28,78 @@ export default function RegisterPage() {
           className="h-16 mb-6"
         />
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-          Criar nova conta
+          {t("register.title")}
         </h2>
 
-        {success && (
+        {signup.success && (
           <Alert color="success" className="mb-4 w-full">
-            Email enviado com sucesso! Verifique sua caixa de entrada para
-            continuar o cadastro.
+            {t("register.success_message")}
           </Alert>
         )}
 
-        {errorMessage && !loading && (
-          <Alert
-            color="failure"
-            className="mb-4 w-full"
-            onDismiss={() => setErrorMessage("")}
-          >
-            {errorMessage}
-          </Alert>
-        )}
-
-        {!success && (
+        {!signup.success && (
           <>
             <p className="text-center text-sm text-gray-600 dark:text-gray-400 mb-6">
-              Digite seu email abaixo e enviaremos um link para completar seu
-              cadastro.
+              {t("register.description")}
             </p>
-            <form onSubmit={handleSubmit} className="w-full space-y-6">
+            <form onSubmit={signup.handleSubmit} className="w-full space-y-4">
               <KuInput
                 type="input"
                 name="email"
                 dataType="email"
-                label="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                error={errorMessage && !email ? "Email é obrigatório" : ""}
+                label={t("register.email_label")}
+                value={signup.email}
+                onChange={(e) => signup.setEmail(e.target.value)}
+                error={signup.errorMessage && !signup.email ? t("register.email_required") : ""}
                 isRequired={true}
-                placeholder="seu@email.com"
+                placeholder={t("register.email_placeholder")}
+                isDisabled={signup.loading}
               />
+              
+              <KuInput
+                type="input"
+                name="password"
+                dataType="password"
+                label={t("register.password_label")}
+                value={signup.password}
+                onChange={(e) => signup.setPassword(e.target.value)}
+                error={
+                  signup.password && !passwordLength 
+                    ? t("register.password_min_length") 
+                    : signup.errorMessage && !signup.password 
+                    ? t("register.password_required") 
+                    : ""
+                }
+                isRequired={true}
+                placeholder={t("register.password_placeholder")}
+                isDisabled={signup.loading}
+              />
+              
+              <KuInput
+                type="input"
+                name="confirmPassword"
+                dataType="password"
+                label={t("register.confirm_password_label")}
+                value={signup.confirmPassword}
+                onChange={(e) => signup.setConfirmPassword(e.target.value)}
+                error={
+                  signup.confirmPassword && !passwordsMatch 
+                    ? t("register.passwords_not_match") 
+                    : signup.errorMessage && !signup.confirmPassword 
+                    ? t("register.confirm_password_required") 
+                    : ""
+                }
+                isRequired={true}
+                placeholder={t("register.confirm_password_placeholder")}
+                isDisabled={signup.loading}
+              />
+              
               <KuButton
                 id="register-button"
                 type="button"
-                label={loading ? "Enviando..." : "Enviar Email de Cadastro"}
+                label={signup.loading ? t("register.submit_loading") : t("register.submit_button")}
                 actionType="submit"
-                isDisabled={loading}
+                isDisabled={signup.loading || !formIsValid}
                 customClass="w-full"
               />
             </form>
@@ -100,12 +108,12 @@ export default function RegisterPage() {
 
         <div className="text-sm text-center mt-6">
           <p className="text-gray-500 dark:text-gray-400">
-            Já tem uma conta?
+            {t("register.already_have_account")}
             <Link
               to="/auth/login"
               className="font-medium text-cyan-700 hover:underline dark:text-cyan-500 ml-1"
             >
-              Fazer login
+              {t("register.login_link")}
             </Link>
           </p>
         </div>

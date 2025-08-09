@@ -5,5 +5,99 @@
     "login": "Login",
     "menu": "Menu",
     "logout": "Logout"
+  },
+  "footer": {
+    "brand_name": "Kunlatek",
+    "company_description": "Innovative solutions for your business",
+    "product_title": "Product",
+    "product_link1": "Features",
+    "product_link2": "Pricing",
+    "product_link3": "Tutorials",
+    "company_title": "Company",
+    "company_link1": "About",
+    "company_link2": "Blog",
+    "company_link3": "Careers",
+    "support_title": "Support",
+    "support_link1": "Help Center",
+    "support_link2": "Contact",
+    "legal_title": "Legal",
+    "legal_link1": "Privacy",
+    "legal_link2": "Terms",
+    "copyright": "© 2024 Kunlatek. All rights reserved."
+  },
+  "home": {
+    "title": "Welcome to Platform",
+    "description": "Your complete solution for process management and automation.",
+    "login_platform": "Sign in to Platform",
+    "create_account": "Create Account",
+    "go_to_dashboard": "Go to Dashboard"
+  },
+  "login": {
+    "title": "Sign in to Platform",
+    "email_label": "Email",
+    "email_placeholder": "Enter your email",
+    "password_label": "Password",
+    "password_placeholder": "Enter your password",
+    "submit_button": "Sign In",
+    "submit_loading": "Signing in...",
+    "forgot_password": "Forgot your password?",
+    "no_account": "Don't have an account?",
+    "create_account": "Create account"
+  },
+  "register": {
+    "title": "Create Account",
+    "email_label": "Email",
+    "email_placeholder": "Enter your email",
+    "password_label": "Password",
+    "password_placeholder": "Enter your password",
+    "confirm_password_label": "Confirm Password",
+    "confirm_password_placeholder": "Confirm your password",
+    "submit_button": "Create Account",
+    "submit_loading": "Creating account...",
+    "has_account": "Already have an account?",
+    "login_here": "Sign in",
+    "success_message": "Account created successfully! Check your inbox to activate your account."
+  },
+  "forgotPassword": {
+    "title": "Forgot your password?",
+    "description": "Enter your email and we'll send you a link to reset your password.",
+    "email_label": "Email",
+    "email_placeholder": "Enter your email",
+    "submit_button": "Send reset link",
+    "submit_loading": "Sending...",
+    "back_to_login": "Back to login",
+    "success_message": "Reset email sent successfully!"
+  },
+  "resetPassword": {
+    "title": "Reset Password",
+    "description": "Enter your new password.",
+    "password_label": "New Password",
+    "password_placeholder": "Enter your new password",
+    "confirm_password_label": "Confirm New Password",
+    "confirm_password_placeholder": "Confirm your new password",
+    "submit_button": "Reset Password",
+    "submit_loading": "Resetting...",
+    "success_message": "Password reset successfully!"
+  },
+  "dashboard": {
+    "welcome_title": "Welcome back!",
+    "welcome_message": "We're glad to see you again. Here's a summary of what's happening today.",
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "profile": "Profile",
+      "invitations": "Invitations",
+      "settings": "Settings",
+      "logout": "Logout"
+    },
+    "topbar": {
+      "workspace_select": "Select Workspace",
+      "workspace_personal": "Personal Workspace",
+      "workspace_company": "Company Workspace",
+      "language": "Language",
+      "theme": "Theme",
+      "theme_light": "Light",
+      "theme_dark": "Dark",
+      "logout": "Logout"
+    }
   }
 }

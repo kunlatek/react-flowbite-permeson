@@ -1,5 +1,6 @@
 import axios from "axios";
 import { browser } from "@/utils/browser";
+import i18n from "@/i18n";
 
 const api = axios.create({
   baseURL: "/api",
@@ -16,6 +17,14 @@ api.interceptors.request.use(
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
+      
+      const lang = i18n.language;
+      if (lang) {
+        config.params = {
+          ...config.params,
+          lang: lang
+        };
+      }
     }
     return config;
   },
@@ -27,11 +36,12 @@ api.interceptors.response.use(
   (error) => {
     const { response } = error;
 
-    if (browser && response && response.status === 401) {
+    /*if (browser && response && response.status === 401) {
+      // Clear storage and redirect to home when token is invalid
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      window.location.replace("/auth/login");
-    }
+      window.location.href = "/";
+    }*/
 
     return Promise.reject(error);
   }

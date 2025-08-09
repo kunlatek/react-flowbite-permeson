@@ -1,6 +1,10 @@
+import { useState } from 'react';
 import { useContext } from 'react';
 import { AuthContext } from '@/contexts/AuthContext';
 import type { AuthContextType } from '@/models/auth';
+import { useToast } from './useToast';
+import axios from 'axios';
+import { login, signup, forgotPassword, resetPassword } from '@/api/auth';
 
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
@@ -8,4 +12,249 @@ export const useAuth = (): AuthContextType => {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
+};
+
+export const useLogin = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  
+  const toast = useToast();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setLoading(true);
+    
+    if (!email || !password) {
+      toast.error("Por favor, preencha todos os campos");
+      setLoading(false);
+      return false;
+    }
+
+    try {
+      const response = await login(email, password);
+      toast.success(response.message || "Login realizado com sucesso!");
+      setSuccess(true);
+      return true;
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        const errorMsg = err.response?.data?.message || "Erro ao fazer login";
+        toast.error(errorMsg);
+        setErrorMessage(errorMsg);
+      } else {
+        toast.error("Erro ao fazer login.");
+        setErrorMessage("Erro ao fazer login.");
+      }
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { 
+    email, 
+    setEmail, 
+    password, 
+    setPassword, 
+    handleSubmit, 
+    loading, 
+    success, 
+    errorMessage, 
+    setErrorMessage 
+  };
+};
+
+export const useSignup = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const toast = useToast();
+  
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setLoading(true);
+    
+    // Validation
+    if (!email || !password || !confirmPassword) {
+      toast.error("Por favor, preencha todos os campos");
+      setLoading(false);
+      return false;
+    }
+
+    if (password.length < 8) {
+      toast.error("A senha deve ter pelo menos 8 caracteres");
+      setLoading(false);
+      return false;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error("As senhas não coincidem");
+      setLoading(false);
+      return false;
+    }
+
+    try {
+      const response = await signup(email, password);
+      toast.success(response.message || "Conta criada com sucesso! Verifique sua caixa de entrada para ativar sua conta.");
+      setSuccess(true);
+      // Only return true if signup was successful
+      setLoading(false);
+      return true;
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        const errorMsg = err.response?.data?.message || "Erro ao fazer cadastro";
+        toast.error(errorMsg);
+        setErrorMessage(errorMsg);
+      } else {
+        toast.error("Erro ao fazer cadastro.");
+        setErrorMessage("Erro ao fazer cadastro.");
+      }
+      setLoading(false);
+      return false;
+    }
+  };
+
+  return { 
+    email, 
+    setEmail, 
+    password, 
+    setPassword, 
+    confirmPassword, 
+    setConfirmPassword,
+    handleSubmit, 
+    loading, 
+    success, 
+    errorMessage, 
+    setErrorMessage 
+  };
+};
+
+export const useForgotPassword = () => {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const toast = useToast();
+  
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setLoading(true);
+    
+    if (!email) {
+      toast.error("Por favor, informe seu email");
+      setLoading(false);
+      return false;
+    }
+
+    try {
+      const response = await forgotPassword(email);
+      toast.success(response.message || "Email de redefinição enviado com sucesso!");
+      setSuccess(true);
+      setLoading(false);
+      return true;
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        const errorMsg = err.response?.data?.message || "Erro ao enviar email de redefinição";
+        toast.error(errorMsg);
+        setErrorMessage(errorMsg);
+      } else {
+        toast.error("Erro ao enviar email de redefinição.");
+        setErrorMessage("Erro ao enviar email de redefinição.");
+      }
+      setLoading(false);
+      return false;
+    }
+  };
+
+  return { 
+    email, 
+    setEmail, 
+    handleSubmit, 
+    loading, 
+    success, 
+    errorMessage, 
+    setErrorMessage 
+  };
+};
+
+export const useResetPassword = () => {
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const toast = useToast();
+  
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>, token: string) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setLoading(true);
+    
+    // Validation
+    if (!password || !confirmPassword) {
+      toast.error("Por favor, preencha todos os campos");
+      setLoading(false);
+      return false;
+    }
+
+    if (password.length < 8) {
+      toast.error("A senha deve ter pelo menos 8 caracteres");
+      setLoading(false);
+      return false;
+    }
+
+    if (password !== confirmPassword) {
+      toast.error("As senhas não coincidem");
+      setLoading(false);
+      return false;
+    }
+
+    if (!token) {
+      toast.error("Token de redefinição inválido ou ausente");
+      setLoading(false);
+      return false;
+    }
+
+    try {
+      const response = await resetPassword(token, password);
+      toast.success(response.message || "Senha redefinida com sucesso!");
+      setSuccess(true);
+      setLoading(false);
+      return true;
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        const errorMsg = err.response?.data?.message || "Erro ao redefinir senha";
+        toast.error(errorMsg);
+        setErrorMessage(errorMsg);
+      } else {
+        toast.error("Erro ao redefinir senha.");
+        setErrorMessage("Erro ao redefinir senha.");
+      }
+      setLoading(false);
+      return false;
+    }
+  };
+
+  return { 
+    password, 
+    setPassword, 
+    confirmPassword, 
+    setConfirmPassword,
+    handleSubmit, 
+    loading, 
+    success, 
+    errorMessage, 
+    setErrorMessage 
+  };
 };

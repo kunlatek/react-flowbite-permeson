@@ -1,0 +1,38 @@
+import api from "@/services/api";
+
+export const login = async (email: string, password: string) => {
+    try {
+        const response = await api.post("/auth/login", { email, password });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const logout = () => {
+    console.log("User logged out");
+};
+
+export const signup = async (email: string, password: string) => {
+    try {
+        const response = await api.post("/auth/signup", { email, password });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const forgotPassword = async (email: string) => {
+    const response = await api.post("/auth/reset-password-request", { email });
+    return response.data;
+};
+
+export const resetPassword = async (token: string, password: string) => {
+    const response = await api.post("/auth/reset-password", { token, password });
+    return response.data;
+};
+
+const switchRole = async (role: string) => {
+    const response = await api.post("/auth/switch-role", { role });
+    return response.data;
+};

@@ -5,5 +5,121 @@
     "login": "Iniciar sesión",
     "menu": "Menú",
     "logout": "Cerrar sesión"
+  },
+  "footer": {
+    "brand_name": "Rapida Quickstart",
+    "about": "Acerca de",
+    "privacy_policy": "Política de Privacidad",
+    "licensing": "Licenciamiento",
+    "contact": "Contacto",
+    "copyright": "Rapida Quickstart™",
+    "all_rights_reserved": "Todos los derechos reservados",
+    "company": "Empresa",
+    "legal": "Legal",
+    "support": "Soporte",
+    "help_center": "Centro de Ayuda",
+    "documentation": "Documentación",
+    "description": "Una plataforma completa para gestionar perfiles de personas y empresas, con autenticación segura y control de roles."
+  },
+  "home": {
+    "title": "Gestión de Perfiles con Autenticación Segura",
+    "description": "Una plataforma completa para gestionar perfiles de personas y empresas, con autenticación multi-proveedor y control de roles.",
+    "go_to_dashboard": "Ir al Dashboard",
+    "login_platform": "Iniciar sesión en la plataforma",
+    "create_account": "Crear una cuenta"
+  },
+  "login": {
+    "title": "Iniciar Sesión en la Plataforma",
+    "email_label": "Correo Electrónico",
+    "email_placeholder": "Ingrese su correo electrónico",
+    "password_label": "Contraseña",
+    "password_placeholder": "Ingrese su contraseña",
+    "submit_button": "Iniciar Sesión",
+    "submit_loading": "Iniciando sesión...",
+    "forgot_password": "¿Olvidó su contraseña?",
+    "no_account": "¿No tiene una cuenta?",
+    "create_account": "Crear cuenta"
+  },
+  "register": {
+    "title": "Crear Cuenta",
+    "email_label": "Correo Electrónico",
+    "email_placeholder": "Ingrese su correo electrónico",
+    "password_label": "Contraseña",
+    "password_placeholder": "Ingrese su contraseña",
+    "confirm_password_label": "Confirmar Contraseña",
+    "confirm_password_placeholder": "Confirme su contraseña",
+    "submit_button": "Crear Cuenta",
+    "submit_loading": "Creando cuenta...",
+    "has_account": "¿Ya tiene una cuenta?",
+    "login_here": "Iniciar sesión",
+    "success_message": "¡Cuenta creada exitosamente! Revise su bandeja de entrada para activar su cuenta."
+  },
+  "forgotPassword": {
+    "title": "¿Olvidó su contraseña?",
+    "description": "Ingrese su correo electrónico y le enviaremos un enlace para restablecer su contraseña.",
+    "email_label": "Correo Electrónico",
+    "email_placeholder": "Ingrese su correo electrónico",
+    "submit_button": "Enviar enlace de restablecimiento",
+    "submit_loading": "Enviando...",
+    "back_to_login": "Volver al inicio de sesión",
+    "success_message": "¡Email de restablecimiento enviado exitosamente!"
+  },
+  "resetPassword": {
+    "title": "Restablecer Contraseña",
+    "description": "Ingrese su nueva contraseña.",
+    "password_label": "Nueva Contraseña",
+    "password_placeholder": "Ingrese su nueva contraseña",
+    "confirm_password_label": "Confirmar Nueva Contraseña",
+    "confirm_password_placeholder": "Confirme su nueva contraseña",
+    "submit_button": "Restablecer Contraseña",
+    "submit_loading": "Restableciendo...",
+    "success_message": "¡Contraseña restablecida exitosamente!"
+  },
+  "home": {
+    "title": "Bienvenido a la Plataforma",
+    "description": "Su solución completa para gestión y automatización de procesos.",
+    "login_platform": "Iniciar Sesión en la Plataforma",
+    "create_account": "Crear Cuenta",
+    "go_to_dashboard": "Ir al Dashboard"
+  },
+  "footer": {
+    "brand_name": "Kunlatek",
+    "company_description": "Soluciones innovadoras para su negocio",
+    "product_title": "Producto",
+    "product_link1": "Características",
+    "product_link2": "Precios",
+    "product_link3": "Tutoriales",
+    "company_title": "Empresa",
+    "company_link1": "Acerca de",
+    "company_link2": "Blog",
+    "company_link3": "Carreras",
+    "support_title": "Soporte",
+    "support_link1": "Centro de Ayuda",
+    "support_link2": "Contacto",
+    "legal_title": "Legal",
+    "legal_link1": "Privacidad",
+    "legal_link2": "Términos",
+    "copyright": "© 2024 Kunlatek. Todos los derechos reservados."
+  },
+  "dashboard": {
+    "welcome_title": "¡Bienvenido de vuelta!",
+    "welcome_message": "Nos alegra verlo de nuevo. Aquí está un resumen de lo que está sucediendo hoy.",
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "profile": "Perfil",
+      "invitations": "Invitaciones",
+      "settings": "Configuraciones",
+      "logout": "Cerrar Sesión"
+    },
+    "topbar": {
+      "workspace_select": "Seleccionar Workspace",
+      "workspace_personal": "Workspace Personal",
+      "workspace_company": "Workspace Empresa",
+      "language": "Idioma",
+      "theme": "Tema",
+      "theme_light": "Claro",
+      "theme_dark": "Oscuro",
+      "logout": "Cerrar Sesión"
+    }
   }
 }

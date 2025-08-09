@@ -24,6 +24,7 @@ i18n
     detection: {
       order: ["localStorage", "navigator"],
       caches: ["localStorage"],
+      lookupLocalStorage: "lang", // Use "lang" key instead of default "i18nextLng"
     },
   });
 

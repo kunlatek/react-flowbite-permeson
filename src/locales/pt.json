@@ -5,5 +5,121 @@
     "login": "Login",
     "menu": "Menu",
     "logout": "Sair"
+  },
+  "footer": {
+    "brand_name": "Rapida Quickstart",
+    "about": "Sobre",
+    "privacy_policy": "Política de Privacidade",
+    "licensing": "Licenciamento",
+    "contact": "Contato",
+    "copyright": "Rapida Quickstart™",
+    "all_rights_reserved": "Todos os direitos reservados",
+    "company": "Empresa",
+    "legal": "Legal",
+    "support": "Suporte",
+    "help_center": "Central de Ajuda",
+    "documentation": "Documentação",
+    "description": "Uma plataforma completa para gerenciar perfis de pessoas e empresas, com autenticação segura e controle de funções."
+  },
+  "home": {
+    "title": "Gerenciamento de Perfis com Autenticação Segura",
+    "description": "Uma plataforma completa para gerenciar perfis de pessoas e empresas, com autenticação multi-provider e controle de funções.",
+    "go_to_dashboard": "Ir para o Dashboard",
+    "login_platform": "Entrar na plataforma",
+    "create_account": "Criar uma conta"
+  },
+  "login": {
+    "title": "Entrar na Plataforma",
+    "email_label": "E-mail",
+    "email_placeholder": "Digite seu e-mail",
+    "password_label": "Senha",
+    "password_placeholder": "Digite sua senha",
+    "submit_button": "Entrar",
+    "submit_loading": "Entrando...",
+    "forgot_password": "Esqueceu sua senha?",
+    "no_account": "Não tem uma conta?",
+    "create_account": "Criar conta"
+  },
+  "register": {
+    "title": "Criar Conta",
+    "email_label": "E-mail",
+    "email_placeholder": "Digite seu e-mail",
+    "password_label": "Senha",
+    "password_placeholder": "Digite sua senha",
+    "confirm_password_label": "Confirmar Senha",
+    "confirm_password_placeholder": "Confirme sua senha",
+    "submit_button": "Criar Conta",
+    "submit_loading": "Criando conta...",
+    "has_account": "Já tem uma conta?",
+    "login_here": "Fazer login",
+    "success_message": "Conta criada com sucesso! Verifique sua caixa de entrada para ativar sua conta."
+  },
+  "forgotPassword": {
+    "title": "Esqueceu sua senha?",
+    "description": "Digite seu e-mail e enviaremos um link para redefinir sua senha.",
+    "email_label": "E-mail",
+    "email_placeholder": "Digite seu e-mail",
+    "submit_button": "Enviar link de redefinição",
+    "submit_loading": "Enviando...",
+    "back_to_login": "Voltar para o login",
+    "success_message": "Email de redefinição enviado com sucesso!"
+  },
+  "resetPassword": {
+    "title": "Redefinir Senha",
+    "description": "Digite sua nova senha.",
+    "password_label": "Nova Senha",
+    "password_placeholder": "Digite sua nova senha",
+    "confirm_password_label": "Confirmar Nova Senha",
+    "confirm_password_placeholder": "Confirme sua nova senha",
+    "submit_button": "Redefinir Senha",
+    "submit_loading": "Redefinindo...",
+    "success_message": "Senha redefinida com sucesso!"
+  },
+  "home": {
+    "title": "Bem-vindo à Plataforma",
+    "description": "Sua solução completa para gerenciamento e automação de processos.",
+    "login_platform": "Entrar na Plataforma",
+    "create_account": "Criar Conta",
+    "go_to_dashboard": "Ir para o Dashboard"
+  },
+  "footer": {
+    "brand_name": "Kunlatek",
+    "company_description": "Soluções inovadoras para o seu negócio",
+    "product_title": "Produto",
+    "product_link1": "Recursos",
+    "product_link2": "Preços",
+    "product_link3": "Tutoriais",
+    "company_title": "Empresa",
+    "company_link1": "Sobre",
+    "company_link2": "Blog",
+    "company_link3": "Carreiras",
+    "support_title": "Suporte",
+    "support_link1": "Central de Ajuda",
+    "support_link2": "Contato",
+    "legal_title": "Legal",
+    "legal_link1": "Privacidade",
+    "legal_link2": "Termos",
+    "copyright": "© 2024 Kunlatek. Todos os direitos reservados."
+  },
+  "dashboard": {
+    "welcome_title": "Bem-vindo de volta!",
+    "welcome_message": "Estamos felizes em vê-lo novamente. Aqui está um resumo do que está acontecendo hoje.",
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "profile": "Perfil",
+      "invitations": "Convites",
+      "settings": "Configurações",
+      "logout": "Sair"
+    },
+    "topbar": {
+      "workspace_select": "Selecionar Workspace",
+      "workspace_personal": "Workspace Pessoal",
+      "workspace_company": "Workspace Empresa",
+      "language": "Idioma",
+      "theme": "Tema",
+      "theme_light": "Claro",
+      "theme_dark": "Escuro",
+      "logout": "Sair"
+    }
   }
 }

@@ -4,7 +4,7 @@ import { AuthContext } from '@/contexts/AuthContext';
 import type { AuthContextType } from '@/models/auth';
 import { useToast } from './useToast';
 import axios from 'axios';
-import { login, signup, forgotPassword, resetPassword } from '@/api/auth';
+import { login, signup, forgotPassword, resetPassword, resendActivation } from '@/api/auth';
 
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
@@ -188,73 +188,119 @@ export const useForgotPassword = () => {
 };
 
 export const useResetPassword = () => {
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
-
   const toast = useToast();
-  
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>, token: string) => {
     event.preventDefault();
     event.stopPropagation();
     setLoading(true);
-    
-    // Validation
+    setErrorMessage("");
+    setSuccess(false);
+
     if (!password || !confirmPassword) {
-      toast.error("Por favor, preencha todos os campos");
+      setErrorMessage("Por favor, preencha todos os campos");
       setLoading(false);
       return false;
     }
 
     if (password.length < 8) {
-      toast.error("A senha deve ter pelo menos 8 caracteres");
+      setErrorMessage("A senha deve ter pelo menos 8 caracteres");
       setLoading(false);
       return false;
     }
 
     if (password !== confirmPassword) {
-      toast.error("As senhas não coincidem");
-      setLoading(false);
-      return false;
-    }
-
-    if (!token) {
-      toast.error("Token de redefinição inválido ou ausente");
+      setErrorMessage("As senhas não coincidem");
       setLoading(false);
       return false;
     }
 
     try {
       const response = await resetPassword(token, password);
-      toast.success(response.message || "Senha redefinida com sucesso!");
-      setSuccess(true);
-      setLoading(false);
-      return true;
-    } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        const errorMsg = err.response?.data?.message || "Erro ao redefinir senha";
-        toast.error(errorMsg);
-        setErrorMessage(errorMsg);
+      if (response.statusCode === 200) {
+        setSuccess(true);
+        toast.success(response.message || "Senha redefinida com sucesso!");
+        return true;
       } else {
-        toast.error("Erro ao redefinir senha.");
-        setErrorMessage("Erro ao redefinir senha.");
+        throw new Error(response.message || "Erro ao redefinir senha");
       }
-      setLoading(false);
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.message || err.message || "Erro ao redefinir senha";
+      setErrorMessage(errorMessage);
+      toast.error(errorMessage);
       return false;
+    } finally {
+      setLoading(false);
     }
   };
 
-  return { 
-    password, 
-    setPassword, 
-    confirmPassword, 
+  return {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    confirmPassword,
     setConfirmPassword,
-    handleSubmit, 
-    loading, 
-    success, 
-    errorMessage, 
-    setErrorMessage 
+    loading,
+    success,
+    errorMessage,
+    setErrorMessage,
+    handleSubmit,
+  };
+};
+
+export const useResendActivation = () => {
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const toast = useToast();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setLoading(true);
+    setErrorMessage("");
+    setSuccess(false);
+
+    if (!email) {
+      setErrorMessage("Por favor, informe seu e-mail");
+      setLoading(false);
+      return false;
+    }
+
+    try {
+      const response = await resendActivation(email);
+      if (response.statusCode === 204) {
+        setSuccess(true);
+        toast.success(response.message || "E-mail de ativação reenviado com sucesso!");
+        return true;
+      } else {
+        throw new Error(response.message || "Erro ao reenviar e-mail de ativação");
+      }
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.message || err.message || "Erro ao reenviar e-mail de ativação";
+      setErrorMessage(errorMessage);
+      toast.error(errorMessage);
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    email,
+    setEmail,
+    loading,
+    success,
+    errorMessage,
+    setErrorMessage,
+    handleSubmit,
   };
 };

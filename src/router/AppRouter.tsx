@@ -2,14 +2,11 @@ import { Routes, Route } from "react-router-dom";
 import LoginPage from "@/pages/login/LoginPage";
 import HomePage from "@/pages/home/HomePage";
 import DashboardPage from "@/pages/dashboard/DashboardPage";
+import ProfilePage from "@/pages/profile/ProfilePage";
 import RegisterPage from "@/pages/auth/RegisterPage";
 import ForgotPasswordPage from "@/pages/auth/ForgotPasswordPage";
 import ResetPasswordPage from "@/pages/auth/ResetPasswordPage";
-import ProfileSelectPage from "@/pages/profile/select/ProfileSelectPage";
-import CreatePersonProfilePage from "@/pages/profile/person/CreatePersonProfilePage";
-import EditPersonProfilePage from "@/pages/profile/person/EditPersonProfilePage";
-import CreateCompanyProfilePage from "@/pages/profile/company/CreateCompanyProfilePage";
-import EditCompanyProfilePage from "@/pages/profile/company/EditCompanyProfilePage";
+import ResendActivationPage from "@/pages/auth/ResendActivationPage";
 import SettingsPage from "@/pages/settings/SettingsPage";
 import InvitationListPage from "@/pages/invitation/InvitationListPage";
 import CreateInvitationPage from "@/pages/invitation/CreateInvitationPage";
@@ -36,36 +33,20 @@ export default function AppRouter() {
           path="/auth/reset-password/:token"
           element={<ResetPasswordPage />}
         />
+        <Route path="/auth/resend-activation" element={<ResendActivationPage />} />
       </Route>
 
-      {/* Rotas Protegidas */}
+      {/* Protected Routes */}
       <Route element={<ProtectedRoute />}>
-        {/* Dashboard com Layout Próprio */}
+        {/* Dashboard with its own Layout */}
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/profile" element={<ProfilePage />} />
         </Route>
 
-        {/* Outras Rotas Protegidas com Layout Principal */}
+        {/* Other Protected Routes with Main Layout */}
         <Route element={<MainLayout />}>
           <Route path="/settings" element={<SettingsPage />} />
-
-          <Route path="/profile/select" element={<ProfileSelectPage />} />
-          <Route
-            path="/profile/person/new"
-            element={<CreatePersonProfilePage />}
-          />
-          <Route
-            path="/profile/person/:id"
-            element={<EditPersonProfilePage />}
-          />
-          <Route
-            path="/profile/company/new"
-            element={<CreateCompanyProfilePage />}
-          />
-          <Route
-            path="/profile/company/:id"
-            element={<EditCompanyProfilePage />}
-          />
 
           <Route path="/invitations" element={<InvitationListPage />} />
           <Route path="/invitations/new" element={<CreateInvitationPage />} />

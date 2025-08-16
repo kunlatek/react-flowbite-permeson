@@ -24,48 +24,72 @@ const checkUserProfiles = async (): Promise<ProfileStatus> => {
 
 // --- Person Profile Methods ---
 const createPersonProfile = async (profileData: Partial<IPersonProfile>) => {
-  const response = await api.post("/person-profiles", profileData);
+  const response = await api.post("/profiles/person", profileData);
   return response.data;
+};
+
+const getPersonProfile = async (): Promise<IPersonProfile> => {
+  const response = await api.get("/profiles/person");
+  return response.data.data;
 };
 
 const getPersonProfileById = async (id: string): Promise<IPersonProfile> => {
-  const response = await api.get(`/person-profiles/${id}`);
+  const response = await api.get(`/profiles/person/${id}`);
+  return response.data.data;
+};
+
+const updatePersonProfile = async (profileData: Partial<IPersonProfile>) => {
+  const response = await api.put("/profiles/person", profileData);
   return response.data;
 };
 
-const updatePersonProfile = async (
+const updatePersonProfileById = async (
   id: string,
   profileData: Partial<IPersonProfile>
 ) => {
-  const response = await api.patch(`/person-profiles/${id}`, profileData);
+  const response = await api.put(`/profiles/person/${id}`, profileData);
   return response.data;
 };
 
 // --- Company Profile Methods ---
 const createCompanyProfile = async (profileData: Partial<ICompanyProfile>) => {
-  const response = await api.post("/company-profiles", profileData);
+  const response = await api.post("/profiles/company", profileData);
   return response.data;
+};
+
+const getCompanyProfile = async (): Promise<ICompanyProfile> => {
+  const response = await api.get("/profiles/company");
+  return response.data.data;
 };
 
 const getCompanyProfileById = async (id: string): Promise<ICompanyProfile> => {
-  const response = await api.get(`/company-profiles/${id}`);
+  const response = await api.get(`/profiles/company/${id}`);
+  return response.data.data;
+};
+
+const updateCompanyProfile = async (profileData: Partial<ICompanyProfile>) => {
+  const response = await api.put("/profiles/company", profileData);
   return response.data;
 };
 
-const updateCompanyProfile = async (
+const updateCompanyProfileById = async (
   id: string,
   profileData: Partial<ICompanyProfile>
 ) => {
-  const response = await api.patch(`/company-profiles/${id}`, profileData);
+  const response = await api.put(`/profiles/company/${id}`, profileData);
   return response.data;
 };
 
 export const profileService = {
   checkUserProfiles,
   createPersonProfile,
+  getPersonProfile,
   getPersonProfileById,
   updatePersonProfile,
+  updatePersonProfileById,
   createCompanyProfile,
+  getCompanyProfile,
   getCompanyProfileById,
   updateCompanyProfile,
+  updateCompanyProfileById,
 };

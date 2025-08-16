@@ -28,11 +28,21 @@ export const forgotPassword = async (email: string) => {
 };
 
 export const resetPassword = async (token: string, password: string) => {
-    const response = await api.post("/auth/reset-password", { token, password });
+    const response = await api.post("/auth/reset-password", {
+        token,
+        password,
+    });
     return response.data;
 };
 
-const switchRole = async (role: string) => {
+export const resendActivation = async (email: string) => {
+    const response = await api.post("/account/verify/send", {
+        email,
+    });
+    return response.data;
+};
+
+export const switchRole = async (role: string) => {
     const response = await api.post("/auth/switch-role", { role });
     return response.data;
 };

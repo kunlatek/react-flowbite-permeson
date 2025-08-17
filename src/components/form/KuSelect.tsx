@@ -92,10 +92,23 @@ export default function KuSelect({
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const stringValue = event.target.value;
+    
+    if (stringValue === "") {
+      onChange(name, "");
+      return;
+    }
+    
+    // Find the option that matches the selected value
     const selectedOption = options.find(
       (opt) => String(opt.value) === stringValue
     );
+    
+    // Use the original value from the option, not the string value
     const originalValue = selectedOption ? selectedOption.value : stringValue;
+    
+
+    
+    // Ensure we're passing the correct value type
     onChange(name, originalValue);
   };
 
@@ -212,7 +225,7 @@ export default function KuSelect({
         <Select
           id={name}
           name={name}
-          value={String(value ?? "")}
+          value={value !== null && value !== undefined ? String(value) : ""}
           onChange={handleSingleSelectChange}
           required={isRequired}
           disabled={isDisabled}

@@ -89,6 +89,125 @@ export default function PersonProfileTab({ profile, loading, onUpdate }: PersonP
     }));
   };
 
+  // Array handling functions
+  const handleProfessionChange = (index: number, field: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      professions: prev.professions?.map((profession, i) => 
+        i === index ? { ...profession, [field]: value } : profession
+      ) || []
+    }));
+  };
+
+  const addProfession = () => {
+    setFormData(prev => ({
+      ...prev,
+      professions: [...(prev.professions || []), {
+        jobId: '',
+        jobStartDateMonth: 1,
+        jobStartDateYear: new Date().getFullYear(),
+        jobFinishDateMonth: 1,
+        jobFinishDateYear: new Date().getFullYear(),
+        jobDescription: ''
+      }]
+    }));
+  };
+
+  const removeProfession = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      professions: prev.professions?.filter((_, i) => i !== index) || []
+    }));
+  };
+
+  const handleEducationChange = (index: number, field: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      personEducations: prev.personEducations?.map((education, i) => 
+        i === index ? { ...education, [field]: value } : education
+      ) || []
+    }));
+  };
+
+  const addEducation = () => {
+    setFormData(prev => ({
+      ...prev,
+      personEducations: [...(prev.personEducations || []), {
+        personEducationCourse: '',
+        personEducationInstitution: '',
+        personEducationStartDate: '',
+        personEducationFinishDate: '',
+        personEducationDescription: '',
+        personEducationCertificateFile: ''
+      }]
+    }));
+  };
+
+  const removeEducation = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      personEducations: prev.personEducations?.filter((_, i) => i !== index) || []
+    }));
+  };
+
+  const handleCourseChange = (index: number, field: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      personCourses: prev.personCourses?.map((course, i) => 
+        i === index ? { ...course, [field]: value } : course
+      ) || []
+    }));
+  };
+
+  const addCourse = () => {
+    setFormData(prev => ({
+      ...prev,
+      personCourses: [...(prev.personCourses || []), {
+        personCourseName: '',
+        personCourseInstitution: '',
+        personCourseStartDate: '',
+        personCourseFinishDate: '',
+        personCourseCertificateFile: ''
+      }]
+    }));
+  };
+
+  const removeCourse = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      personCourses: prev.personCourses?.filter((_, i) => i !== index) || []
+    }));
+  };
+
+  const handleRelatedFileChange = (index: number, field: string, value: string | number) => {
+    setFormData(prev => ({
+      ...prev,
+      relatedFiles: prev.relatedFiles?.map((file, i) => 
+        i === index ? { ...file, [field]: value } : file
+      ) || []
+    }));
+  };
+
+  const addRelatedFile = () => {
+    setFormData(prev => ({
+      ...prev,
+      relatedFiles: [...(prev.relatedFiles || []), {
+        filesDescription: '',
+        relatedFilesFiles: '',
+        relatedFilesDateDay: new Date().getDate(),
+        relatedFilesDateMonth: new Date().getMonth() + 1,
+        relatedFilesDateYear: new Date().getFullYear()
+      }]
+    }));
+  };
+
+  const removeRelatedFile = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      relatedFiles: prev.relatedFiles?.filter((_, i) => i !== index) || []
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await onUpdate(formData);
@@ -135,11 +254,11 @@ export default function PersonProfileTab({ profile, loading, onUpdate }: PersonP
             dataType="text"
             label={t("profile.person.gender")}
             value={formData.gender || ''}
-            onChange={(value) => handleInputChange('gender', value)}
+            onChange={(name, value) => handleInputChange(name, value)}
             options={[
-              { value: 'Masculino', label: t("profile.person.gender_male") },
-              { value: 'Feminino', label: t("profile.person.gender_female") },
-              { value: 'Outro', label: t("profile.person.gender_other") }
+              { value: 'Male', label: t("profile.person.gender_male") },
+              { value: 'Female', label: t("profile.person.gender_female") },
+              { value: 'Other', label: t("profile.person.gender_other") }
             ]}
           />
           <KuInput
@@ -156,12 +275,12 @@ export default function PersonProfileTab({ profile, loading, onUpdate }: PersonP
             dataType="text"
             label={t("profile.person.marital_status")}
             value={formData.maritalStatus || ''}
-            onChange={(value) => handleInputChange('maritalStatus', value)}
+            onChange={(name, value) => handleInputChange(name, value)}
             options={[
-              { value: 'Solteiro', label: t("profile.person.marital_single") },
-              { value: 'Casado', label: t("profile.person.marital_married") },
-              { value: 'Divorciado', label: t("profile.person.marital_divorced") },
-              { value: 'Viúvo', label: t("profile.person.marital_widowed") }
+              { value: 'Single', label: t("profile.person.marital_single") },
+              { value: 'Married', label: t("profile.person.marital_married") },
+              { value: 'Divorced', label: t("profile.person.marital_divorced") },
+              { value: 'Widowed', label: t("profile.person.marital_widowed") }
             ]}
           />
           <KuInput
@@ -269,7 +388,7 @@ export default function PersonProfileTab({ profile, loading, onUpdate }: PersonP
             dataType="text"
             label={t("profile.person.address_type")}
             value={formData.addressOneType || ''}
-            onChange={(value) => handleInputChange('addressOneType', value)}
+            onChange={(name, value) => handleInputChange(name, value)}
             options={[
               { value: 'residential', label: t("profile.person.address_residential") },
               { value: 'commercial', label: t("profile.person.address_commercial") }
@@ -352,7 +471,7 @@ export default function PersonProfileTab({ profile, loading, onUpdate }: PersonP
                 dataType="text"
                 label={t("profile.person.bank_account_type")}
                 value={formData.bankDataOne?.bankAccountType || ''}
-                onChange={(value) => handleBankDataChange('One', 'bankAccountType', value)}
+                onChange={(name, value) => handleBankDataChange('One', 'bankAccountType', String(value))}
                 options={[
                   { value: 'current', label: t("profile.person.bank_current") },
                   { value: 'savings', label: t("profile.person.bank_savings") }
@@ -397,7 +516,7 @@ export default function PersonProfileTab({ profile, loading, onUpdate }: PersonP
                 dataType="text"
                 label={t("profile.person.bank_account_type")}
                 value={formData.bankDataTwo?.bankAccountType || ''}
-                onChange={(value) => handleBankDataChange('Two', 'bankAccountType', value)}
+                onChange={(name, value) => handleBankDataChange('Two', 'bankAccountType', String(value))}
                 options={[
                   { value: 'current', label: t("profile.person.bank_current") },
                   { value: 'savings', label: t("profile.person.bank_savings") }
@@ -406,6 +525,340 @@ export default function PersonProfileTab({ profile, loading, onUpdate }: PersonP
             </div>
           </div>
         </div>
+      </Card>
+
+      {/* Professions */}
+      <Card>
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            {t("profile.person.professions")}
+          </h3>
+          <KuButton
+            id="add-profession"
+            type="button"
+            actionType="button"
+            variant="secondary"
+            size="sm"
+            label={t("profile.person.add_profession")}
+            onClick={addProfession}
+          />
+        </div>
+        
+        {formData.professions?.map((profession, index) => (
+          <div key={index} className="border rounded-lg p-4 mb-4">
+            <div className="flex justify-between items-center mb-3">
+              <h4 className="text-md font-medium text-gray-700 dark:text-gray-300">
+                {t("profile.person.profession")} {index + 1}
+              </h4>
+              <KuButton
+                id={`remove-profession-${index}`}
+                type="button"
+                actionType="button"
+                variant="danger"
+                size="sm"
+                label={t("profile.person.remove_profession")}
+                onClick={() => removeProfession(index)}
+              />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <KuInput
+                name={`jobId-${index}`}
+                type="input"
+                dataType="text"
+                label={t("profile.person.job_id")}
+                value={profession.jobId}
+                onChange={(e) => handleProfessionChange(index, 'jobId', e.target.value)}
+              />
+              <KuInput
+                name={`jobDescription-${index}`}
+                type="input"
+                dataType="text"
+                label={t("profile.person.job_description")}
+                value={profession.jobDescription}
+                onChange={(e) => handleProfessionChange(index, 'jobDescription', e.target.value)}
+              />
+              <KuInput
+                name={`jobStartDateMonth-${index}`}
+                type="input"
+                dataType="number"
+                label={t("profile.person.job_start_month")}
+                value={profession.jobStartDateMonth}
+                onChange={(e) => handleProfessionChange(index, 'jobStartDateMonth', e.target.value)}
+              />
+              <KuInput
+                name={`jobStartDateYear-${index}`}
+                type="input"
+                dataType="number"
+                label={t("profile.person.job_start_year")}
+                value={profession.jobStartDateYear}
+                onChange={(e) => handleProfessionChange(index, 'jobStartDateYear', e.target.value)}
+              />
+              <KuInput
+                name={`jobFinishDateMonth-${index}`}
+                type="input"
+                dataType="number"
+                label={t("profile.person.job_finish_month")}
+                value={profession.jobFinishDateMonth}
+                onChange={(e) => handleProfessionChange(index, 'jobFinishDateMonth', e.target.value)}
+              />
+              <KuInput
+                name={`jobFinishDateYear-${index}`}
+                type="input"
+                dataType="number"
+                label={t("profile.person.job_finish_year")}
+                value={profession.jobFinishDateYear}
+                onChange={(e) => handleProfessionChange(index, 'jobFinishDateYear', e.target.value)}
+              />
+            </div>
+          </div>
+        ))}
+      </Card>
+
+      {/* Education */}
+      <Card>
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            {t("profile.person.education")}
+          </h3>
+          <KuButton
+            id="add-education"
+            type="button"
+            actionType="button"
+            variant="secondary"
+            size="sm"
+            label={t("profile.person.add_education")}
+            onClick={addEducation}
+          />
+        </div>
+        
+        {formData.personEducations?.map((education, index) => (
+          <div key={index} className="border rounded-lg p-4 mb-4">
+            <div className="flex justify-between items-center mb-3">
+              <h4 className="text-md font-medium text-gray-700 dark:text-gray-300">
+                {t("profile.person.education_item")} {index + 1}
+              </h4>
+              <KuButton
+                id={`remove-education-${index}`}
+                type="button"
+                actionType="button"
+                variant="danger"
+                size="sm"
+                label={t("profile.person.remove_education")}
+                onClick={() => removeEducation(index)}
+              />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <KuInput
+                name={`personEducationCourse-${index}`}
+                type="input"
+                dataType="text"
+                label={t("profile.person.education_course")}
+                value={education.personEducationCourse}
+                onChange={(e) => handleEducationChange(index, 'personEducationCourse', e.target.value)}
+              />
+              <KuInput
+                name={`personEducationInstitution-${index}`}
+                type="input"
+                dataType="text"
+                label={t("profile.person.education_institution")}
+                value={education.personEducationInstitution}
+                onChange={(e) => handleEducationChange(index, 'personEducationInstitution', e.target.value)}
+              />
+              <KuInput
+                name={`personEducationStartDate-${index}`}
+                type="input"
+                dataType="date"
+                label={t("profile.person.education_start_date")}
+                value={education.personEducationStartDate}
+                onChange={(e) => handleEducationChange(index, 'personEducationStartDate', e.target.value)}
+              />
+              <KuInput
+                name={`personEducationFinishDate-${index}`}
+                type="input"
+                dataType="date"
+                label={t("profile.person.education_finish_date")}
+                value={education.personEducationFinishDate}
+                onChange={(e) => handleEducationChange(index, 'personEducationFinishDate', e.target.value)}
+              />
+              <div className="md:col-span-2">
+                <KuInput
+                  name={`personEducationDescription-${index}`}
+                  type="input"
+                  dataType="text"
+                  label={t("profile.person.education_description")}
+                  value={education.personEducationDescription}
+                  onChange={(e) => handleEducationChange(index, 'personEducationDescription', e.target.value)}
+                />
+              </div>
+              <KuInput
+                name={`personEducationCertificateFile-${index}`}
+                type="input"
+                dataType="text"
+                label={t("profile.person.education_certificate")}
+                value={education.personEducationCertificateFile}
+                onChange={(e) => handleEducationChange(index, 'personEducationCertificateFile', e.target.value)}
+              />
+            </div>
+          </div>
+        ))}
+      </Card>
+
+      {/* Courses */}
+      <Card>
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            {t("profile.person.courses")}
+          </h3>
+          <KuButton
+            id="add-course"
+            type="button"
+            actionType="button"
+            variant="secondary"
+            size="sm"
+            label={t("profile.person.add_course")}
+            onClick={addCourse}
+          />
+        </div>
+        
+        {formData.personCourses?.map((course, index) => (
+          <div key={index} className="border rounded-lg p-4 mb-4">
+            <div className="flex justify-between items-center mb-3">
+              <h4 className="text-md font-medium text-gray-700 dark:text-gray-300">
+                {t("profile.person.course")} {index + 1}
+              </h4>
+              <KuButton
+                id={`remove-course-${index}`}
+                type="button"
+                actionType="button"
+                variant="danger"
+                size="sm"
+                label={t("profile.person.remove_course")}
+                onClick={() => removeCourse(index)}
+              />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <KuInput
+                name={`personCourseName-${index}`}
+                type="input"
+                dataType="text"
+                label={t("profile.person.course_name")}
+                value={course.personCourseName}
+                onChange={(e) => handleCourseChange(index, 'personCourseName', e.target.value)}
+              />
+              <KuInput
+                name={`personCourseInstitution-${index}`}
+                type="input"
+                dataType="text"
+                label={t("profile.person.course_institution")}
+                value={course.personCourseInstitution}
+                onChange={(e) => handleCourseChange(index, 'personCourseInstitution', e.target.value)}
+              />
+              <KuInput
+                name={`personCourseStartDate-${index}`}
+                type="input"
+                dataType="date"
+                label={t("profile.person.course_start_date")}
+                value={course.personCourseStartDate}
+                onChange={(e) => handleCourseChange(index, 'personCourseStartDate', e.target.value)}
+              />
+              <KuInput
+                name={`personCourseFinishDate-${index}`}
+                type="input"
+                dataType="date"
+                label={t("profile.person.course_finish_date")}
+                value={course.personCourseFinishDate}
+                onChange={(e) => handleCourseChange(index, 'personCourseFinishDate', e.target.value)}
+              />
+              <KuInput
+                name={`personCourseCertificateFile-${index}`}
+                type="input"
+                dataType="text"
+                label={t("profile.person.course_certificate")}
+                value={course.personCourseCertificateFile}
+                onChange={(e) => handleCourseChange(index, 'personCourseCertificateFile', e.target.value)}
+              />
+            </div>
+          </div>
+        ))}
+      </Card>
+
+      {/* Related Files */}
+      <Card>
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            {t("profile.person.related_files")}
+          </h3>
+          <KuButton
+            id="add-related-file"
+            type="button"
+            actionType="button"
+            variant="secondary"
+            size="sm"
+            label={t("profile.person.add_related_file")}
+            onClick={addRelatedFile}
+          />
+        </div>
+        
+        {formData.relatedFiles?.map((file, index) => (
+          <div key={index} className="border rounded-lg p-4 mb-4">
+            <div className="flex justify-between items-center mb-3">
+              <h4 className="text-md font-medium text-gray-700 dark:text-gray-300">
+                {t("profile.person.related_file")} {index + 1}
+              </h4>
+              <KuButton
+                id={`remove-related-file-${index}`}
+                type="button"
+                actionType="button"
+                variant="danger"
+                size="sm"
+                label={t("profile.person.remove_related_file")}
+                onClick={() => removeRelatedFile(index)}
+              />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <KuInput
+                name={`filesDescription-${index}`}
+                type="input"
+                dataType="text"
+                label={t("profile.person.file_description")}
+                value={file.filesDescription}
+                onChange={(e) => handleRelatedFileChange(index, 'filesDescription', e.target.value)}
+              />
+              <KuInput
+                name={`relatedFilesFiles-${index}`}
+                type="input"
+                dataType="text"
+                label={t("profile.person.file_path")}
+                value={file.relatedFilesFiles}
+                onChange={(e) => handleRelatedFileChange(index, 'relatedFilesFiles', e.target.value)}
+              />
+              <KuInput
+                name={`relatedFilesDateDay-${index}`}
+                type="input"
+                dataType="number"
+                label={t("profile.person.file_date_day")}
+                value={file.relatedFilesDateDay}
+                onChange={(e) => handleRelatedFileChange(index, 'relatedFilesDateDay', parseInt(e.target.value))}
+              />
+              <KuInput
+                name={`relatedFilesDateMonth-${index}`}
+                type="input"
+                dataType="number"
+                label={t("profile.person.file_date_month")}
+                value={file.relatedFilesDateMonth}
+                onChange={(e) => handleRelatedFileChange(index, 'relatedFilesDateMonth', parseInt(e.target.value))}
+              />
+              <KuInput
+                name={`relatedFilesDateYear-${index}`}
+                type="input"
+                dataType="number"
+                label={t("profile.person.file_date_year")}
+                value={file.relatedFilesDateYear}
+                onChange={(e) => handleRelatedFileChange(index, 'relatedFilesDateYear', parseInt(e.target.value))}
+              />
+            </div>
+          </div>
+        ))}
       </Card>
 
       {/* Actions */}

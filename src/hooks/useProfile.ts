@@ -28,9 +28,10 @@ export const usePersonProfile = () => {
     try {
       setLoading(true);
       setError(null);
+      delete profileData._id;
       const response = await profileService.updatePersonProfile(profileData);
       toast.success(response.message || 'Perfil atualizado com sucesso!');
-      // await fetchProfile(); // Refresh the profile data
+      await fetchProfile(); // Refresh the profile data
       return true;
     } catch (err: any) {
       const errorMessage = err.response?.data?.message || err.message || 'Erro ao atualizar perfil';
@@ -80,6 +81,7 @@ export const useCompanyProfile = () => {
     try {
       setLoading(true);
       setError(null);
+      delete profileData._id;
       const response = await profileService.updateCompanyProfile(profileData);
       toast.success(response.message || 'Perfil atualizado com sucesso!');
       await fetchProfile(); // Refresh the profile data

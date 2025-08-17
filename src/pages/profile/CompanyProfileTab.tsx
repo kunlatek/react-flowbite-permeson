@@ -106,6 +106,84 @@ export default function CompanyProfileTab({ profile, loading, onUpdate }: Compan
     }));
   };
 
+  // Additional array handling functions
+  const handlePartnerChange = (index: number, field: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      partners: prev.partners?.map((partner, i) => 
+        i === index ? { ...partner, [field]: value } : partner
+      ) || []
+    }));
+  };
+
+  const addPartner = () => {
+    setFormData(prev => ({
+      ...prev,
+      partners: [...(prev.partners || []), {
+        personId: ''
+      }]
+    }));
+  };
+
+  const removePartner = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      partners: prev.partners?.filter((_, i) => i !== index) || []
+    }));
+  };
+
+  const handleCompanyImageChange = (index: number, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      companyImages: prev.companyImages?.map((image, i) => 
+        i === index ? value : image
+      ) || []
+    }));
+  };
+
+  const addCompanyImage = () => {
+    setFormData(prev => ({
+      ...prev,
+      companyImages: [...(prev.companyImages || []), '']
+    }));
+  };
+
+  const removeCompanyImage = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      companyImages: prev.companyImages?.filter((_, i) => i !== index) || []
+    }));
+  };
+
+  const handleRelatedFileChange = (index: number, field: string, value: string | number) => {
+    setFormData(prev => ({
+      ...prev,
+      relatedFiles: prev.relatedFiles?.map((file, i) => 
+        i === index ? { ...file, [field]: value } : file
+      ) || []
+    }));
+  };
+
+  const addRelatedFile = () => {
+    setFormData(prev => ({
+      ...prev,
+      relatedFiles: [...(prev.relatedFiles || []), {
+        filesDescription: '',
+        relatedFilesFiles: '',
+        relatedFilesDateDay: new Date().getDate(),
+        relatedFilesDateMonth: new Date().getMonth() + 1,
+        relatedFilesDateYear: new Date().getFullYear()
+      }]
+    }));
+  };
+
+  const removeRelatedFile = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      relatedFiles: prev.relatedFiles?.filter((_, i) => i !== index) || []
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await onUpdate(formData);
@@ -169,7 +247,7 @@ export default function CompanyProfileTab({ profile, loading, onUpdate }: Compan
             dataType="text"
             label={t("profile.company.legal_nature")}
             value={formData.legalNature || ''}
-            onChange={(value) => handleInputChange('legalNature', value)}
+            onChange={(name, value) => handleInputChange(name, value)}
             options={[
               { value: 'Sociedade Limitada', label: t("profile.company.legal_ltda") },
               { value: 'Sociedade Anônima', label: t("profile.company.legal_sa") },
@@ -230,7 +308,7 @@ export default function CompanyProfileTab({ profile, loading, onUpdate }: Compan
                 dataType="text"
                 label={t("profile.company.contact_type")}
                 value={contact.contactType}
-                onChange={(value) => handleContactChange(index, 'contactType', value)}
+                onChange={(name, value) => handleContactChange(index, 'contactType', String(value))}
                 options={[
                   { value: 'PHONE', label: t("profile.company.contact_phone") },
                   { value: 'EMAIL', label: t("profile.company.contact_email") },
@@ -278,7 +356,7 @@ export default function CompanyProfileTab({ profile, loading, onUpdate }: Compan
             dataType="text"
             label={t("profile.company.address_type")}
             value={formData.addressOneType || ''}
-            onChange={(value) => handleInputChange('addressOneType', value)}
+            onChange={(name, value) => handleInputChange(name, value)}
             options={[
               { value: 'commercial', label: t("profile.company.address_commercial") },
               { value: 'residential', label: t("profile.company.address_residential") }
@@ -369,7 +447,7 @@ export default function CompanyProfileTab({ profile, loading, onUpdate }: Compan
                 dataType="text"
                 label={t("profile.company.bank_account_type")}
                 value={formData.bankDataOne?.bankAccountType || ''}
-                onChange={(value) => handleBankDataChange('One', 'bankAccountType', value)}
+                onChange={(name, value) => handleBankDataChange('One', 'bankAccountType', String(value))}
                 options={[
                   { value: 'currentAccount', label: t("profile.company.bank_current") },
                   { value: 'savingsAccount', label: t("profile.company.bank_savings") }
@@ -414,7 +492,7 @@ export default function CompanyProfileTab({ profile, loading, onUpdate }: Compan
                 dataType="text"
                 label={t("profile.company.bank_account_type")}
                 value={formData.bankDataTwo?.bankAccountType || ''}
-                onChange={(value) => handleBankDataChange('Two', 'bankAccountType', value)}
+                onChange={(name, value) => handleBankDataChange('Two', 'bankAccountType', String(value))}
                 options={[
                   { value: 'currentAccount', label: t("profile.company.bank_current") },
                   { value: 'savingsAccount', label: t("profile.company.bank_savings") }
@@ -423,6 +501,179 @@ export default function CompanyProfileTab({ profile, loading, onUpdate }: Compan
             </div>
           </div>
         </div>
+      </Card>
+
+      {/* Partners */}
+      <Card>
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            {t("profile.company.partners")}
+          </h3>
+          <KuButton
+            id="add-partner"
+            type="button"
+            actionType="button"
+            variant="secondary"
+            size="sm"
+            label={t("profile.company.add_partner")}
+            onClick={addPartner}
+          />
+        </div>
+        
+        {formData.partners?.map((partner, index) => (
+          <div key={index} className="border rounded-lg p-4 mb-4">
+            <div className="flex justify-between items-center mb-3">
+              <h4 className="text-md font-medium text-gray-700 dark:text-gray-300">
+                {t("profile.company.partner")} {index + 1}
+              </h4>
+              <KuButton
+                id={`remove-partner-${index}`}
+                type="button"
+                actionType="button"
+                variant="danger"
+                size="sm"
+                label={t("profile.company.remove_partner")}
+                onClick={() => removePartner(index)}
+              />
+            </div>
+            <div className="grid grid-cols-1 gap-4">
+              <KuInput
+                name={`personId-${index}`}
+                type="input"
+                dataType="text"
+                label={t("profile.company.partner_person_id")}
+                value={partner.personId}
+                onChange={(e) => handlePartnerChange(index, 'personId', e.target.value)}
+              />
+            </div>
+          </div>
+        ))}
+      </Card>
+
+      {/* Company Images */}
+      <Card>
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            {t("profile.company.images")}
+          </h3>
+          <KuButton
+            id="add-company-image"
+            type="button"
+            actionType="button"
+            variant="secondary"
+            size="sm"
+            label={t("profile.company.add_image")}
+            onClick={addCompanyImage}
+          />
+        </div>
+        
+        {formData.companyImages?.map((image, index) => (
+          <div key={index} className="border rounded-lg p-4 mb-4">
+            <div className="flex justify-between items-center mb-3">
+              <h4 className="text-md font-medium text-gray-700 dark:text-gray-300">
+                {t("profile.company.image")} {index + 1}
+              </h4>
+              <KuButton
+                id={`remove-company-image-${index}`}
+                type="button"
+                actionType="button"
+                variant="danger"
+                size="sm"
+                label={t("profile.company.remove_image")}
+                onClick={() => removeCompanyImage(index)}
+              />
+            </div>
+            <div className="grid grid-cols-1 gap-4">
+              <KuInput
+                name={`companyImage-${index}`}
+                type="input"
+                dataType="text"
+                label={t("profile.company.image_path")}
+                value={image}
+                onChange={(e) => handleCompanyImageChange(index, e.target.value)}
+              />
+            </div>
+          </div>
+        ))}
+      </Card>
+
+      {/* Related Files */}
+      <Card>
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+            {t("profile.company.related_files")}
+          </h3>
+          <KuButton
+            id="add-related-file"
+            type="button"
+            actionType="button"
+            variant="secondary"
+            size="sm"
+            label={t("profile.company.add_related_file")}
+            onClick={addRelatedFile}
+          />
+        </div>
+        
+        {formData.relatedFiles?.map((file, index) => (
+          <div key={index} className="border rounded-lg p-4 mb-4">
+            <div className="flex justify-between items-center mb-3">
+              <h4 className="text-md font-medium text-gray-700 dark:text-gray-300">
+                {t("profile.company.related_file")} {index + 1}
+              </h4>
+              <KuButton
+                id={`remove-related-file-${index}`}
+                type="button"
+                actionType="button"
+                variant="danger"
+                size="sm"
+                label={t("profile.company.remove_related_file")}
+                onClick={() => removeRelatedFile(index)}
+              />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <KuInput
+                name={`filesDescription-${index}`}
+                type="input"
+                dataType="text"
+                label={t("profile.company.file_description")}
+                value={file.filesDescription}
+                onChange={(e) => handleRelatedFileChange(index, 'filesDescription', e.target.value)}
+              />
+              <KuInput
+                name={`relatedFilesFiles-${index}`}
+                type="input"
+                dataType="text"
+                label={t("profile.company.file_path")}
+                value={file.relatedFilesFiles}
+                onChange={(e) => handleRelatedFileChange(index, 'relatedFilesFiles', e.target.value)}
+              />
+              <KuInput
+                name={`relatedFilesDateDay-${index}`}
+                type="input"
+                dataType="number"
+                label={t("profile.company.file_date_day")}
+                value={file.relatedFilesDateDay}
+                onChange={(e) => handleRelatedFileChange(index, 'relatedFilesDateDay', parseInt(e.target.value))}
+              />
+              <KuInput
+                name={`relatedFilesDateMonth-${index}`}
+                type="input"
+                dataType="number"
+                label={t("profile.company.file_date_month")}
+                value={file.relatedFilesDateMonth}
+                onChange={(e) => handleRelatedFileChange(index, 'relatedFilesDateMonth', parseInt(e.target.value))}
+              />
+              <KuInput
+                name={`relatedFilesDateYear-${index}`}
+                type="input"
+                dataType="number"
+                label={t("profile.company.file_date_year")}
+                value={file.relatedFilesDateYear}
+                onChange={(e) => handleRelatedFileChange(index, 'relatedFilesDateYear', parseInt(e.target.value))}
+              />
+            </div>
+          </div>
+        ))}
       </Card>
 
       {/* Actions */}

@@ -92,6 +92,7 @@ export default function KuButton({
 
   return (
     <FlowbiteButton
+      size="sm"
       type={getButtonType()}
       disabled={finalIsDisabled}
       className={buttonClasses}

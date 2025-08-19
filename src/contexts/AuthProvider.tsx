@@ -23,17 +23,26 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   useEffect(() => {
     const checkAuth = () => {
       const storedToken = localStorage.getItem('token');
+      const storedUser = localStorage.getItem('user');
+      
       if (storedToken) {
         setToken(storedToken);
         setIsAuthenticated(true);
-        // Mock user data for now
-        const mockUser: AuthUser = {
-          userId: '1',
-          email: 'user@example.com',
-          activeRole: 'person',
-          availableRoles: ['person', 'company']
-        };
-        setUser(mockUser);
+        
+        if (storedUser) {
+          // Use stored user data
+          const userData = JSON.parse(storedUser);
+          setUser(userData);
+        } else {
+          // Fallback to mock user data
+          const mockUser: AuthUser = {
+            userId: '1',
+            email: 'user@example.com',
+            activeRole: 'person',
+            availableRoles: ['person', 'company']
+          };
+          setUser(mockUser);
+        }
       }
       setLoading(false);
     };
@@ -41,24 +50,27 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     checkAuth();
   }, []);
 
-  const setSession = (accessToken: string): AuthUser => {
+  const setSession = (accessToken: string, userEmail?: string): AuthUser => {
     // Save token to localStorage
     localStorage.setItem('token', accessToken);
     setToken(accessToken);
     setIsAuthenticated(true);
     
-    // Mock user data - you can decode JWT or fetch user data here
-    const mockUser: AuthUser = {
+    // Create user data with email from login or fallback to mock
+    const userData: AuthUser = {
       userId: '1',
-      email: 'user@example.com',
+      email: userEmail || 'user@example.com',
       activeRole: 'person',
       availableRoles: ['person', 'company']
     };
     
-    setUser(mockUser);
+    // Save user data to localStorage
+    localStorage.setItem('user', JSON.stringify(userData));
+    
+    setUser(userData);
     setError(null);
     
-    return mockUser;
+    return userData;
   };
 
   const logout = () => {
@@ -94,7 +106,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const response = await loginApi(email, password);
       
       if (response.statusCode === 200 && response.data?.access_token) {
-        const user = setSession(response.data.access_token);
+        const user = setSession(response.data.access_token, email);
         toast.success(response.message || 'Login realizado com sucesso!');
         navigate('/dashboard');
         return true;

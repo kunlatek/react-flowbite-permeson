@@ -8,9 +8,7 @@ import ForgotPasswordPage from "@/pages/auth/ForgotPasswordPage";
 import ResetPasswordPage from "@/pages/auth/ResetPasswordPage";
 import ResendActivationPage from "@/pages/auth/ResendActivationPage";
 import SettingsPage from "@/pages/settings/SettingsPage";
-import InvitationListPage from "@/pages/invitation/InvitationListPage";
-import CreateInvitationPage from "@/pages/invitation/CreateInvitationPage";
-import EditInvitationPage from "@/pages/invitation/EditInvitationPage";
+import WorkspacePage from "@/pages/workspace/WorkspacePage";
 import MainLayout from "@/components/layout/MainLayout";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import AuthLayout from "@/components/layout/AuthLayout";
@@ -42,18 +40,12 @@ export default function AppRouter() {
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/workspace" element={<WorkspacePage />} />
         </Route>
 
         {/* Other Protected Routes with Main Layout */}
         <Route element={<MainLayout />}>
           <Route path="/settings" element={<SettingsPage />} />
-
-          <Route path="/invitations" element={<InvitationListPage />} />
-          <Route path="/invitations/new" element={<CreateInvitationPage />} />
-          <Route
-            path="/invitations/:id/edit"
-            element={<EditInvitationPage />}
-          />
         </Route>
       </Route>
     </Routes>

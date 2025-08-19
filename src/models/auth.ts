@@ -9,7 +9,7 @@ export interface AuthContextType {
   isAuthenticated: boolean;
   user: AuthUser | null;
   token: string | null;
-  setSession: (accessToken: string) => AuthUser;
+  setSession: (accessToken: string, userEmail?: string) => AuthUser;
   loading: boolean;
   error: string | null;
   logout: () => void;

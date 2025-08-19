@@ -17,7 +17,7 @@ import {
   HiCog, 
   HiLogout,
   HiHome,
-  HiMail,
+  HiUserGroup,
   HiGlobe,
   HiSun,
   HiMoon,
@@ -72,8 +72,8 @@ export default function DashboardLayout() {
                 <Sidebar.Item href="/profile" icon={HiUser}>
                   {!sidebarCollapsed && t("dashboard.sidebar.profile")}
                 </Sidebar.Item>
-                <Sidebar.Item href="/invitations" icon={HiMail}>
-                  {!sidebarCollapsed && t("dashboard.sidebar.invitations")}
+                <Sidebar.Item href="/workspace" icon={HiUserGroup}>
+                  {!sidebarCollapsed && t("dashboard.sidebar.collaborators")}
                 </Sidebar.Item>
                 <Sidebar.Item href="/settings" icon={HiCog}>
                   {!sidebarCollapsed && t("dashboard.sidebar.settings")}

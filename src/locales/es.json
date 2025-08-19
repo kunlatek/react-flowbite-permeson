@@ -43,17 +43,23 @@
   },
   "register": {
     "title": "Crear Cuenta",
+    "description": "Complete los datos a continuación para crear su cuenta",
     "email_label": "Correo Electrónico",
     "email_placeholder": "Ingrese su correo electrónico",
+    "email_required": "El correo electrónico es obligatorio",
     "password_label": "Contraseña",
     "password_placeholder": "Ingrese su contraseña",
+    "password_required": "La contraseña es obligatoria",
+    "password_min_length": "La contraseña debe tener al menos 8 caracteres",
     "confirm_password_label": "Confirmar Contraseña",
     "confirm_password_placeholder": "Confirme su contraseña",
+    "confirm_password_required": "La confirmación de contraseña es obligatoria",
+    "passwords_not_match": "Las contraseñas no coinciden",
     "submit_button": "Crear Cuenta",
     "submit_loading": "Creando cuenta...",
-    "has_account": "¿Ya tiene una cuenta?",
-    "login_here": "Iniciar sesión",
-    "success_message": "¡Cuenta creada exitosamente! Revise su bandeja de entrada para activar su cuenta."
+    "success_message": "¡Cuenta creada exitosamente! Revise su bandeja de entrada para activar su cuenta.",
+    "already_have_account": "¿Ya tiene una cuenta?",
+    "login_link": "Iniciar sesión"
   },
   "forgotPassword": {
     "title": "¿Olvidó su contraseña?",
@@ -121,7 +127,7 @@
     "sidebar": {
       "dashboard": "Dashboard",
       "profile": "Perfil",
-      "invitations": "Invitaciones",
+      "collaborators": "Colaboradores",
       "settings": "Configuraciones",
       "logout": "Cerrar Sesión",
       "show": "Mostrar menú",
@@ -289,5 +295,41 @@
       "file_date_month": "Mes",
       "file_date_year": "Año"
     }
+  },
+  "workspace": {
+    "title": "Colaboradores",
+    "description": "Gestiona los miembros de tu equipo de trabajo",
+    "error_title": "Error al cargar colaboradores",
+    "team_members": "Miembros del Equipo",
+    "members": "miembros",
+    "add_member": "Agregar Colaborador",
+    "add_first_member": "Agregar Primer Colaborador",
+    "refresh": "Actualizar",
+    "user_id": "ID del Usuario",
+    "member_since": "Miembro desde",
+    "no_members_title": "No se encontraron colaboradores",
+    "no_members_description": "Comienza agregando colaboradores a tu equipo para trabajar en conjunto.",
+    "add_member_title": "Agregar Colaborador",
+    "search_user_placeholder": "Buscar por nombre de usuario...",
+    "searching": "Buscando...",
+    "no_users_found": "No se encontraron usuarios",
+    "selected_user": "Usuario Seleccionado",
+    "already_in_team": "Usuarios ya están en el equipo (no mostrados)",
+    "user_already_in_team": "¡Este usuario ya está en el equipo!",
+    "loading_names": "Cargando nombres...",
+    "owner": "Propietario",
+    "profile_type": {
+      "person": "Persona Física",
+      "company": "Persona Jurídica"
+    },
+    "remove_member_title": "Remover Colaborador",
+    "remove_member_confirm": "Confirmar Eliminación",
+    "remove_member_description": "¿Está seguro de que desea eliminar al colaborador",
+    "remove_member_warning": "Esta acción no se puede deshacer.",
+    "remove_member": "Remover Colaborador",
+    "cannot_remove_owner": "No se puede eliminar al propietario del workspace."
+  },
+  "common": {
+    "cancel": "Cancelar"
   }
 }

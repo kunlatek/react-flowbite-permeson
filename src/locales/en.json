@@ -47,17 +47,23 @@
   },
   "register": {
     "title": "Create Account",
+    "description": "Fill in the data below to create your account",
     "email_label": "Email",
     "email_placeholder": "Enter your email",
+    "email_required": "Email is required",
     "password_label": "Password",
     "password_placeholder": "Enter your password",
+    "password_required": "Password is required",
+    "password_min_length": "Password must be at least 8 characters",
     "confirm_password_label": "Confirm Password",
     "confirm_password_placeholder": "Confirm your password",
+    "confirm_password_required": "Password confirmation is required",
+    "passwords_not_match": "Passwords do not match",
     "submit_button": "Create Account",
     "submit_loading": "Creating account...",
-    "has_account": "Already have an account?",
-    "login_here": "Sign in",
-    "success_message": "Account created successfully! Check your inbox to activate your account."
+    "success_message": "Account created successfully! Check your inbox to activate your account.",
+    "already_have_account": "Already have an account?",
+    "login_link": "Sign in"
   },
   "forgotPassword": {
     "title": "Forgot your password?",
@@ -99,7 +105,7 @@
     "sidebar": {
       "dashboard": "Dashboard",
       "profile": "Profile",
-      "invitations": "Invitations",
+      "collaborators": "Collaborators",
       "settings": "Settings",
       "logout": "Logout",
       "show": "Show menu",
@@ -267,5 +273,41 @@
       "file_date_month": "Month",
       "file_date_year": "Year"
     }
+  },
+  "workspace": {
+    "title": "Collaborators",
+    "description": "Manage your team members",
+    "error_title": "Error loading collaborators",
+    "team_members": "Team Members",
+    "members": "members",
+    "add_member": "Add Collaborator",
+    "add_first_member": "Add First Collaborator",
+    "refresh": "Refresh",
+    "user_id": "User ID",
+    "member_since": "Member since",
+    "no_members_title": "No collaborators found",
+    "no_members_description": "Start by adding collaborators to your team to work together.",
+    "add_member_title": "Add Collaborator",
+    "search_user_placeholder": "Search by username...",
+    "searching": "Searching...",
+    "no_users_found": "No users found",
+    "selected_user": "Selected User",
+    "already_in_team": "Users already in team (not shown)",
+    "user_already_in_team": "This user is already in the team!",
+    "loading_names": "Loading names...",
+    "owner": "Owner",
+    "profile_type": {
+      "person": "Individual",
+      "company": "Company"
+    },
+    "remove_member_title": "Remove Collaborator",
+    "remove_member_confirm": "Confirm Removal",
+    "remove_member_description": "Are you sure you want to remove the collaborator",
+    "remove_member_warning": "This action cannot be undone.",
+    "remove_member": "Remove Collaborator",
+    "cannot_remove_owner": "Cannot remove the workspace owner."
+  },
+  "common": {
+    "cancel": "Cancel"
   }
 }

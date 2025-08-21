@@ -9,9 +9,7 @@ export const login = async (email: string, password: string) => {
     }
 };
 
-export const logout = () => {
-    console.log("User logged out");
-};
+export const logout = () => {};
 
 export const signup = async (email: string, password: string) => {
     try {

@@ -327,7 +327,8 @@
     "remove_member_description": "Tem certeza que deseja remover o colaborador",
     "remove_member_warning": "Esta ação não pode ser desfeita.",
     "remove_member": "Remover Colaborador",
-    "cannot_remove_owner": "Não é possível remover o proprietário do workspace."
+    "cannot_remove_owner": "Não é possível remover o proprietário do workspace.",
+    "not_owner_error": "Apenas o proprietário do workspace pode adicionar ou remover colaboradores."
   },
   "common": {
     "cancel": "Cancelar"

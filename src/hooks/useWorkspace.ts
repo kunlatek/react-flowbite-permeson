@@ -17,33 +17,31 @@ export const useWorkspace = () => {
       setError(null);
       const data = await workspaceService.getWorkspace();
       
-      console.log('Workspace data received:', data); // Debug log
-      
       // Buscar informações do usuário atual
       try {
         const currentUser = await workspaceService.getCurrentUserProfile();
         if (currentUser) {
           data.currentUserId = currentUser.userId;
           data.currentUserType = currentUser.type;
-          console.log('Current user profile:', currentUser); // Debug log
+          
+          // Verificar se o usuário atual é o dono do workspace
+          data.isOwner = String(currentUser.userId) === String(data.owner);
         }
       } catch (err: any) {
-        console.warn('Failed to fetch current user profile:', err);
         // Não falha a operação principal se não conseguir buscar o perfil
+        data.isOwner = false;
       }
       
       // Remove duplicados baseado no userId
       if (data.team && Array.isArray(data.team)) {
         const uniqueTeam = [...new Set(data.team)];
         data.team = uniqueTeam;
-        console.log('Team after deduplication:', data.team); // Debug log
         
         // Buscar informações dos usuários do time
         if (uniqueTeam.length > 0) {
           try {
             const teamMembers = await workspaceService.getProfilesByIds(uniqueTeam);
             data.teamMembers = teamMembers;
-            console.log('Team members fetched:', teamMembers); // Debug log
           } catch (err: any) {
             console.warn('Failed to fetch team members:', err);
             // Não falha a operação principal se não conseguir buscar os nomes
@@ -52,7 +50,6 @@ export const useWorkspace = () => {
       }
       
       setWorkspace(data);
-      console.log('Workspace state set:', data); // Debug log
     } catch (err: any) {
       const errorMessage = err.response?.data?.message || err.message || "Erro ao carregar workspace";
       setError(errorMessage);
@@ -65,6 +62,12 @@ export const useWorkspace = () => {
   const addMember = async (userId: string) => {
     try {
       setLoading(true);
+      
+      // Verificar se o usuário atual é o dono do workspace
+      if (!workspace?.isOwner) {
+        toast.error(t("workspace.not_owner_error"));
+        return false;
+      }
       
       // Verificar se o usuário já está no time
       if (workspace?.team?.includes(userId)) {
@@ -89,8 +92,14 @@ export const useWorkspace = () => {
     try {
       setLoading(true);
       
+      // Verificar se o usuário atual é o dono do workspace
+      if (!workspace?.isOwner) {
+        toast.error(t("workspace.not_owner_error"));
+        return false;
+      }
+      
       // Verificar se não é o proprietário
-      if (String(userId) === String(workspace?.currentUserId)) {
+      if (String(userId) === String(workspace?.owner)) {
         toast.error(t("workspace.cannot_remove_owner"));
         return false;
       }
@@ -139,14 +148,10 @@ export const useUserSearch = () => {
       setSearchError(null);
       const results = await workspaceService.searchUsers(username);
       
-      console.log('Search results:', results); // Debug log
-      
       // Remove duplicados baseado no userId
       const uniqueResults = results.filter((user, index, self) => 
         index === self.findIndex(u => u.userId === user.userId)
       );
-      
-      console.log('Unique results:', uniqueResults); // Debug log
       
       setSearchResults(uniqueResults);
     } catch (err: any) {

@@ -1,14 +1,16 @@
 import { Outlet } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
+import { useMyWorkspaces } from "@/hooks/useMyWorkspaces";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { 
   Navbar, 
   Sidebar, 
   Dropdown, 
   Avatar, 
   Select,
-  Button
+  Button,
+  Spinner
 } from "flowbite-react";
 import { 
   HiMenuAlt1, 
@@ -26,9 +28,9 @@ import {
 
 export default function DashboardLayout() {
   const { user, logout } = useAuth();
+  const { workspaces, selectedWorkspaceId, loading: workspacesLoading, switchWorkspace } = useMyWorkspaces();
   const { t, i18n } = useTranslation();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [selectedWorkspace, setSelectedWorkspace] = useState('personal');
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleSidebar = () => {
@@ -45,7 +47,10 @@ export default function DashboardLayout() {
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
-    console.log('Theme toggled:', !isDarkMode ? 'dark' : 'light');
+  };
+
+  const handleWorkspaceChange = async (workspaceId: string) => {
+    await switchWorkspace(workspaceId);
   };
 
   return (
@@ -121,14 +126,23 @@ export default function DashboardLayout() {
               </div>
               <div className="flex items-center gap-3">
                 {/* Workspace Selector */}
-                <Select 
-                  value={selectedWorkspace} 
-                  onChange={(e) => setSelectedWorkspace(e.target.value)}
-                  className="w-48"
-                >
-                  <option value="personal">{t("dashboard.topbar.workspace_personal")}</option>
-                  <option value="company">{t("dashboard.topbar.workspace_company")}</option>
-                </Select>
+                {workspacesLoading ? (
+                  <div className="w-48 flex items-center justify-center">
+                    <Spinner size="sm" />
+                  </div>
+                ) : (
+                  <Select 
+                    value={selectedWorkspaceId} 
+                    onChange={(e) => handleWorkspaceChange(e.target.value)}
+                    className="w-48"
+                  >
+                    {workspaces.map((workspace) => (
+                      <option key={workspace._id} value={workspace._id}>
+                        {workspace.name}
+                      </option>
+                    ))}
+                  </Select>
+                )}
 
                 {/* User Menu */}
                 <Dropdown 

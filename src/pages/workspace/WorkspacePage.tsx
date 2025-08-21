@@ -12,11 +12,6 @@ export default function WorkspacePage() {
   const [removeModalOpen, setRemoveModalOpen] = useState(false);
   const [userToRemove, setUserToRemove] = useState<{ userId: string; userName?: string } | null>(null);
   
-  // Debug logs
-  console.log('WorkspacePage - workspace state:', workspace);
-  console.log('WorkspacePage - team array:', workspace?.team);
-  console.log('WorkspacePage - team length:', workspace?.team?.length);
-
   const handleAddMember = async (userId: string) => {
     return await addMember(userId);
   };
@@ -87,14 +82,16 @@ export default function WorkspacePage() {
                 <HiRefresh className="mr-2 h-4 w-4" />
                 {t("workspace.refresh")}
               </Button>
-              <Button
-                color="primary"
-                onClick={() => setIsModalOpen(true)}
-                disabled={loading}
-              >
-                <HiUserAdd className="mr-2 h-4 w-4" />
-                {t("workspace.add_member")}
-              </Button>
+              {workspace?.isOwner && (
+                <Button
+                  color="primary"
+                  onClick={() => setIsModalOpen(true)}
+                  disabled={loading}
+                >
+                  <HiUserAdd className="mr-2 h-4 w-4" />
+                  {t("workspace.add_member")}
+                </Button>
+              )}
             </div>
           </div>
         </div>
@@ -113,15 +110,9 @@ export default function WorkspacePage() {
           {workspace?.team && workspace.team.length > 0 ? (
             <div className="grid gap-4">
               {workspace.team.map((userId, index) => {
-                // Encontrar informações do usuário (convertendo para string para garantir compatibilidade)
                 const userInfo = workspace.teamMembers?.find(member => String(member.userId) === String(userId));
                 
-                // Verificar se é o dono do workspace
-                const isOwner = String(userId) === String(workspace.currentUserId);
-                
-                // Debug logs
-                console.log(`User ${userId}:`, userInfo, 'isOwner:', isOwner);
-                console.log('All teamMembers:', workspace.teamMembers);
+                const isOwner = String(userId) === String(workspace.owner);
                 
                 return (
                   <div
@@ -165,7 +156,7 @@ export default function WorkspacePage() {
                       <div className="text-sm text-gray-500 dark:text-gray-400">
                         #{index + 1}
                       </div>
-                      {!isOwner && (
+                      {!isOwner && workspace?.isOwner && (
                         <Button
                           size="sm"
                           color="failure"
@@ -173,7 +164,7 @@ export default function WorkspacePage() {
                           disabled={loading}
                           className="ml-2"
                         >
-                          <HiTrash className="h-8 w-4" />
+                          <HiTrash className="h-4 w-4" />
                         </Button>
                       )}
                     </div>
@@ -192,13 +183,15 @@ export default function WorkspacePage() {
               <p className="text-gray-500 dark:text-gray-400 mb-4">
                 {t("workspace.no_members_description")}
               </p>
-              <Button
-                color="primary"
-                onClick={() => setIsModalOpen(true)}
-              >
-                <HiUserAdd className="mr-2 h-4 w-4" />
-                {t("workspace.add_first_member")}
-              </Button>
+              {workspace?.isOwner && (
+                <Button
+                  color="primary"
+                  onClick={() => setIsModalOpen(true)}
+                >
+                  <HiUserAdd className="mr-2 h-4 w-4" />
+                  {t("workspace.add_first_member")}
+                </Button>
+              )}
             </div>
           )}
         </Card>

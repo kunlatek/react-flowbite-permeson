@@ -305,7 +305,8 @@
     "remove_member_description": "Are you sure you want to remove the collaborator",
     "remove_member_warning": "This action cannot be undone.",
     "remove_member": "Remove Collaborator",
-    "cannot_remove_owner": "Cannot remove the workspace owner."
+    "cannot_remove_owner": "Cannot remove the workspace owner.",
+    "not_owner_error": "Only the workspace owner can add or remove collaborators."
   },
   "common": {
     "cancel": "Cancel"

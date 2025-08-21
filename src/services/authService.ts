@@ -5,9 +5,7 @@ const login = async (email: string, password: string) => {
   return response.data;
 };
 
-const logout = () => {
-  console.log("User logged out");
-};
+const logout = () => {};
 
 const registerInit = async (email: string) => {
   const response = await api.post("/auth/register-init", { email });

@@ -73,6 +73,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     return userData;
   };
 
+  const updateToken = (accessToken: string) => {
+    // Update only the token without changing user data
+    localStorage.setItem('token', accessToken);
+    setToken(accessToken);
+    setIsAuthenticated(true);
+  };
+
   const logout = () => {
     // Clear all auth data
     localStorage.removeItem('token');
@@ -128,6 +135,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     user,
     token,
     setSession,
+    updateToken,
     loading,
     error,
     logout,

@@ -19,10 +19,6 @@ export default function AddMemberModal({ isOpen, onClose, onAddMember, currentTe
   const [adding, setAdding] = useState(false);
   
   const { searchResults, searching, searchUsers } = useUserSearch();
-  
-  // Debug log
-  console.log('Modal searchResults:', searchResults);
-  console.log('Modal searchTerm:', searchTerm);
 
   useEffect(() => {
     if (searchTerm && searchTerm.length >= 2) {

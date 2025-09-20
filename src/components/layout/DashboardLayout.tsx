@@ -24,7 +24,8 @@ import {
   HiGlobe,
   HiSun,
   HiMoon,
-  HiMenu
+  HiMenu,
+  HiDocumentText
 } from "react-icons/hi";
 
 export default function DashboardLayout() {
@@ -61,11 +62,20 @@ export default function DashboardLayout() {
       >
         <div className="flex h-full flex-col justify-between py-2 bg-white dark:bg-gray-800 p-4">
           <div>
-            <Sidebar.Logo href="/" img="/src/assets/images/logo.png" imgAlt="Logo" className="mb-[33px]">
-              {!sidebarCollapsed && <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-                Kunlatek
-              </span>}
-            </Sidebar.Logo>
+            <div className="mb-[33px] flex items-center">
+              <a href="/" className="flex items-center">
+                <img 
+                  src="/src/assets/images/logo.png" 
+                  alt="Logo" 
+                  className="h-8 w-8 mr-3 dark:invert dark:brightness-0 dark:contrast-100" 
+                />
+                {!sidebarCollapsed && (
+                  <span className="self-center whitespace-nowrap text-xl font-semibold text-gray-900 dark:text-white">
+                    Kunlatek
+                  </span>
+                )}
+              </a>
+            </div>
             <Sidebar.Items>
               <Sidebar.ItemGroup>
                 <Sidebar.Item href="/dashboard" icon={HiHome}>
@@ -73,6 +83,9 @@ export default function DashboardLayout() {
                 </Sidebar.Item>
                 <Sidebar.Item href="/profile" icon={HiUser}>
                   {!sidebarCollapsed && t("dashboard.sidebar.profile")}
+                </Sidebar.Item>
+                <Sidebar.Item href="/posts" icon={HiDocumentText}>
+                  {!sidebarCollapsed && t("dashboard.sidebar.posts")}
                 </Sidebar.Item>
                 <Sidebar.Item href="/workspace" icon={HiUserGroup}>
                   {!sidebarCollapsed && t("dashboard.sidebar.collaborators")}

@@ -127,6 +127,7 @@
     "sidebar": {
       "dashboard": "Dashboard",
       "profile": "Perfil",
+      "posts": "Posts",
       "collaborators": "Colaboradores",
       "settings": "Configuraciones",
       "logout": "Cerrar Sesión",
@@ -331,6 +332,59 @@
     "remove_member": "Remover Colaborador",
     "cannot_remove_owner": "No se puede eliminar al propietario del workspace.",
     "not_owner_error": "Solo el propietario del workspace puede agregar o eliminar colaboradores."
+  },
+  "posts": {
+    "title": "Posts",
+    "subtitle": "Gestiona tus posts del blog",
+    "new_post": "Nuevo Post",
+    "create_first_post": "Crear Primer Post",
+    "no_posts": "No se encontraron posts",
+    "no_posts_description": "Comienza creando tu primer post para compartir contenido.",
+    "view": "Ver",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "create": "Crear Post",
+    "creating": "Creando...",
+    "update": "Actualizar Post",
+    "updating": "Actualizando...",
+    "cancel": "Cancelar",
+    "back_to_list": "Volver a la Lista",
+    "edit_post": "Editar Post",
+    "edit_post_description": "Modifica la información de tu post",
+    "new_post_description": "Crea un nuevo post para tu blog",
+    "reading_time": "{{minutes}} min de lectura",
+    "created_at": "Creado en",
+    "updated_at": "Actualizado en",
+    "confirm_delete": "¿Está seguro de que desea eliminar el post \"{{title}}\"?",
+    "create_success": "¡Post creado exitosamente!",
+    "update_success": "¡Post actualizado exitosamente!",
+    "delete_success": "¡Post eliminado exitosamente!",
+    "status": {
+      "published": "Publicado",
+      "draft": "Borrador"
+    },
+    "form": {
+      "title": "Título",
+      "title_placeholder": "Ingrese el título del post",
+      "author": "Autor",
+      "author_placeholder": "Ingrese el nombre del autor",
+      "content": "Contenido",
+      "content_placeholder": "Ingrese el contenido del post...",
+      "reading_time": "Tiempo de Lectura (minutos)",
+      "published_at": "Fecha de Publicación",
+      "published_at_tooltip": "Deje vacío para guardar como borrador",
+      "publish_now": "Publicar Ahora",
+      "save_as_draft": "Guardar como Borrador"
+    },
+    "error": {
+      "fetch_failed": "Error al cargar posts",
+      "create_failed": "Error al crear post",
+      "update_failed": "Error al actualizar post",
+      "delete_failed": "Error al eliminar post",
+      "not_found": "Post no encontrado",
+      "invalid_id": "ID del post inválido",
+      "required_fields": "Complete todos los campos obligatorios"
+    }
   },
   "common": {
     "cancel": "Cancelar"

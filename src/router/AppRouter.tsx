@@ -14,6 +14,11 @@ import DashboardLayout from "@/components/layout/DashboardLayout";
 import AuthLayout from "@/components/layout/AuthLayout";
 import ProtectedRoute from "./ProtectedRoute";
 
+// Posts
+import PostsListPage from "@/pages/posts/PostsListPage";
+import PostCreatePage from "@/pages/posts/PostCreatePage";
+import PostEditPage from "@/pages/posts/PostEditPage";
+
 export default function AppRouter() {
   return (
     <Routes>
@@ -41,6 +46,11 @@ export default function AppRouter() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/workspace" element={<WorkspacePage />} />
+          
+          {/* Posts Routes */}
+          <Route path="/posts" element={<PostsListPage />} />
+          <Route path="/posts/new" element={<PostCreatePage />} />
+          <Route path="/posts/:id/edit" element={<PostEditPage />} />
         </Route>
 
         {/* Other Protected Routes with Main Layout */}

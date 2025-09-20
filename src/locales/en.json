@@ -105,6 +105,7 @@
     "sidebar": {
       "dashboard": "Dashboard",
       "profile": "Profile",
+      "posts": "Posts",
       "collaborators": "Collaborators",
       "settings": "Settings",
       "logout": "Logout",
@@ -309,6 +310,59 @@
     "remove_member": "Remove Collaborator",
     "cannot_remove_owner": "Cannot remove the workspace owner.",
     "not_owner_error": "Only the workspace owner can add or remove collaborators."
+  },
+  "posts": {
+    "title": "Posts",
+    "subtitle": "Manage your blog posts",
+    "new_post": "New Post",
+    "create_first_post": "Create First Post",
+    "no_posts": "No posts found",
+    "no_posts_description": "Start by creating your first post to share content.",
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete",
+    "create": "Create Post",
+    "creating": "Creating...",
+    "update": "Update Post",
+    "updating": "Updating...",
+    "cancel": "Cancel",
+    "back_to_list": "Back to List",
+    "edit_post": "Edit Post",
+    "edit_post_description": "Modify your post information",
+    "new_post_description": "Create a new post for your blog",
+    "reading_time": "{{minutes}} min read",
+    "created_at": "Created at",
+    "updated_at": "Updated at",
+    "confirm_delete": "Are you sure you want to delete the post \"{{title}}\"?",
+    "create_success": "Post created successfully!",
+    "update_success": "Post updated successfully!",
+    "delete_success": "Post deleted successfully!",
+    "status": {
+      "published": "Published",
+      "draft": "Draft"
+    },
+    "form": {
+      "title": "Title",
+      "title_placeholder": "Enter post title",
+      "author": "Author",
+      "author_placeholder": "Enter author name",
+      "content": "Content",
+      "content_placeholder": "Enter post content...",
+      "reading_time": "Reading Time (minutes)",
+      "published_at": "Publication Date",
+      "published_at_tooltip": "Leave empty to save as draft",
+      "publish_now": "Publish Now",
+      "save_as_draft": "Save as Draft"
+    },
+    "error": {
+      "fetch_failed": "Error loading posts",
+      "create_failed": "Error creating post",
+      "update_failed": "Error updating post",
+      "delete_failed": "Error deleting post",
+      "not_found": "Post not found",
+      "invalid_id": "Invalid post ID",
+      "required_fields": "Please fill in all required fields"
+    }
   },
   "common": {
     "cancel": "Cancel"

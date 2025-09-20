@@ -113,7 +113,7 @@ export default function KuDataTable<T extends { _id: string }>({
   };
 
   return (
-    <Card>
+    <Card className="!static !relative z-0">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold dark:text-white">{title}</h2>
         <div className="flex gap-2">
@@ -140,8 +140,8 @@ export default function KuDataTable<T extends { _id: string }>({
       {error && <div className="p-4 text-red-600">{error}</div>}
 
       {!loading && !error && (
-        <div className="overflow-x-auto">
-          <Table hoverable>
+        <div className="overflow-x-auto relative">
+          <Table className="!static !relative">
             <Table.Head>
               {columns.map((col) => (
                 <Table.HeadCell

@@ -140,8 +140,10 @@
       "workspace_company": "Workspace Empresa",
       "language": "Idioma",
       "theme": "Tema",
-      "theme_light": "Claro",
-      "theme_dark": "Escuro",
+      "theme_light": "Mudar para Claro",
+      "theme_dark": "Mudar para Escuro",
+      "theme_current_light": "Tema Claro (Atual)",
+      "theme_current_dark": "Tema Escuro (Atual)",
       "logout": "Sair"
     }
   },

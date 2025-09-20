@@ -118,8 +118,10 @@
       "workspace_company": "Company Workspace",
       "language": "Language",
       "theme": "Theme",
-      "theme_light": "Light",
-      "theme_dark": "Dark",
+      "theme_light": "Switch to Light",
+      "theme_dark": "Switch to Dark",
+      "theme_current_light": "Light Theme (Current)",
+      "theme_current_dark": "Dark Theme (Current)",
       "logout": "Logout"
     }
   },

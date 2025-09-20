@@ -7,17 +7,20 @@ import { BrowserRouter } from "react-router-dom";
 import ToastProvider from "./contexts/ToastProvider";
 import { AccountDeletionProvider } from "./contexts/AccountDeletionProvider";
 import { AuthProvider } from "./contexts/AuthProvider";
+import { ThemeProvider } from "./contexts/ThemeProvider";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <BrowserRouter>
-      <ToastProvider>
-        <AuthProvider>
-          <AccountDeletionProvider>
-            <App />
-          </AccountDeletionProvider>
-        </AuthProvider>
-      </ToastProvider>
+      <ThemeProvider>
+        <ToastProvider>
+          <AuthProvider>
+            <AccountDeletionProvider>
+              <App />
+            </AccountDeletionProvider>
+          </AuthProvider>
+        </ToastProvider>
+      </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

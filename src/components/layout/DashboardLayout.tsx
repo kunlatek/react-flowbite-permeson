@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useMyWorkspaces } from "@/hooks/useMyWorkspaces";
+import { useTheme } from "@/hooks/useTheme";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import { 
@@ -29,9 +30,9 @@ import {
 export default function DashboardLayout() {
   const { user, logout } = useAuth();
   const { workspaces, selectedWorkspaceId, loading: workspacesLoading, switchWorkspace } = useMyWorkspaces();
+  const { isDarkMode, toggleTheme } = useTheme();
   const { t, i18n } = useTranslation();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarCollapsed(!sidebarCollapsed);
@@ -43,10 +44,6 @@ export default function DashboardLayout() {
 
   const changeLanguage = (language: string) => {
     i18n.changeLanguage(language);
-  };
-
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
   };
 
   const handleWorkspaceChange = async (workspaceId: string) => {
@@ -158,23 +155,23 @@ export default function DashboardLayout() {
                   }
                 >
                   <Dropdown.Header>
-                    <span className="block text-sm font-medium">{user?.email}</span>
+                    <span className="block text-sm font-medium text-gray-900 dark:text-white">{user?.email}</span>
                     <span className="block truncate text-sm text-gray-500 dark:text-gray-400">
                       {user?.activeRole === 'company' ? 'Empresa' : 'Pessoa'}
                     </span>
                   </Dropdown.Header>
 
                   {/* Language Options */}
-                  <Dropdown.Item icon={HiGlobe}>
+                  <Dropdown.Item icon={HiGlobe} className="[&>svg]:text-gray-600 [&>svg]:dark:text-gray-300">
                     <div className="flex items-center justify-between w-full">
-                      <span>{t("dashboard.topbar.language")}</span>
+                      <span className="text-gray-900 dark:text-white">{t("dashboard.topbar.language")}</span>
                       <div className="flex gap-1 ml-2">
                         <button 
                           onClick={() => changeLanguage('pt')} 
                           className={`px-2 py-1 text-xs rounded ${
                             i18n.language === 'pt' 
                               ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' 
-                              : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+                              : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                           }`}
                         >
                           PT
@@ -184,7 +181,7 @@ export default function DashboardLayout() {
                           className={`px-2 py-1 text-xs rounded ${
                             i18n.language === 'en' 
                               ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' 
-                              : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+                              : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                           }`}
                         >
                           EN
@@ -194,7 +191,7 @@ export default function DashboardLayout() {
                           className={`px-2 py-1 text-xs rounded ${
                             i18n.language === 'es' 
                               ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' 
-                              : 'hover:bg-gray-100 dark:hover:bg-gray-700'
+                              : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
                           }`}
                         >
                           ES
@@ -204,17 +201,21 @@ export default function DashboardLayout() {
                   </Dropdown.Item>
 
                   {/* Theme Toggle */}
-                  <Dropdown.Item icon={isDarkMode ? HiSun : HiMoon} onClick={toggleTheme}>
-                    <div className="flex items-center justify-between w-full">
-                      <span>{t("dashboard.topbar.theme")}</span>
-                      <span className="text-sm text-gray-500 dark:text-gray-400">
-                        {isDarkMode ? t("dashboard.topbar.theme_light") : t("dashboard.topbar.theme_dark")}
-                      </span>
+                  <Dropdown.Item icon={isDarkMode ? HiSun : HiMoon} onClick={toggleTheme} className="[&>svg]:text-gray-600 [&>svg]:dark:text-gray-300">
+                    <div className="flex flex-col">
+                      <div className="flex items-center justify-between w-full">
+                        <span className="text-gray-900 dark:text-white">
+                          {isDarkMode ? t("dashboard.topbar.theme_light") : t("dashboard.topbar.theme_dark")}
+                        </span>
+                      </div>
+                      <div className="text-xs text-gray-400 dark:text-gray-500 mt-1">
+                        {isDarkMode ? t("dashboard.topbar.theme_current_dark") : t("dashboard.topbar.theme_current_light")}
+                      </div>
                     </div>
                   </Dropdown.Item>
 
                   <Dropdown.Divider />
-                  <Dropdown.Item icon={HiLogout} onClick={handleLogout} className="text-red-600">
+                  <Dropdown.Item icon={HiLogout} onClick={handleLogout} className="text-red-600 dark:text-red-400 [&>svg]:text-red-600 [&>svg]:dark:text-red-400">
                     {t("dashboard.topbar.logout")}
                   </Dropdown.Item>
                 </Dropdown>

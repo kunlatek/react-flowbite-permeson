@@ -119,6 +119,7 @@ export default function KuSelect({
           htmlFor={name}
           color={hasError ? "failure" : "gray"}
           title={tooltip}
+          className="text-gray-900 dark:text-white"
         >
           {label}
           {isRequired && <span className="text-red-500 ml-1">*</span>}
@@ -192,7 +193,7 @@ export default function KuSelect({
                       key={String(option.value)}
                       className="px-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-600"
                     >
-                      <Label className="flex items-center w-full cursor-pointer">
+                      <Label className="flex items-center w-full cursor-pointer text-gray-900 dark:text-white">
                         <Checkbox
                           className="mr-2"
                           checked={

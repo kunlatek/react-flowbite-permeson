@@ -293,6 +293,7 @@ export default function KuAutocomplete({
           htmlFor={name}
           color={hasError ? "failure" : "gray"}
           title={tooltip}
+          className="text-gray-900 dark:text-white"
         >
           {label}
           {isRequired && <span className="text-red-500 ml-1">*</span>}

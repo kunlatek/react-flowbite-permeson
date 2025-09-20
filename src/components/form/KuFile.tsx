@@ -19,7 +19,7 @@ export default function KuFile({
   return (
     <div>
       <div className="mb-2 block">
-        <Label htmlFor={name} color={hasError ? "failure" : "gray"}>
+        <Label htmlFor={name} color={hasError ? "failure" : "gray"} className="text-gray-900 dark:text-white">
           {label}
           {isRequired && <span className="text-red-500 ml-1">*</span>}
         </Label>

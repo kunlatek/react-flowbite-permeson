@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/hooks/useAuth";
 import { useAccountDeletion } from "@/hooks/useAccountDeletion";
+import { useTheme } from "@/hooks/useTheme";
 import KuButton from "@/components/form/KuButton";
 import KuModal from "@/components/common/KuModal";
 import { useState } from "react";
@@ -14,6 +15,8 @@ import {
   HiUser,
   HiCog,
   HiSwitchHorizontal,
+  HiSun,
+  HiMoon,
 } from "react-icons/hi";
 
 const locales = {
@@ -25,6 +28,7 @@ const locales = {
 export default function KuNavbar() {
   const { isAuthenticated, logout, user, switchRole } = useAuth();
   const { isDeleted } = useAccountDeletion();
+  const { isDarkMode, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -66,6 +70,7 @@ export default function KuNavbar() {
           </span>
         </Navbar.Brand>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-2">
+          {/* Language Selector */}
           <Dropdown
             inline
             label={i18n.language.split("-")[0].toUpperCase()}
@@ -83,6 +88,49 @@ export default function KuNavbar() {
                 {name}
               </Dropdown.Item>
             ))}
+          </Dropdown>
+
+          {/* Theme Selector */}
+          <Dropdown
+            inline
+            label={
+              <Button outline className="!p-2">
+                {isDarkMode ? (
+                  <HiSun className="h-4 w-4 text-yellow-500" />
+                ) : (
+                  <HiMoon className="h-4 w-4 text-gray-600" />
+                )}
+              </Button>
+            }
+            renderTrigger={() => (
+              <Button outline className="!p-2">
+                {isDarkMode ? (
+                  <HiSun className="h-4 w-4 text-yellow-500" />
+                ) : (
+                  <HiMoon className="h-4 w-4 text-gray-600" />
+                )}
+              </Button>
+            )}
+          >
+            <Dropdown.Header>
+              <span>{t("dashboard.topbar.theme")}</span>
+            </Dropdown.Header>
+            <Dropdown.Item 
+              icon={isDarkMode ? HiSun : HiMoon} 
+              onClick={toggleTheme}
+              className="[&>svg]:text-gray-600 [&>svg]:dark:text-gray-300"
+            >
+              <div className="flex flex-col">
+                <div className="flex items-center justify-between w-full">
+                  <span className="text-gray-900 dark:text-white">
+                    {isDarkMode ? t("dashboard.topbar.theme_light") : t("dashboard.topbar.theme_dark")}
+                  </span>
+                </div>
+                <div className="text-xs text-gray-400 dark:text-gray-500 mt-1">
+                  {isDarkMode ? t("dashboard.topbar.theme_current_dark") : t("dashboard.topbar.theme_current_light")}
+                </div>
+              </div>
+            </Dropdown.Item>
           </Dropdown>
 
           {isAuthenticated ? (

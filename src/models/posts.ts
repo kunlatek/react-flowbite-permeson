@@ -1,3 +1,5 @@
+import type { IFileItem } from "@/components/common";
+
 export interface IPost {
   _id: string;
   title: string;
@@ -5,6 +7,7 @@ export interface IPost {
   publishedAt?: string;
   readingTime: number; // in minutes
   author: string;
+  cover?: IFileItem[];
   createdAt: string;
   updatedAt: string;
 }

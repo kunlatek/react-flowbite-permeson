@@ -6,7 +6,9 @@ import { HiArrowLeft } from "react-icons/hi";
 import { KuInput, KuButton } from "@/components/form";
 import { useToast } from "@/hooks/useToast";
 import { postsService } from "@/services/postsService";
+import { FileManager } from "@/components/common";
 import type { IPostFormData } from "@/models/posts";
+import type { IFileItem } from "@/components/common";
 
 export default function PostCreatePage() {
   const { t } = useTranslation();
@@ -22,11 +24,26 @@ export default function PostCreatePage() {
   });
   const [loading, setLoading] = useState(false);
 
+  const [files, setFiles] = useState<{ [key: string]: IFileItem[] }>({
+    cover: []
+  });
+  const [selectedFiles, setSelectedFiles] = useState<{ [key: string]: File[] }>({
+    cover: []
+  });
+
   const handleInputChange = (name: string, value: string | number) => {
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
+  };
+
+  const handleFilesChange = (field: string, files: IFileItem[]) => {
+    setFiles(prev => ({ ...prev, [field]: files }));
+  };
+
+  const handleFilesSelect = (field: string, files: File[]) => {
+    setSelectedFiles(prev => ({ ...prev, [field]: files }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -48,7 +65,29 @@ export default function PostCreatePage() {
         publishedAt: formData.publishedAt ? formData.publishedAt : undefined,
       };
 
-      await postsService.createPost(postData);
+      const createdPost = await postsService.createPost(postData);
+
+      // Upload cover files if any were selected
+      const fields = Object.keys(selectedFiles);
+      for (const field of fields) {
+        const fieldFiles = selectedFiles[field] || [];
+        const keepFiles = files[field] || [];
+        if (fieldFiles.length > 0) {
+          try {
+             const updateData = await postsService.uploadFiles(createdPost._id, field, fieldFiles, keepFiles);
+             setFiles(prev => ({ ...prev, [field]: (updateData as any)[field] || [] }));
+          } catch (uploadError: any) {
+            // If upload fails, delete the created post
+            try {
+              await postsService.deletePost(createdPost._id);
+            } catch (deleteError) {
+              console.error("Failed to delete post after upload failure:", deleteError);
+            }
+            throw uploadError;
+          }
+        }
+      }
+
       toast.success(t("posts.create_success"));
       navigate("/posts");
     } catch (err: any) {
@@ -154,6 +193,17 @@ export default function PostCreatePage() {
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500"
               />
             </div>
+
+            {/* Cover Images */}
+            <FileManager
+              files={files.cover}
+              onFilesChange={(files) => handleFilesChange("cover", files)}
+              onFilesSelect={(files) => handleFilesSelect("cover", files)}
+              isUploading={loading}
+              disabled={loading}
+              label="Imagens de Capa"
+              accept="image/*"
+            />
 
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-200 dark:border-gray-700">

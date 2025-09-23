@@ -1,5 +1,6 @@
 import api from "./api";
 import type { IPost, ICreatePost, IUpdatePost, IPostsResponse } from "@/models/posts";
+import type { IFileItem } from "@/components/common";
 
 export const postsService = {
   // Get all posts with pagination
@@ -64,7 +65,36 @@ export const postsService = {
     } catch (error) {
       throw error;
     }
-  }
+  },
+
+  // Upload files
+  uploadFiles: async (id: string, field: string, files: File[], keepFiles: IFileItem[] = []): Promise<IPost> => {
+    try {
+      const formData = new FormData();
+      
+      files.forEach((file) => {
+        formData.append('files', file);
+      });
+      
+      if (keepFiles.length > 0) {
+        formData.append('keepFiles', JSON.stringify(keepFiles));
+      }
+
+      const response = await api.post(`/posts/${id}/upload/${field}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      if (response.data && response.data.data) {
+        return response.data.data;
+      }
+      
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 export default postsService;

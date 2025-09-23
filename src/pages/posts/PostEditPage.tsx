@@ -6,7 +6,9 @@ import { HiArrowLeft } from "react-icons/hi";
 import { KuInput, KuButton } from "@/components/form";
 import { useToast } from "@/hooks/useToast";
 import { postsService } from "@/services/postsService";
+import { FileManager } from "@/components/common";
 import type { IPost, IPostFormData } from "@/models/posts";
+import type { IFileItem } from "@/components/common";
 
 export default function PostEditPage() {
   const { id } = useParams<{ id: string }>();
@@ -26,6 +28,13 @@ export default function PostEditPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string>("");
 
+  const [files, setFiles] = useState<{ [key: string]: IFileItem[] }>({
+    cover: []
+  });
+  const [selectedFiles, setSelectedFiles] = useState<{ [key: string]: File[] }>({
+    cover: []
+  });
+
   const fetchPost = async () => {
     if (!id) {
       setError(t("posts.error.invalid_id"));
@@ -39,12 +48,7 @@ export default function PostEditPage() {
       const postData = await postsService.getPostById(id);
       setPost(postData);
       
-      // Pre-fill form with post data
-      console.log("🔍 Post data for form:", postData);
-      console.log("🔍 Original publishedAt:", postData.publishedAt);
-      
       const formattedDate = postData.publishedAt ? formatDateForInput(postData.publishedAt) : "";
-      console.log("🔍 Formatted publishedAt:", formattedDate);
       
       setFormData({
         title: postData.title,
@@ -53,6 +57,14 @@ export default function PostEditPage() {
         readingTime: postData.readingTime,
         author: postData.author,
       });
+      
+      const fileFields = Object.keys(postData);
+      const newFiles: { [key: string]: IFileItem[] } = {};
+      fileFields.forEach(field => {
+        newFiles[field] = (postData as any)[field] || [];
+      });
+      setFiles(newFiles);
+      
     } catch (err: any) {
       setError(err.message || t("posts.error.fetch_failed"));
       toast.error(t("posts.error.fetch_failed"));
@@ -65,7 +77,6 @@ export default function PostEditPage() {
     if (!dateString) return "";
     
     try {
-      // Convert ISO string to date format (YYYY-MM-DD)
       const date = new Date(dateString);
       
       if (isNaN(date.getTime())) {
@@ -78,7 +89,6 @@ export default function PostEditPage() {
       const day = String(date.getDate()).padStart(2, '0');
       
       const formatted = `${year}-${month}-${day}`;
-      console.log("🔍 Date formatting:", dateString, "→", formatted);
       
       return formatted;
     } catch (error) {
@@ -92,6 +102,14 @@ export default function PostEditPage() {
       ...prev,
       [name]: value
     }));
+  };
+
+  const handleFilesChange = (field: string, files: IFileItem[]) => {
+    setFiles(prev => ({ ...prev, [field]: files }));
+  };
+
+  const handleFilesSelect = (field: string, files: File[]) => {
+    setSelectedFiles(prev => ({ ...prev, [field]: files }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -114,10 +132,23 @@ export default function PostEditPage() {
         readingTime: Number(formData.readingTime),
         publishedAt: formData.publishedAt ? formData.publishedAt : undefined,
       };
-      
-      console.log("🔍 Update data being sent:", updateData);
 
       await postsService.updatePost(post._id, updateData);
+      
+      // Upload files for all fields that have selected files
+      const fields = Object.keys(selectedFiles);
+      for (const field of fields) {
+        const fieldFiles = selectedFiles[field] || [];
+        const keepFiles = files[field] || [];
+        try {
+          const updateData = await postsService.uploadFiles(post._id, field, fieldFiles, keepFiles);
+          setFiles(prev => ({ ...prev, [field]: (updateData as any)[field] || [] }));
+        } catch (uploadError: any) {
+          toast.error(uploadError.message || "Failed to upload files");
+          return; // Don't navigate if upload fails
+        }
+      }
+      
       toast.success(t("posts.update_success"));
       navigate("/posts");
     } catch (err: any) {
@@ -256,6 +287,17 @@ export default function PostEditPage() {
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500"
               />
             </div>
+
+            {/* Cover Images */}
+            <FileManager
+              files={files.cover}
+              onFilesChange={(files) => handleFilesChange("cover", files)}
+              onFilesSelect={(files) => handleFilesSelect("cover", files)}
+              isUploading={saving}
+              disabled={saving}
+              label="Imagens de Capa"
+              accept="image/*"
+            />
 
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-200 dark:border-gray-700">

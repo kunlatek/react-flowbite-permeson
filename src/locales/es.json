@@ -388,5 +388,16 @@
   },
   "common": {
     "cancel": "Cancelar"
+  },
+  "fileManager": {
+    "label": "Archivos",
+    "addFiles": "Agregar Archivos",
+    "newFilesToUpload": "Nuevos Archivos para Subir",
+    "uploading": "Subiendo...",
+    "uploadFiles": "Subir Archivos",
+    "cancel": "Cancelar",
+    "emptyMessage": "Ningún archivo seleccionado",
+    "emptySubMessage": "Haga clic en 'Agregar Archivos' para subir archivos",
+    "filesUploaded": "{{current}}/{{max}} archivos subidos"
   }
 }

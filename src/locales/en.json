@@ -366,5 +366,16 @@
   },
   "common": {
     "cancel": "Cancel"
+  },
+  "fileManager": {
+    "label": "Files",
+    "addFiles": "Add Files",
+    "newFilesToUpload": "New Files to Upload",
+    "uploading": "Uploading...",
+    "uploadFiles": "Upload Files",
+    "cancel": "Cancel",
+    "emptyMessage": "No files selected",
+    "emptySubMessage": "Click 'Add Files' to upload files",
+    "filesUploaded": "{{current}}/{{max}} files uploaded"
   }
 }

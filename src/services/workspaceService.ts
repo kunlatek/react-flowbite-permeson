@@ -67,7 +67,7 @@ const getCurrentUserProfile = async (): Promise<{ userId: string; type: 'person'
       };
     }
   } catch (err) {
-    console.log('getCurrentUserProfile - person not found, trying company');
+    console.error('getCurrentUserProfile - person not found, trying company');
   }
   
   try {
@@ -80,7 +80,7 @@ const getCurrentUserProfile = async (): Promise<{ userId: string; type: 'person'
       };
     }
   } catch (err) {
-    console.log('getCurrentUserProfile - company not found');
+    console.error('getCurrentUserProfile - company not found');
   }
   
   return null;

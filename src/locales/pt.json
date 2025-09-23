@@ -7,26 +7,31 @@
     "logout": "Sair"
   },
   "footer": {
-    "brand_name": "Rapida Quickstart",
-    "about": "Sobre",
-    "privacy_policy": "Política de Privacidade",
-    "licensing": "Licenciamento",
-    "contact": "Contato",
-    "copyright": "Rapida Quickstart™",
-    "all_rights_reserved": "Todos os direitos reservados",
-    "company": "Empresa",
-    "legal": "Legal",
-    "support": "Suporte",
-    "help_center": "Central de Ajuda",
-    "documentation": "Documentação",
-    "description": "Uma plataforma completa para gerenciar perfis de pessoas e empresas, com autenticação segura e controle de funções."
+    "brand_name": "Kunlatek",
+    "description": "Sua solução completa para gerenciamento e automação de processos.",
+    "company_description": "Soluções inovadoras para o seu negócio",
+    "product_title": "Produto",
+    "product_link1": "Recursos",
+    "product_link2": "Preços",
+    "product_link3": "Tutoriais",
+    "company_title": "Empresa",
+    "company_link1": "Sobre",
+    "company_link2": "Blog",
+    "company_link3": "Carreiras",
+    "support_title": "Suporte",
+    "support_link1": "Central de Ajuda",
+    "support_link2": "Contato",
+    "legal_title": "Legal",
+    "legal_link1": "Privacidade",
+    "legal_link2": "Termos",
+    "copyright": "© 2024 Kunlatek. Todos os direitos reservados."
   },
   "home": {
-    "title": "Gerenciamento de Perfis com Autenticação Segura",
-    "description": "Uma plataforma completa para gerenciar perfis de pessoas e empresas, com autenticação multi-provider e controle de funções.",
-    "go_to_dashboard": "Ir para o Dashboard",
-    "login_platform": "Entrar na plataforma",
-    "create_account": "Criar uma conta"
+    "title": "Bem-vindo à Plataforma",
+    "description": "Sua solução completa para gerenciamento e automação de processos.",
+    "login_platform": "Entrar na Plataforma",
+    "create_account": "Criar Conta",
+    "go_to_dashboard": "Ir para o Dashboard"
   },
   "login": {
     "title": "Entrar na Plataforma",
@@ -94,32 +99,6 @@
     "success_message": "E-mail de ativação reenviado com sucesso! Verifique sua caixa de entrada.",
     "back_to_login": "Lembrou sua senha?",
     "login_link": "Fazer login"
-  },
-  "home": {
-    "title": "Bem-vindo à Plataforma",
-    "description": "Sua solução completa para gerenciamento e automação de processos.",
-    "login_platform": "Entrar na Plataforma",
-    "create_account": "Criar Conta",
-    "go_to_dashboard": "Ir para o Dashboard"
-  },
-  "footer": {
-    "brand_name": "Kunlatek",
-    "company_description": "Soluções inovadoras para o seu negócio",
-    "product_title": "Produto",
-    "product_link1": "Recursos",
-    "product_link2": "Preços",
-    "product_link3": "Tutoriais",
-    "company_title": "Empresa",
-    "company_link1": "Sobre",
-    "company_link2": "Blog",
-    "company_link3": "Carreiras",
-    "support_title": "Suporte",
-    "support_link1": "Central de Ajuda",
-    "support_link2": "Contato",
-    "legal_title": "Legal",
-    "legal_link1": "Privacidade",
-    "legal_link2": "Termos",
-    "copyright": "© 2024 Kunlatek. Todos os direitos reservados."
   },
   "dashboard": {
     "welcome_title": "Bem-vindo de volta!",

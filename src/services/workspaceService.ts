@@ -92,7 +92,7 @@ const getMyWorkspaces = async (): Promise<any[]> => {
 };
 
 const getWorkspaceToken = async (workspaceId: string): Promise<string> => {
-  const response = await api.get(`/workspaces/token/${workspaceId}`);
+  const response = await api.get(`/workspaces/${workspaceId}/token`);
   return response.data.data;
 };
 

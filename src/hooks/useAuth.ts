@@ -4,7 +4,8 @@ import { AuthContext } from '@/contexts/AuthContext';
 import type { AuthContextType } from '@/models/auth';
 import { useToast } from './useToast';
 import axios from 'axios';
-import { login, signup, forgotPassword, resetPassword, resendActivation } from '@/api/auth';
+import { login, presignup, signup, forgotPassword, resetPassword } from '@/api/auth';
+import { useNavigate } from 'react-router-dom';
 
 export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
@@ -67,7 +68,7 @@ export const useLogin = () => {
   };
 };
 
-export const useSignup = () => {
+export const useSignup = (token?: string) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -75,7 +76,10 @@ export const useSignup = () => {
   const [success, setSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const navigate = useNavigate();
+
   const toast = useToast();
+  const { setSession } = useAuth();
   
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -102,12 +106,19 @@ export const useSignup = () => {
     }
 
     try {
-      const response = await signup(email, password);
-      toast.success(response.message || "Conta criada com sucesso! Verifique sua caixa de entrada para ativar sua conta.");
-      setSuccess(true);
-      // Only return true if signup was successful
-      setLoading(false);
-      return true;
+      if (!token) {
+        throw new Error("Token de registro é obrigatório");
+      }
+      const response = await signup(email, password, token);
+      
+      if (response.statusCode === 200 && response.data?.access_token) {
+        setSession(response.data.access_token, email);
+        toast.success(response.message || "Conta criada e login realizado com sucesso!");
+        navigate('/dashboard');
+        return true;
+      } else {
+        throw new Error(response.message || 'Erro no login');
+      }
     } catch (err: unknown) {
       if (axios.isAxiosError(err)) {
         const errorMsg = err.response?.data?.message || "Erro ao fazer cadastro";
@@ -255,7 +266,7 @@ export const useResetPassword = () => {
   };
 };
 
-export const useResendActivation = () => {
+export const usePreSignup = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -276,16 +287,16 @@ export const useResendActivation = () => {
     }
 
     try {
-      const response = await resendActivation(email);
-      if (response.statusCode === 204) {
+      const response = await presignup(email);
+      if (response.statusCode === 200 || response.statusCode === 201) {
         setSuccess(true);
-        toast.success(response.message || "E-mail de ativação reenviado com sucesso!");
+        toast.success(response.message || "E-mail de registro enviado com sucesso!");
         return true;
       } else {
-        throw new Error(response.message || "Erro ao reenviar e-mail de ativação");
+        throw new Error(response.message || "Erro ao enviar e-mail de registro");
       }
     } catch (err: any) {
-      const errorMessage = err.response?.data?.message || err.message || "Erro ao reenviar e-mail de ativação";
+      const errorMessage = err.response?.data?.message || err.message || "Erro ao enviar e-mail de registro";
       setErrorMessage(errorMessage);
       toast.error(errorMessage);
       return false;

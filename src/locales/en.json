@@ -42,9 +42,20 @@
     "submit_button": "Sign in",
     "submit_loading": "Signing in...",
     "forgot_password": "Forgot your password?",
-    "resend_activation": "Resend activation email",
     "no_account": "Don't have an account?",
     "create_account": "Create account"
+  },
+  "preRegister": {
+    "title": "Request Registration",
+    "description": "Enter your email to receive the registration link for your account.",
+    "email_label": "Email",
+    "email_placeholder": "Enter your email",
+    "email_required": "Email is required",
+    "submit_button": "Send Registration Email",
+    "submit_loading": "Sending...",
+    "success_message": "Registration email sent successfully! Check your inbox.",
+    "already_have_account": "Already have an account?",
+    "login_link": "Sign in"
   },
   "register": {
     "title": "Create Account",
@@ -86,17 +97,6 @@
     "submit_button": "Reset Password",
     "submit_loading": "Resetting...",
     "success_message": "Password reset successfully! You will be redirected to login.",
-    "back_to_login": "Remembered your password?",
-    "login_link": "Sign in"
-  },
-  "resendActivation": {
-    "title": "Resend Activation Email",
-    "description": "Enter your email to resend the account activation link. You can request a new email every 5 minutes.",
-    "email_label": "Email",
-    "email_placeholder": "Enter your email",
-    "submit_button": "Resend Email",
-    "submit_loading": "Resending...",
-    "success_message": "Activation email sent successfully! Check your inbox.",
     "back_to_login": "Remembered your password?",
     "login_link": "Sign in"
   },

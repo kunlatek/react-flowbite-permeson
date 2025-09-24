@@ -4,9 +4,9 @@ import HomePage from "@/pages/home/HomePage";
 import DashboardPage from "@/pages/dashboard/DashboardPage";
 import ProfilePage from "@/pages/profile/ProfilePage";
 import RegisterPage from "@/pages/auth/RegisterPage";
+import PreRegisterPage from "@/pages/auth/PreRegisterPage";
 import ForgotPasswordPage from "@/pages/auth/ForgotPasswordPage";
 import ResetPasswordPage from "@/pages/auth/ResetPasswordPage";
-import ResendActivationPage from "@/pages/auth/ResendActivationPage";
 import SettingsPage from "@/pages/settings/SettingsPage";
 import WorkspacePage from "@/pages/workspace/WorkspacePage";
 import MainLayout from "@/components/layout/MainLayout";
@@ -30,13 +30,13 @@ export default function AppRouter() {
       {/* Rotas de Autenticação com Layout de Autenticação */}
       <Route element={<AuthLayout />}>
         <Route path="/auth/login" element={<LoginPage />} />
+        <Route path="/auth/pre-register" element={<PreRegisterPage />} />
         <Route path="/auth/register" element={<RegisterPage />} />
         <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
         <Route
           path="/auth/reset-password/:token"
           element={<ResetPasswordPage />}
         />
-        <Route path="/auth/resend-activation" element={<ResendActivationPage />} />
       </Route>
 
       {/* Protected Routes */}

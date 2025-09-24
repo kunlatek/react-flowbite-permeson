@@ -79,14 +79,6 @@ export default function LoginPage() {
             </a>
           </div>
 
-          <div className="flex items-center justify-end mt-2 mb-2">
-            <a
-              href="/auth/resend-activation"
-              className="text-sm text-cyan-700 hover:underline dark:text-cyan-500"
-            >
-              {t("login.resend_activation")}
-            </a>
-          </div>
 
           <KuButton
             id="login-button"

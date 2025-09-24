@@ -76,7 +76,7 @@ export default function HomePage() {
               id="register-home"
               type="button"
               actionType="link"
-              href="/auth/register"
+              href="/auth/pre-register"
               size="xl"
               variant="secondary"
               label={t("home.create_account")}

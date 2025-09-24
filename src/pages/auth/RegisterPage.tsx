@@ -1,13 +1,24 @@
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Alert } from "flowbite-react";
 import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
 import KuInput from "@/components/form/KuInput";
 import KuButton from "@/components/form/KuButton";
 import { useSignup } from "@/hooks/useAuth";
 
 export default function RegisterPage() {
-  const signup = useSignup();
+  const [searchParams] = useSearchParams();
+  const email = searchParams.get('email') || '';
+  const token = searchParams.get('token') || '';
+  
+  const signup = useSignup(token);
   const { t } = useTranslation();
+
+  useEffect(() => {
+    if (email) {
+      signup.setEmail(email);
+    }
+  }, [email, signup]);
 
   // Validation helpers
   const passwordLength = signup.password.length >= 8;
@@ -53,7 +64,7 @@ export default function RegisterPage() {
                 error={signup.errorMessage && !signup.email ? t("register.email_required") : ""}
                 isRequired={true}
                 placeholder={t("register.email_placeholder")}
-                isDisabled={signup.loading}
+                isDisabled={true}
               />
               
               <KuInput

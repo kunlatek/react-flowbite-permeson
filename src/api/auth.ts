@@ -11,9 +11,18 @@ export const login = async (email: string, password: string) => {
 
 export const logout = () => {};
 
-export const signup = async (email: string, password: string) => {
+export const presignup = async (email: string) => {
     try {
-        const response = await api.post("/auth/signup", { email, password });
+        const response = await api.post("/auth/presignup", { email });
+        return response.data;
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const signup = async (email: string, password: string, token: string) => {
+    try {
+        const response = await api.post("/auth/signup", { email, password, token });
         return response.data;
     } catch (error) {
         throw error;
@@ -33,12 +42,6 @@ export const resetPassword = async (token: string, password: string) => {
     return response.data;
 };
 
-export const resendActivation = async (email: string) => {
-    const response = await api.post("/account/verify/send", {
-        email,
-    });
-    return response.data;
-};
 
 export const switchRole = async (role: string) => {
     const response = await api.post("/auth/switch-role", { role });

@@ -8,7 +8,6 @@ A complete application for managing personal and business profiles with secure a
 - Complete JWT authentication system
 - User registration with email activation
 - Password recovery via email
-- Activation email resend
 - Private route protection
 - Global authentication context
 
@@ -139,7 +138,6 @@ src/
 - **Register** (`/auth/register`): Account creation
 - **Forgot Password** (`/auth/forgot-password`): Password recovery
 - **Reset Password** (`/auth/reset-password/:token`): Reset via token
-- **Resend Activation** (`/auth/resend-activation`): Email resend
 
 ### Protected Pages
 - **Dashboard** (`/dashboard`): Main dashboard

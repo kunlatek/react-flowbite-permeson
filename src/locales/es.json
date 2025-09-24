@@ -42,9 +42,20 @@
     "submit_button": "Iniciar Sesión",
     "submit_loading": "Iniciando sesión...",
     "forgot_password": "¿Olvidó su contraseña?",
-    "resend_activation": "Reenviar email de activación",
     "no_account": "¿No tiene una cuenta?",
     "create_account": "Crear cuenta"
+  },
+  "preRegister": {
+    "title": "Solicitar Registro",
+    "description": "Ingrese su email para recibir el enlace de registro de su cuenta.",
+    "email_label": "Email",
+    "email_placeholder": "Ingrese su email",
+    "email_required": "El email es obligatorio",
+    "submit_button": "Enviar Email de Registro",
+    "submit_loading": "Enviando...",
+    "success_message": "¡Email de registro enviado exitosamente! Revise su bandeja de entrada.",
+    "already_have_account": "¿Ya tiene una cuenta?",
+    "login_link": "Iniciar sesión"
   },
   "register": {
     "title": "Crear Cuenta",
@@ -86,17 +97,6 @@
     "submit_button": "Restablecer Contraseña",
     "submit_loading": "Restableciendo...",
     "success_message": "¡Contraseña restablecida exitosamente! Será redirigido al inicio de sesión.",
-    "back_to_login": "¿Recordó su contraseña?",
-    "login_link": "Iniciar sesión"
-  },
-  "resendActivation": {
-    "title": "Reenviar Email de Activación",
-    "description": "Ingrese su email para reenviar el enlace de activación de cuenta. Puede solicitar un nuevo email cada 5 minutos.",
-    "email_label": "Email",
-    "email_placeholder": "Ingrese su email",
-    "submit_button": "Reenviar Email",
-    "submit_loading": "Reenviando...",
-    "success_message": "¡Email de activación enviado exitosamente! Revise su bandeja de entrada.",
     "back_to_login": "¿Recordó su contraseña?",
     "login_link": "Iniciar sesión"
   },

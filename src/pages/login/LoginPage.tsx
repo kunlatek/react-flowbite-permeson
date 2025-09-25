@@ -40,7 +40,11 @@ export default function LoginPage() {
   return (
     <div className="w-full max-w-md bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 md:p-8">
       <div className="flex flex-col items-center">
-        <img src="/src/assets/images/logo.png" alt="Logo" className="h-16 mb-6" />
+        <img 
+          src="/src/assets/images/logo.png" 
+          alt="Logo" 
+          className="h-16 mb-6 dark:invert dark:brightness-0 dark:contrast-100"
+        />
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
           {t("login.title")}
         </h2>
@@ -93,7 +97,7 @@ export default function LoginPage() {
             <p className="text-gray-500 dark:text-gray-400">
               {t("login.no_account")}{" "}
               <a
-                href="/auth/register"
+                href="/auth/pre-register"
                 className="font-medium text-cyan-700 hover:underline dark:text-cyan-500"
               >
                 {t("login.create_account")}

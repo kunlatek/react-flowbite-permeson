@@ -10,9 +10,10 @@ interface PersonProfileTabProps {
   profile: IPersonProfile | null;
   loading: boolean;
   onUpdate: (data: Partial<IPersonProfile>) => Promise<boolean>;
+  hideSaveButton?: boolean;
 }
 
-export default function PersonProfileTab({ profile, loading, onUpdate }: PersonProfileTabProps) {
+export default function PersonProfileTab({ profile, loading, onUpdate, hideSaveButton }: PersonProfileTabProps) {
   const { t } = useTranslation();
   const [formData, setFormData] = useState<Partial<IPersonProfile>>({
     personName: '',
@@ -93,7 +94,7 @@ export default function PersonProfileTab({ profile, loading, onUpdate }: PersonP
   const handleProfessionChange = (index: number, field: string, value: string) => {
     setFormData(prev => ({
       ...prev,
-      professions: prev.professions?.map((profession, i) => 
+      professions: prev.professions?.map((profession, i) =>
         i === index ? { ...profession, [field]: value } : profession
       ) || []
     }));
@@ -123,7 +124,7 @@ export default function PersonProfileTab({ profile, loading, onUpdate }: PersonP
   const handleEducationChange = (index: number, field: string, value: string) => {
     setFormData(prev => ({
       ...prev,
-      personEducations: prev.personEducations?.map((education, i) => 
+      personEducations: prev.personEducations?.map((education, i) =>
         i === index ? { ...education, [field]: value } : education
       ) || []
     }));
@@ -153,7 +154,7 @@ export default function PersonProfileTab({ profile, loading, onUpdate }: PersonP
   const handleCourseChange = (index: number, field: string, value: string) => {
     setFormData(prev => ({
       ...prev,
-      personCourses: prev.personCourses?.map((course, i) => 
+      personCourses: prev.personCourses?.map((course, i) =>
         i === index ? { ...course, [field]: value } : course
       ) || []
     }));
@@ -182,7 +183,7 @@ export default function PersonProfileTab({ profile, loading, onUpdate }: PersonP
   const handleRelatedFileChange = (index: number, field: string, value: string | number) => {
     setFormData(prev => ({
       ...prev,
-      relatedFiles: prev.relatedFiles?.map((file, i) => 
+      relatedFiles: prev.relatedFiles?.map((file, i) =>
         i === index ? { ...file, [field]: value } : file
       ) || []
     }));
@@ -543,7 +544,7 @@ export default function PersonProfileTab({ profile, loading, onUpdate }: PersonP
             onClick={addProfession}
           />
         </div>
-        
+
         {formData.professions?.map((profession, index) => (
           <div key={index} className="border rounded-lg p-4 mb-4">
             <div className="flex justify-between items-center mb-3">
@@ -630,7 +631,7 @@ export default function PersonProfileTab({ profile, loading, onUpdate }: PersonP
             onClick={addEducation}
           />
         </div>
-        
+
         {formData.personEducations?.map((education, index) => (
           <div key={index} className="border rounded-lg p-4 mb-4">
             <div className="flex justify-between items-center mb-3">
@@ -719,7 +720,7 @@ export default function PersonProfileTab({ profile, loading, onUpdate }: PersonP
             onClick={addCourse}
           />
         </div>
-        
+
         {formData.personCourses?.map((course, index) => (
           <div key={index} className="border rounded-lg p-4 mb-4">
             <div className="flex justify-between items-center mb-3">
@@ -798,7 +799,7 @@ export default function PersonProfileTab({ profile, loading, onUpdate }: PersonP
             onClick={addRelatedFile}
           />
         </div>
-        
+
         {formData.relatedFiles?.map((file, index) => (
           <div key={index} className="border rounded-lg p-4 mb-4">
             <div className="flex justify-between items-center mb-3">
@@ -862,20 +863,22 @@ export default function PersonProfileTab({ profile, loading, onUpdate }: PersonP
       </Card>
 
       {/* Actions */}
-      <div className="flex justify-end gap-4">
-        <KuButton
-          id="update-person-profile"
-          type="button"
-          actionType="submit"
-          isDisabled={loading}
-          label={loading ? t("profile.updating") : t("profile.update")}
-          customClass="flex items-center"
-        >
-          {loading ? (
-            <Spinner size="sm" className="mr-2" />
-          ) : null}
-        </KuButton>
-      </div>
+      {!hideSaveButton && (
+        <div className="flex justify-end gap-4">
+          <KuButton
+            id="update-person-profile"
+            type="button"
+            actionType="submit"
+            isDisabled={loading}
+            label={loading ? t("profile.updating") : t("profile.update")}
+            customClass="flex items-center"
+          >
+            {loading ? (
+              <Spinner size="sm" className="mr-2" />
+            ) : null}
+          </KuButton>
+        </div>
+      )}
     </form>
   );
 }

@@ -3,6 +3,8 @@ import LoginPage from "@/pages/login/LoginPage";
 import HomePage from "@/pages/home/HomePage";
 import DashboardPage from "@/pages/dashboard/DashboardPage";
 import ProfilePage from "@/pages/profile/ProfilePage";
+import ProfileTypeSelectionPage from "@/pages/profile/ProfileTypeSelectionPage";
+import ProfileSetupPage from "@/pages/profile/ProfileSetupPage";
 import RegisterPage from "@/pages/auth/RegisterPage";
 import PreRegisterPage from "@/pages/auth/PreRegisterPage";
 import ForgotPasswordPage from "@/pages/auth/ForgotPasswordPage";
@@ -51,6 +53,12 @@ export default function AppRouter() {
           <Route path="/posts" element={<PostsListPage />} />
           <Route path="/posts/new" element={<PostCreatePage />} />
           <Route path="/posts/:id/edit" element={<PostEditPage />} />
+        </Route>
+
+        {/* Profile Setup Routes */}
+        <Route element={<MainLayout />}>
+          <Route path="/profile/type-selection" element={<ProfileTypeSelectionPage />} />
+          <Route path="/profile/setup" element={<ProfileSetupPage />} />
         </Route>
 
         {/* Other Protected Routes with Main Layout */}

@@ -114,7 +114,7 @@ export const useSignup = (token?: string) => {
       if (response.statusCode === 200 && response.data?.access_token) {
         setSession(response.data.access_token, email);
         toast.success(response.message || "Conta criada e login realizado com sucesso!");
-        navigate('/dashboard');
+        navigate('/profile/type-selection');
         return true;
       } else {
         throw new Error(response.message || 'Erro no login');

@@ -167,7 +167,7 @@ export default function KuNavbar() {
                 id="nav-register"
                 type="button"
                 actionType="link"
-                href="/auth/register"
+                href="/auth/pre-register"
                 variant="secondary"
                 label={t("nav.create_account")}
               />
@@ -181,7 +181,7 @@ export default function KuNavbar() {
               <Navbar.Link as={Link} to="/auth/login" className="md:hidden">
                 {t("nav.login")}
               </Navbar.Link>
-              <Navbar.Link as={Link} to="/auth/register" className="md:hidden">
+              <Navbar.Link as={Link} to="/auth/pre-register" className="md:hidden">
                 {t("nav.create_account")}
               </Navbar.Link>
             </>

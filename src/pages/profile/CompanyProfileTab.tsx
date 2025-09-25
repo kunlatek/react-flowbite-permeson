@@ -10,9 +10,10 @@ interface CompanyProfileTabProps {
   profile: ICompanyProfile | null;
   loading: boolean;
   onUpdate: (data: Partial<ICompanyProfile>) => Promise<boolean>;
+  hideSaveButton?: boolean;
 }
 
-export default function CompanyProfileTab({ profile, loading, onUpdate }: CompanyProfileTabProps) {
+export default function CompanyProfileTab({ profile, loading, onUpdate, hideSaveButton }: CompanyProfileTabProps) {
   const { t } = useTranslation();
   const [formData, setFormData] = useState<Partial<ICompanyProfile>>({
     companyName: '',
@@ -82,7 +83,7 @@ export default function CompanyProfileTab({ profile, loading, onUpdate }: Compan
   const handleContactChange = (index: number, field: string, value: string) => {
     setFormData(prev => ({
       ...prev,
-      contacts: prev.contacts?.map((contact, i) => 
+      contacts: prev.contacts?.map((contact, i) =>
         i === index ? { ...contact, [field]: value } : contact
       ) || []
     }));
@@ -110,7 +111,7 @@ export default function CompanyProfileTab({ profile, loading, onUpdate }: Compan
   const handlePartnerChange = (index: number, field: string, value: string) => {
     setFormData(prev => ({
       ...prev,
-      partners: prev.partners?.map((partner, i) => 
+      partners: prev.partners?.map((partner, i) =>
         i === index ? { ...partner, [field]: value } : partner
       ) || []
     }));
@@ -135,7 +136,7 @@ export default function CompanyProfileTab({ profile, loading, onUpdate }: Compan
   const handleCompanyImageChange = (index: number, value: string) => {
     setFormData(prev => ({
       ...prev,
-      companyImages: prev.companyImages?.map((image, i) => 
+      companyImages: prev.companyImages?.map((image, i) =>
         i === index ? value : image
       ) || []
     }));
@@ -158,7 +159,7 @@ export default function CompanyProfileTab({ profile, loading, onUpdate }: Compan
   const handleRelatedFileChange = (index: number, field: string, value: string | number) => {
     setFormData(prev => ({
       ...prev,
-      relatedFiles: prev.relatedFiles?.map((file, i) => 
+      relatedFiles: prev.relatedFiles?.map((file, i) =>
         i === index ? { ...file, [field]: value } : file
       ) || []
     }));
@@ -284,7 +285,7 @@ export default function CompanyProfileTab({ profile, loading, onUpdate }: Compan
             onClick={addContact}
           />
         </div>
-        
+
         {formData.contacts?.map((contact, index) => (
           <div key={index} className="border rounded-lg p-4 mb-4">
             <div className="flex justify-between items-center mb-3">
@@ -519,7 +520,7 @@ export default function CompanyProfileTab({ profile, loading, onUpdate }: Compan
             onClick={addPartner}
           />
         </div>
-        
+
         {formData.partners?.map((partner, index) => (
           <div key={index} className="border rounded-lg p-4 mb-4">
             <div className="flex justify-between items-center mb-3">
@@ -566,7 +567,7 @@ export default function CompanyProfileTab({ profile, loading, onUpdate }: Compan
             onClick={addCompanyImage}
           />
         </div>
-        
+
         {formData.companyImages?.map((image, index) => (
           <div key={index} className="border rounded-lg p-4 mb-4">
             <div className="flex justify-between items-center mb-3">
@@ -613,7 +614,7 @@ export default function CompanyProfileTab({ profile, loading, onUpdate }: Compan
             onClick={addRelatedFile}
           />
         </div>
-        
+
         {formData.relatedFiles?.map((file, index) => (
           <div key={index} className="border rounded-lg p-4 mb-4">
             <div className="flex justify-between items-center mb-3">
@@ -677,20 +678,22 @@ export default function CompanyProfileTab({ profile, loading, onUpdate }: Compan
       </Card>
 
       {/* Actions */}
-      <div className="flex justify-end gap-4">
-        <KuButton
-          id="update-company-profile"
-          type="button"
-          actionType="submit"
-          isDisabled={loading}
-          label={loading ? t("profile.updating") : t("profile.update")}
-          customClass="flex items-center"
-        >
-          {loading ? (
-            <Spinner size="sm" className="mr-2" />
-          ) : null}
-        </KuButton>
-      </div>
+      {!hideSaveButton && (
+        <div className="flex justify-end gap-4">
+          <KuButton
+            id="update-company-profile"
+            type="button"
+            actionType="submit"
+            isDisabled={loading}
+            label={loading ? t("profile.updating") : t("profile.update")}
+            customClass="flex items-center"
+          >
+            {loading ? (
+              <Spinner size="sm" className="mr-2" />
+            ) : null}
+          </KuButton>
+        </div>
+      )}
     </form>
   );
 }

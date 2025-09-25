@@ -139,6 +139,37 @@
     "update": "Atualizar",
     "updating": "Atualizando...",
     "reset": "Restaurar",
+    "type_selection": {
+      "title": "Escolha o tipo de perfil",
+      "description": "Selecione o tipo de perfil que melhor se adequa ao seu caso para continuar com a configuração.",
+      "continue": "Continuar",
+      "person": {
+        "title": "Pessoa Física",
+        "description": "Perfil para pessoas físicas",
+        "feature1": "Informações pessoais completas",
+        "feature2": "Dados bancários e endereços",
+        "feature3": "Histórico profissional e educacional"
+      },
+      "company": {
+        "title": "Pessoa Jurídica",
+        "description": "Perfil para empresas e organizações",
+        "feature1": "Dados da empresa e CNPJ",
+        "feature2": "Informações de contato e endereços",
+        "feature3": "Sócios e documentos relacionados"
+      }
+    },
+    "setup": {
+      "loading": "Carregando configuração do perfil...",
+      "save": "Salvar",
+      "person": {
+        "title": "Configure seu perfil pessoal",
+        "description": "Preencha suas informações pessoais para completar seu perfil."
+      },
+      "company": {
+        "title": "Configure o perfil da empresa",
+        "description": "Preencha as informações da empresa para completar o perfil."
+      }
+    },
     "person": {
       "personal_info": "Informações Pessoais",
       "name": "Nome Completo",

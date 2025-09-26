@@ -43,3 +43,18 @@ body {
 .dark .flowbite-dropdown-content .flowbite-dropdown-header {
   color: rgb(243 244 246) !important; /* gray-100 */
 }
+
+/* Enhanced modal backdrop */
+[data-testid="flowbite-modal-backdrop"] {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+/* Modal content styling */
+[data-testid="flowbite-modal"] {
+  z-index: 50 !important;
+}
+
+[data-testid="flowbite-modal"] .fixed {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+}

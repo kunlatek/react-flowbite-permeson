@@ -1,17 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Badge } from "flowbite-react";
-import { HiPlus, HiPencil, HiTrash } from "react-icons/hi";
+import { HiPlus, HiPencil, HiTrash, HiEye } from "react-icons/hi";
 import KuDataTable, { type IColumn, type IAction, type IHeaderAction } from "@/components/data/KuDataTable";
 import { useToast } from "@/hooks/useToast";
 import { postsService } from "@/services/postsService";
+import PostViewModal from "@/components/pages/posts/PostViewModal";
 import type { IPost, IPostsResponse } from "@/models/posts";
 
 export default function PostsListPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const toast = useToast();
+  const [viewModalOpen, setViewModalOpen] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<IPost | null>(null);
+
+  const handleView = (post: IPost) => {
+    setSelectedPost(post);
+    setViewModalOpen(true);
+  };
 
   const handleDelete = async (post: IPost) => {
     if (!window.confirm(t("posts.confirm_delete", { title: post.title }))) {
@@ -93,6 +101,11 @@ export default function PostsListPage() {
   // Definição das ações da tabela
   const actions: IAction<IPost>[] = [
     {
+      label: t("posts.view"),
+      color: "secondary",
+      handler: handleView,
+    },
+    {
       label: t("posts.edit"),
       color: "primary",
       handler: (post) => navigate(`/posts/${post._id}/edit`),
@@ -125,6 +138,16 @@ export default function PostsListPage() {
           pageSize={10}
         />
       </div>
+
+      {/* Modal de visualização */}
+      <PostViewModal
+        show={viewModalOpen}
+        onClose={() => {
+          setViewModalOpen(false);
+          setSelectedPost(null);
+        }}
+        post={selectedPost}
+      />
     </div>
   );
 }

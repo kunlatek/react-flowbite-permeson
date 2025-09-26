@@ -371,7 +371,8 @@
     "delete_success": "¡Post eliminado exitosamente!",
     "status": {
       "published": "Publicado",
-      "draft": "Borrador"
+      "draft": "Borrador",
+      "scheduled": "Programado"
     },
     "form": {
       "title": "Título",
@@ -384,8 +385,13 @@
       "published_at": "Fecha de Publicación",
       "published_at_tooltip": "Deje vacío para guardar como borrador",
       "publish_now": "Publicar Ahora",
-      "save_as_draft": "Guardar como Borrador"
+      "save_as_draft": "Guardar como Borrador",
+      "information": "Información",
+      "dates": "Fechas",
+      "cover": "Portada"
     },
+    "view_post": "Ver Post",
+    "details": "Detalles",
     "error": {
       "fetch_failed": "Error al cargar posts",
       "create_failed": "Error al crear post",

@@ -371,7 +371,8 @@
     "delete_success": "Post deleted successfully!",
     "status": {
       "published": "Published",
-      "draft": "Draft"
+      "draft": "Draft",
+      "scheduled": "Scheduled"
     },
     "form": {
       "title": "Title",
@@ -384,8 +385,13 @@
       "published_at": "Publication Date",
       "published_at_tooltip": "Leave empty to save as draft",
       "publish_now": "Publish Now",
-      "save_as_draft": "Save as Draft"
+      "save_as_draft": "Save as Draft",
+      "information": "Information",
+      "dates": "Dates",
+      "cover": "Cover"
     },
+    "view_post": "View Post",
+    "details": "Details",
     "error": {
       "fetch_failed": "Error loading posts",
       "create_failed": "Error creating post",

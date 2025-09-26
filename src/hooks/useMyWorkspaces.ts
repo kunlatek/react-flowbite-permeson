@@ -21,7 +21,7 @@ export const useMyWorkspaces = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const toast = useToast();
-  const { updateToken } = useAuth();
+  const { updateToken, user } = useAuth();
   const navigate = useNavigate();
 
   const fetchWorkspaces = async () => {
@@ -38,10 +38,23 @@ export const useMyWorkspaces = () => {
         // Se o workspace salvo ainda existe, use-o
         setSelectedWorkspaceId(storedWorkspaceId);
       } else if (data.length > 0) {
-        // Senão, use o primeiro workspace disponível
-        const firstWorkspaceId = data[0]._id;
-        setSelectedWorkspaceId(firstWorkspaceId);
-        localStorage.setItem('selectedWorkspaceId', firstWorkspaceId);
+        const profile = await workspaceService.getCurrentUserProfile();
+        const ownerWorkspace = data.find(ws => ws.owner === profile?.userId);
+        
+        if (ownerWorkspace) {
+          // Se encontrou workspace onde é owner, use-o
+          setSelectedWorkspaceId(ownerWorkspace._id);
+          localStorage.setItem('selectedWorkspaceId', ownerWorkspace._id);
+        } else {
+          // Senão, use o primeiro workspace disponível
+          const firstWorkspaceId = data[0]._id;
+          setSelectedWorkspaceId(firstWorkspaceId);
+          localStorage.setItem('selectedWorkspaceId', firstWorkspaceId);
+        }
+      } else {
+        // Se não há workspaces, limpar seleção
+        setSelectedWorkspaceId('');
+        localStorage.removeItem('selectedWorkspaceId');
       }
     } catch (err: any) {
       const errorMessage = err.response?.data?.message || err.message || "Erro ao carregar workspaces";
@@ -85,6 +98,12 @@ export const useMyWorkspaces = () => {
     }
   };
 
+  const resetWorkspace = () => {
+    // Limpar workspace selecionado
+    setSelectedWorkspaceId('');
+    localStorage.removeItem('selectedWorkspaceId');
+  };
+
   useEffect(() => {
     fetchWorkspaces();
   }, []);
@@ -96,5 +115,6 @@ export const useMyWorkspaces = () => {
     error,
     fetchWorkspaces,
     switchWorkspace,
+    resetWorkspace,
   };
 };

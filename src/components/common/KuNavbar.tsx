@@ -79,13 +79,18 @@ export default function KuNavbar() {
                 {i18n.language.split("-")[0].toUpperCase()}
               </Button>
             )}
+            className="dark:bg-gray-800 dark:border-gray-700"
           >
-            <Dropdown.Header>
-              <span>Select Language</span>
+            <Dropdown.Header className="dark:bg-gray-800 dark:border-gray-700">
+              <span className="text-gray-900 dark:text-white font-medium">Select Language</span>
             </Dropdown.Header>
             {Object.entries(locales).map(([value, name]) => (
-              <Dropdown.Item key={value} onClick={() => changeLanguage(value)}>
-                {name}
+              <Dropdown.Item 
+                key={value} 
+                onClick={() => changeLanguage(value)}
+                className="text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 dark:bg-gray-800"
+              >
+                <span className="text-gray-900 dark:text-white">{name}</span>
               </Dropdown.Item>
             ))}
           </Dropdown>

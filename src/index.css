@@ -7,3 +7,39 @@
 body {
   min-height: 100vh;
 }
+
+/* Fix for dropdown visibility in dark mode */
+.dark [data-testid="flowbite-dropdown-content"] {
+  background-color: rgb(31 41 55) !important; /* gray-800 */
+  border-color: rgb(55 65 81) !important; /* gray-700 */
+}
+
+.dark [data-testid="flowbite-dropdown-content"] [role="menuitem"] {
+  color: rgb(243 244 246) !important; /* gray-100 */
+}
+
+.dark [data-testid="flowbite-dropdown-content"] [role="menuitem"]:hover {
+  background-color: rgb(55 65 81) !important; /* gray-700 */
+}
+
+.dark [data-testid="flowbite-dropdown-content"] [role="menuitem"] span {
+  color: rgb(243 244 246) !important; /* gray-100 */
+}
+
+/* Alternative selectors for Flowbite dropdowns */
+.dark .flowbite-dropdown-content {
+  background-color: rgb(31 41 55) !important; /* gray-800 */
+  border-color: rgb(55 65 81) !important; /* gray-700 */
+}
+
+.dark .flowbite-dropdown-content .flowbite-dropdown-item {
+  color: rgb(243 244 246) !important; /* gray-100 */
+}
+
+.dark .flowbite-dropdown-content .flowbite-dropdown-item:hover {
+  background-color: rgb(55 65 81) !important; /* gray-700 */
+}
+
+.dark .flowbite-dropdown-content .flowbite-dropdown-header {
+  color: rgb(243 244 246) !important; /* gray-100 */
+}

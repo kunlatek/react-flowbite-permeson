@@ -205,7 +205,7 @@ export default function WorkspacePage() {
         />
 
         {/* Remove Member Confirmation Modal */}
-        <Modal show={removeModalOpen} onClose={() => setRemoveModalOpen(false)} size="md">
+        <Modal show={removeModalOpen} onClose={() => setRemoveModalOpen(false)} size="md" position="center">
           <Modal.Header>
             {t("workspace.remove_member_title")}
           </Modal.Header>

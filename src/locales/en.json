@@ -139,6 +139,37 @@
     "update": "Update",
     "updating": "Updating...",
     "reset": "Reset",
+    "type_selection": {
+      "title": "Choose Profile Type",
+      "description": "Select the profile type that best suits your case to continue with the setup.",
+      "continue": "Continue",
+      "person": {
+        "title": "Individual",
+        "description": "Profile for individuals",
+        "feature1": "Complete personal information",
+        "feature2": "Bank details and addresses",
+        "feature3": "Professional and educational history"
+      },
+      "company": {
+        "title": "Company",
+        "description": "Profile for companies and organizations",
+        "feature1": "Company data and registration",
+        "feature2": "Contact information and addresses",
+        "feature3": "Partners and related documents"
+      }
+    },
+    "setup": {
+      "loading": "Loading profile setup...",
+      "save": "Save",
+      "person": {
+        "title": "Set up your personal profile",
+        "description": "Fill in your personal information to complete your profile."
+      },
+      "company": {
+        "title": "Set up company profile",
+        "description": "Fill in the company information to complete the profile."
+      }
+    },
     "person": {
       "personal_info": "Personal Information",
       "name": "Full Name",

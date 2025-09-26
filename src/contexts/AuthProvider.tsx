@@ -56,6 +56,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setToken(accessToken);
     setIsAuthenticated(true);
     
+    localStorage.removeItem('selectedWorkspaceId');
+    
     // Create user data with email from login or fallback to mock
     const userData: AuthUser = {
       userId: '1',
@@ -84,6 +86,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     // Clear all auth data
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    localStorage.removeItem('selectedWorkspaceId');
     setToken(null);
     setIsAuthenticated(false);
     setUser(null);

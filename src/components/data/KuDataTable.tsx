@@ -30,6 +30,7 @@ interface KuDataTableProps<T> {
     params: URLSearchParams
   ) => Promise<{ data: T[]; total: number }>;
   actions?: IAction<T>[];
+  getActions?: (row: T) => IAction<T>[];
   headerActions?: IHeaderAction[];
   pageSize?: number;
 }
@@ -39,6 +40,7 @@ export default function KuDataTable<T extends { _id: string }>({
   columns,
   dataSource,
   actions = [],
+  getActions,
   headerActions = [],
   pageSize = 10,
 }: KuDataTableProps<T>) {
@@ -155,7 +157,7 @@ export default function KuDataTable<T extends { _id: string }>({
                   )}
                 </Table.HeadCell>
               ))}
-              {actions.length > 0 && <Table.HeadCell>Ações</Table.HeadCell>}
+              {(actions.length > 0 || getActions) && <Table.HeadCell>Ações</Table.HeadCell>}
             </Table.Head>
             <Table.Body className="divide-y">
               {data.map((row) => (
@@ -165,9 +167,9 @@ export default function KuDataTable<T extends { _id: string }>({
                       {renderCellContent(row, col)}
                     </Table.Cell>
                   ))}
-                  {actions.length > 0 && (
+                  {(actions.length > 0 || getActions) && (
                     <Table.Cell className="flex gap-2">
-                      {actions.map((action, index) => (
+                      {(getActions ? getActions(row) : actions).map((action, index) => (
                         <KuButton
                           key={action.label}
                           id={`row-${row._id}-action-${index}`}

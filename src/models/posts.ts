@@ -7,6 +7,7 @@ export interface IPost {
   publishedAt?: string;
   readingTime: number; // in minutes
   author: string;
+  createdBy: string;
   cover?: IFileItem[];
   createdAt: string;
   updatedAt: string;

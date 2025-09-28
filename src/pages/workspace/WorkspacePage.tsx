@@ -1,19 +1,19 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, Button, Spinner, Alert, Modal } from "flowbite-react";
 import { HiUserAdd, HiRefresh, HiTrash } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
 import { useWorkspace } from "@/hooks/useWorkspace";
-import AddMemberModal from "@/components/workspace/AddMemberModal";
 
 export default function WorkspacePage() {
   const { t } = useTranslation();
-  const { workspace, loading, error, fetchWorkspace, addMember, removeMember } = useWorkspace();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
+  const { workspace, loading, error, fetchWorkspace, removeMember } = useWorkspace();
   const [removeModalOpen, setRemoveModalOpen] = useState(false);
   const [userToRemove, setUserToRemove] = useState<{ userId: string; userName?: string } | null>(null);
   
-  const handleAddMember = async (userId: string) => {
-    return await addMember(userId);
+  const handleAddMember = () => {
+    navigate("/workspace/add-member");
   };
 
   const handleRemoveMember = async (userId: string) => {
@@ -85,7 +85,8 @@ export default function WorkspacePage() {
               {workspace?.isOwner && (
                 <Button
                   color="primary"
-                  onClick={() => setIsModalOpen(true)}
+                  className="bg-blue-600 hover:bg-blue-700 text-white border-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:text-white"
+                  onClick={handleAddMember}
                   disabled={loading}
                 >
                   <HiUserAdd className="mr-2 h-4 w-4" />
@@ -186,7 +187,7 @@ export default function WorkspacePage() {
               {workspace?.isOwner && (
                 <Button
                   color="primary"
-                  onClick={() => setIsModalOpen(true)}
+                  onClick={handleAddMember}
                 >
                   <HiUserAdd className="mr-2 h-4 w-4" />
                   {t("workspace.add_first_member")}
@@ -196,44 +197,32 @@ export default function WorkspacePage() {
           )}
         </Card>
 
-        {/* Add Member Modal */}
-        <AddMemberModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          onAddMember={handleAddMember}
-          currentTeamMembers={workspace?.team || []}
-        />
 
         {/* Remove Member Confirmation Modal */}
-        <Modal show={removeModalOpen} onClose={() => setRemoveModalOpen(false)} size="md" position="center">
-          <Modal.Header>
+        <Modal 
+          show={removeModalOpen} 
+          onClose={() => setRemoveModalOpen(false)} 
+          size="md" 
+          position="center"
+          className="backdrop-blur-sm"
+        >
+          <Modal.Header className="px-6 py-4">
             {t("workspace.remove_member_title")}
           </Modal.Header>
-          <Modal.Body>
+          <Modal.Body className="px-6 py-4">
             <div className="text-center">
               <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100 dark:bg-red-900 mb-4">
                 <HiTrash className="h-6 w-6 text-red-600 dark:text-red-400" />
               </div>
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                {t("workspace.remove_member_confirm")}
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
+                Tem certeza que deseja remover o colaborador?
               </h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                {userToRemove?.userName ? (
-                  <>
-                    {t("workspace.remove_member_description")} <strong>{userToRemove.userName}</strong>?
-                  </>
-                ) : (
-                  <>
-                    {t("workspace.remove_member_description")} <strong>ID: {userToRemove?.userId}</strong>?
-                  </>
-                )}
-              </p>
               <p className="text-xs text-gray-400 dark:text-gray-500">
                 {t("workspace.remove_member_warning")}
               </p>
             </div>
           </Modal.Body>
-          <Modal.Footer>
+          <Modal.Footer className="px-6 py-4">
             <Button
               color="gray"
               onClick={() => setRemoveModalOpen(false)}

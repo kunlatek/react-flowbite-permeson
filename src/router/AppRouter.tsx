@@ -11,6 +11,7 @@ import ForgotPasswordPage from "@/pages/auth/ForgotPasswordPage";
 import ResetPasswordPage from "@/pages/auth/ResetPasswordPage";
 import SettingsPage from "@/pages/settings/SettingsPage";
 import WorkspacePage from "@/pages/workspace/WorkspacePage";
+import AddMemberPage from "@/pages/workspace/AddMemberPage";
 import MainLayout from "@/components/layout/MainLayout";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import AuthLayout from "@/components/layout/AuthLayout";
@@ -20,6 +21,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import PostsListPage from "@/pages/posts/PostsListPage";
 import PostCreatePage from "@/pages/posts/PostCreatePage";
 import PostEditPage from "@/pages/posts/PostEditPage";
+import PostViewPage from "@/pages/posts/PostViewPage";
 
 export default function AppRouter() {
   return (
@@ -48,10 +50,12 @@ export default function AppRouter() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/workspace" element={<WorkspacePage />} />
+          <Route path="/workspace/add-member" element={<AddMemberPage />} />
           
           {/* Posts Routes */}
           <Route path="/posts" element={<PostsListPage />} />
           <Route path="/posts/new" element={<PostCreatePage />} />
+          <Route path="/posts/:id" element={<PostViewPage />} />
           <Route path="/posts/:id/edit" element={<PostEditPage />} />
         </Route>
 

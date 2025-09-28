@@ -5,7 +5,7 @@ import KuDataTable, { type IColumn, type IAction, type IHeaderAction } from "@/c
 import { useToast } from "@/hooks/useToast";
 import { useWorkspace } from "@/hooks/useWorkspace";
 import { postsService } from "@/services/postsService";
-import PostViewModal from "@/components/pages/posts/PostViewModal";
+import PostDeleteConfirm from "@/components/pages/posts/PostDeleteConfirm";
 import type { IPost, IPostsResponse } from "@/models/posts";
 
 export default function PostsListPage() {
@@ -13,12 +13,12 @@ export default function PostsListPage() {
   const navigate = useNavigate();
   const toast = useToast();
   const { workspace } = useWorkspace();
-  const [viewModalOpen, setViewModalOpen] = useState(false);
-  const [selectedPost, setSelectedPost] = useState<IPost | null>(null);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [postToDelete, setPostToDelete] = useState<IPost | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const handleView = (post: IPost) => {
-    setSelectedPost(post);
-    setViewModalOpen(true);
+    navigate(`/posts/${post._id}`);
   };
 
   const canEditPost = (post: IPost) => {
@@ -30,17 +30,30 @@ export default function PostsListPage() {
     return isOwner || isCreator;
   };
 
-  const handleDelete = async (post: IPost) => {
-    if (!window.confirm(t("posts.confirm_delete", { title: post.title }))) {
-      return;
-    }
+  const handleDeleteClick = (post: IPost) => {
+    setPostToDelete(post);
+    setDeleteModalOpen(true);
+  };
 
+  const handleDeleteConfirm = async () => {
+    if (!postToDelete) return;
+
+    setDeleteLoading(true);
     try {
-      await postsService.deletePost(post._id);
+      await postsService.deletePost(postToDelete._id);
       toast.success(t("posts.delete_success"));
+      setDeleteModalOpen(false);
+      setPostToDelete(null);
     } catch (err: any) {
       toast.error(err.message || t("posts.error.delete_failed"));
+    } finally {
+      setDeleteLoading(false);
     }
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteModalOpen(false);
+    setPostToDelete(null);
   };
 
   const formatDate = (dateString: string) => {
@@ -128,7 +141,7 @@ export default function PostsListPage() {
         {
           label: t("posts.delete"),
           color: "danger",
-          handler: handleDelete,
+          handler: handleDeleteClick,
         }
       );
     }
@@ -158,14 +171,13 @@ export default function PostsListPage() {
         />
       </div>
 
-      {/* Modal de visualização */}
-      <PostViewModal
-        show={viewModalOpen}
-        onClose={() => {
-          setViewModalOpen(false);
-          setSelectedPost(null);
-        }}
-        post={selectedPost}
+      {/* Modal de confirmação de exclusão */}
+      <PostDeleteConfirm
+        post={postToDelete}
+        show={deleteModalOpen}
+        loading={deleteLoading}
+        onClose={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
       />
     </div>
   );

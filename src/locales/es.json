@@ -323,11 +323,19 @@
     "no_members_title": "No se encontraron colaboradores",
     "no_members_description": "Comienza agregando colaboradores a tu equipo para trabajar en conjunto.",
     "add_member_title": "Agregar Colaborador",
+    "add_member_description": "Busca y agrega nuevos colaboradores a tu workspace",
+    "search_user_label": "Buscar Usuario",
     "search_user_placeholder": "Buscar por nombre de usuario...",
+    "search_user_help": "Escribe al menos 2 caracteres para buscar",
+    "search_results": "Resultados de Búsqueda",
     "searching": "Buscando...",
     "no_users_found": "No se encontraron usuarios",
     "selected_user": "Usuario Seleccionado",
     "already_in_team": "Usuarios ya están en el equipo (no mostrados)",
+    "current_team_size": "Tamaño del Equipo Actual",
+    "current_team_description": "Miembros actualmente en tu workspace",
+    "member_added_success": "¡Colaborador agregado exitosamente!",
+    "redirecting": "Redirigiendo...",
     "user_already_in_team": "¡Este usuario ya está en el equipo!",
     "loading_names": "Cargando nombres...",
     "owner": "Propietario",
@@ -353,6 +361,10 @@
     "view": "Ver",
     "edit": "Editar",
     "delete": "Eliminar",
+    "delete_title": "Eliminar Post",
+    "confirm_delete_title": "Confirmar Eliminación",
+    "confirm_delete_message": "¿Estás seguro de que quieres eliminar el post \"{title}\"?",
+    "delete_warning": "Esta acción no se puede deshacer.",
     "create": "Crear Post",
     "creating": "Creando...",
     "update": "Actualizar Post",
@@ -398,12 +410,14 @@
       "update_failed": "Error al actualizar post",
       "delete_failed": "Error al eliminar post",
       "not_found": "Post no encontrado",
+      "post_not_available": "El post solicitado no está disponible",
       "invalid_id": "ID del post inválido",
       "required_fields": "Complete todos los campos obligatorios"
     }
   },
   "common": {
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "back": "Volver"
   },
   "fileManager": {
     "label": "Archivos",

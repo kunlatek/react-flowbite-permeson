@@ -323,11 +323,19 @@
     "no_members_title": "Nenhum colaborador encontrado",
     "no_members_description": "Comece adicionando colaboradores à sua equipe para trabalhar em conjunto.",
     "add_member_title": "Adicionar Colaborador",
+    "add_member_description": "Pesquise e adicione novos colaboradores ao seu workspace",
+    "search_user_label": "Pesquisar Usuário",
     "search_user_placeholder": "Pesquisar por nome de usuário...",
+    "search_user_help": "Digite pelo menos 2 caracteres para pesquisar",
+    "search_results": "Resultados da Pesquisa",
     "searching": "Pesquisando...",
     "no_users_found": "Nenhum usuário encontrado",
     "selected_user": "Usuário Selecionado",
     "already_in_team": "Usuários já estão no time (não exibidos)",
+    "current_team_size": "Tamanho do Time Atual",
+    "current_team_description": "Membros atualmente no seu workspace",
+    "member_added_success": "Colaborador adicionado com sucesso!",
+    "redirecting": "Redirecionando...",
     "user_already_in_team": "Este usuário já está no time!",
     "loading_names": "Carregando nomes...",
     "owner": "Proprietário",
@@ -353,6 +361,10 @@
     "view": "Visualizar",
     "edit": "Editar",
     "delete": "Excluir",
+    "delete_title": "Excluir Post",
+    "confirm_delete_title": "Confirmar Exclusão",
+    "confirm_delete_message": "Tem certeza que deseja excluir o post \"{title}\"?",
+    "delete_warning": "Esta ação não pode ser desfeita.",
     "create": "Criar Post",
     "creating": "Criando...",
     "update": "Atualizar Post",
@@ -398,12 +410,14 @@
       "update_failed": "Erro ao atualizar post",
       "delete_failed": "Erro ao excluir post",
       "not_found": "Post não encontrado",
+      "post_not_available": "O post solicitado não está disponível",
       "invalid_id": "ID do post inválido",
       "required_fields": "Preencha todos os campos obrigatórios"
     }
   },
   "common": {
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "back": "Voltar"
   },
   "fileManager": {
     "label": "Arquivos",

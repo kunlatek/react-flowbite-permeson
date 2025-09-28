@@ -323,11 +323,19 @@
     "no_members_title": "No collaborators found",
     "no_members_description": "Start by adding collaborators to your team to work together.",
     "add_member_title": "Add Collaborator",
+    "add_member_description": "Search and add new collaborators to your workspace",
+    "search_user_label": "Search User",
     "search_user_placeholder": "Search by username...",
+    "search_user_help": "Type at least 2 characters to search",
+    "search_results": "Search Results",
     "searching": "Searching...",
     "no_users_found": "No users found",
     "selected_user": "Selected User",
     "already_in_team": "Users already in team (not shown)",
+    "current_team_size": "Current Team Size",
+    "current_team_description": "Members currently in your workspace",
+    "member_added_success": "Collaborator added successfully!",
+    "redirecting": "Redirecting...",
     "user_already_in_team": "This user is already in the team!",
     "loading_names": "Loading names...",
     "owner": "Owner",
@@ -353,6 +361,10 @@
     "view": "View",
     "edit": "Edit",
     "delete": "Delete",
+    "delete_title": "Delete Post",
+    "confirm_delete_title": "Confirm Deletion",
+    "confirm_delete_message": "Are you sure you want to delete the post \"{title}\"?",
+    "delete_warning": "This action cannot be undone.",
     "create": "Create Post",
     "creating": "Creating...",
     "update": "Update Post",
@@ -398,12 +410,14 @@
       "update_failed": "Error updating post",
       "delete_failed": "Error deleting post",
       "not_found": "Post not found",
+      "post_not_available": "The requested post is not available",
       "invalid_id": "Invalid post ID",
       "required_fields": "Please fill in all required fields"
     }
   },
   "common": {
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "back": "Back"
   },
   "fileManager": {
     "label": "Files",

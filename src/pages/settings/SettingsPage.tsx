@@ -44,7 +44,7 @@ export default function SettingsPage() {
             </h2>
             <div className="space-y-4">
               <div>
-                <h3 className="text-lg font-medium">Alterar Senha</h3>
+                <h3 className="text-lg font-medium dark:text-white">Alterar Senha</h3>
                 <p className="text-gray-600 dark:text-gray-400 my-2">
                   Recomendamos alterar sua senha regularmente.
                 </p>

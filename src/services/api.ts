@@ -20,10 +20,7 @@ api.interceptors.request.use(
       
       const lang = i18n.language;
       if (lang) {
-        config.params = {
-          ...config.params,
-          lang: lang
-        };
+        config.headers['Accept-Language'] = lang;
       }
     }
     return config;

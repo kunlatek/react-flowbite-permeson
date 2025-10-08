@@ -59,6 +59,7 @@ export default function KuNavbar() {
   return (
     <>
       <Navbar fluid rounded className="py-3 px-4">
+        <Navbar.Brand></Navbar.Brand>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-2">
           {/* Language Selector */}
           <Dropdown

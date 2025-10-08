@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Card, Button, Spinner } from "flowbite-react";
 import { HiArrowLeft } from "react-icons/hi";
-import { KuInput, KuButton } from "@/components/form";
+import { KuInput, KuButton, KuArrayForm } from "@/components/form";
 import { useToast } from "@/hooks/useToast";
 import { postsService } from "@/services/postsService";
 import { FileManager } from "@/components/common";
-import type { IPostFormData } from "@/models/posts";
+import type { IPostFormData, ICoauthor } from "@/models/posts";
 import type { IFileItem } from "@/components/common";
 
 export default function PostCreatePage() {
@@ -21,6 +21,8 @@ export default function PostCreatePage() {
     publishedAt: "",
     readingTime: 1,
     author: "",
+    tags: [],
+    coauthors: [],
   });
   const [loading, setLoading] = useState(false);
 
@@ -31,7 +33,7 @@ export default function PostCreatePage() {
     cover: []
   });
 
-  const handleInputChange = (name: string, value: string | number) => {
+  const handleInputChange = (name: string, value: string | number | string[] | ICoauthor[]) => {
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -63,6 +65,8 @@ export default function PostCreatePage() {
         author: formData.author.trim(),
         readingTime: Number(formData.readingTime),
         publishedAt: formData.publishedAt ? formData.publishedAt : undefined,
+        tags: formData.tags.length > 0 ? formData.tags : undefined,
+        coauthors: formData.coauthors.length > 0 ? formData.coauthors : undefined,
       };
 
       const createdPost = await postsService.createPost(postData);
@@ -193,6 +197,35 @@ export default function PostCreatePage() {
                 className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500"
               />
             </div>
+
+            {/* Tags */}
+            <KuArrayForm
+              name="tags"
+              label="Tags"
+              value={formData.tags}
+              onChange={(name, value) => handleInputChange(name, value)}
+              itemType="string"
+              placeholder="Digite uma tag"
+              isDisabled={loading}
+              tooltip="Adicione tags para categorizar o post"
+            />
+
+            {/* Coauthors */}
+            <KuArrayForm
+              name="coauthors"
+              label="Coautores"
+              value={formData.coauthors}
+              onChange={(name, value) => handleInputChange(name, value)}
+              itemType="object"
+              fields={[
+                { name: "name", label: "Nome", type: "text", required: true },
+                { name: "subject", label: "Assunto", type: "text", required: true },
+                { name: "link", label: "Link", type: "url", required: false },
+                { name: "phone", label: "Telefone", type: "tel", required: false }
+              ]}
+              isDisabled={loading}
+              tooltip="Adicione coautores do post"
+            />
 
             {/* Cover Images */}
             <FileManager

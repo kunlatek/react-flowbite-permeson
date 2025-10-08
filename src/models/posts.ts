@@ -1,5 +1,12 @@
 import type { IFileItem } from "@/components/common";
 
+export interface ICoauthor {
+  name: string;
+  subject: string;
+  link: string;
+  phone: string;
+}
+
 export interface IPost {
   _id: string;
   title: string;
@@ -9,6 +16,8 @@ export interface IPost {
   author: string;
   createdBy: string;
   cover?: IFileItem[];
+  tags?: string[];
+  coauthors?: ICoauthor[];
   createdAt: string;
   updatedAt: string;
 }
@@ -19,6 +28,8 @@ export interface ICreatePost {
   publishedAt?: string;
   readingTime: number;
   author: string;
+  tags?: string[];
+  coauthors?: ICoauthor[];
 }
 
 export interface IUpdatePost {
@@ -27,6 +38,8 @@ export interface IUpdatePost {
   publishedAt?: string;
   readingTime?: number;
   author?: string;
+  tags?: string[];
+  coauthors?: ICoauthor[];
 }
 
 export interface IPostsResponse {
@@ -44,4 +57,6 @@ export interface IPostFormData {
   publishedAt: string;
   readingTime: number;
   author: string;
+  tags: string[];
+  coauthors: ICoauthor[];
 }

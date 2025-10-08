@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Card, Button, Spinner } from "flowbite-react";
-import { HiArrowLeft, HiCalendar, HiClock, HiUser, HiDocumentText } from "react-icons/hi";
+import { Card, Button, Spinner, Badge } from "flowbite-react";
+import { HiArrowLeft, HiCalendar, HiClock, HiUser, HiDocumentText, HiTag, HiUserGroup, HiPhone, HiLink } from "react-icons/hi";
 import { postsService } from "@/services/postsService";
 import { useToast } from "@/hooks/useToast";
 import type { IPost } from "@/models/posts";
@@ -148,6 +148,75 @@ export default function PostViewPage() {
                                 dangerouslySetInnerHTML={{ __html: post.content }}
                             />
                         </div>
+
+                        {/* Tags */}
+                        {post.tags && post.tags.length > 0 && (
+                            <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+                                <div className="flex items-center gap-2 mb-3">
+                                    <HiTag className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                                        Tags
+                                    </h3>
+                                </div>
+                                <div className="flex flex-wrap gap-2">
+                                    {post.tags.map((tag, index) => (
+                                        <Badge key={index} color="info" size="sm">
+                                            {tag}
+                                        </Badge>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Coautores */}
+                        {post.coauthors && post.coauthors.length > 0 && (
+                            <div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+                                <div className="flex items-center gap-2 mb-4">
+                                    <HiUserGroup className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                                        Coautores
+                                    </h3>
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    {post.coauthors.map((coauthor, index) => (
+                                        <Card key={index} className="bg-gray-50 dark:bg-gray-800">
+                                            <div className="space-y-2">
+                                                <div className="flex items-center gap-2">
+                                                    <HiUser className="h-4 w-4 text-gray-500" />
+                                                    <p className="font-semibold text-gray-900 dark:text-white">
+                                                        {coauthor.name}
+                                                    </p>
+                                                </div>
+                                                <p className="text-sm text-gray-600 dark:text-gray-400">
+                                                    {coauthor.subject}
+                                                </p>
+                                                {coauthor.link && (
+                                                    <div className="flex items-center gap-2">
+                                                        <HiLink className="h-4 w-4 text-gray-500" />
+                                                        <a
+                                                            href={coauthor.link}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="text-sm text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300 underline"
+                                                        >
+                                                            {coauthor.link}
+                                                        </a>
+                                                    </div>
+                                                )}
+                                                {coauthor.phone && (
+                                                    <div className="flex items-center gap-2">
+                                                        <HiPhone className="h-4 w-4 text-gray-500" />
+                                                        <p className="text-sm text-gray-600 dark:text-gray-400">
+                                                            {coauthor.phone}
+                                                        </p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </Card>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
 
                         {/* Cover/Imagem se existir */}
                         {post.cover && post.cover.length > 0 && (

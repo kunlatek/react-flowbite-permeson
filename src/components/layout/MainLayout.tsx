@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import KuNavbar from "@/components/common/KuNavbar";
-import KuFooter from "@/components/common/KuFooter";
 
 export default function MainLayout() {
   return (
@@ -9,7 +8,6 @@ export default function MainLayout() {
       <main className="flex-grow container mx-auto px-4 py-8">
         <Outlet />
       </main>
-      <KuFooter />
     </div>
   );
 }

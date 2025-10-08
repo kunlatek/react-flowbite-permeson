@@ -27,14 +27,14 @@
     "copyright": "© 2024 Kunlatek. All rights reserved."
   },
   "home": {
-    "title": "Welcome to Platform",
-    "description": "Your complete solution for process management and automation.",
+    "title": "Welcome",
+    "description": "To get started, select an option below.",
     "login_platform": "Sign in to Platform",
     "create_account": "Create Account",
     "go_to_dashboard": "Go to Dashboard"
   },
   "login": {
-    "title": "Sign in to Platform",
+    "title": "Sign in",
     "email_label": "Email",
     "email_placeholder": "Enter your email",
     "password_label": "Password",

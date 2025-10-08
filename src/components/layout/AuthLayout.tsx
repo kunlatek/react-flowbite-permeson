@@ -7,7 +7,7 @@ export default function AuthLayout() {
         <Outlet />
         <div className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
           <p>
-            © {new Date().getFullYear()} Rapida Quickstart. Todos os direitos
+            © {new Date().getFullYear()} Kunlatek. Todos os direitos
             reservados.
           </p>
         </div>

@@ -59,16 +59,6 @@ export default function KuNavbar() {
   return (
     <>
       <Navbar fluid rounded className="py-3 px-4">
-        <Navbar.Brand as={Link} to="/">
-          <img
-            src="/src/assets/images/logo.png"
-            className="mr-3 h-6 sm:h-9 dark:invert dark:brightness-0 dark:contrast-100"
-            alt="Logo"
-          />
-          <span className="self-center whitespace-nowrap text-xl font-semibold text-gray-900 dark:text-white">
-            Rapida Quickstart
-          </span>
-        </Navbar.Brand>
         <div className="flex items-center md:order-2 space-x-3 md:space-x-2">
           {/* Language Selector */}
           <Dropdown

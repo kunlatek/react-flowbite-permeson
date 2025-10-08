@@ -24,17 +24,17 @@
     "legal_title": "Legal",
     "legal_link1": "Privacidad",
     "legal_link2": "Términos",
-    "copyright": "Rapida Quickstart™"
+    "copyright": "Kunlatek™"
   },
   "home": {
-    "title": "Bienvenido a la Plataforma",
-    "description": "Su solución completa para gestión y automatización de procesos.",
+    "title": "Bienvenido",
+    "description": "Para iniciar, seleccione una opción a continuación.",
     "login_platform": "Iniciar Sesión en la Plataforma",
     "create_account": "Crear Cuenta",
     "go_to_dashboard": "Ir al Dashboard"
   },
   "login": {
-    "title": "Iniciar Sesión en la Plataforma",
+    "title": "Iniciar Sesión",
     "email_label": "Email",
     "email_placeholder": "Ingrese su email",
     "password_label": "Contraseña",

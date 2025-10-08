@@ -79,19 +79,29 @@ export default function DashboardLayout() {
             <Sidebar.Items>
               <Sidebar.ItemGroup>
                 <Sidebar.Item href="/dashboard" icon={HiHome}>
-                  {!sidebarCollapsed && t("dashboard.sidebar.dashboard")}
+                  <div className="truncate w-[150px]">
+                    {!sidebarCollapsed && t("dashboard.sidebar.dashboard")}
+                  </div>
                 </Sidebar.Item>
                 <Sidebar.Item href="/profile" icon={HiUser}>
-                  {!sidebarCollapsed && t("dashboard.sidebar.profile")}
+                  <div className="truncate w-[150px]">
+                    {!sidebarCollapsed && t("dashboard.sidebar.profile")}
+                  </div>
                 </Sidebar.Item>
                 <Sidebar.Item href="/posts" icon={HiDocumentText}>
-                  {!sidebarCollapsed && t("dashboard.sidebar.posts")}
+                  <div className="truncate w-[150px]">
+                    {!sidebarCollapsed && t("dashboard.sidebar.posts")}
+                  </div>
                 </Sidebar.Item>
                 <Sidebar.Item href="/workspace" icon={HiUserGroup}>
-                  {!sidebarCollapsed && t("dashboard.sidebar.collaborators")}
+                  <div className="truncate w-[150px]">
+                    {!sidebarCollapsed && t("dashboard.sidebar.collaborators")}
+                  </div>
                 </Sidebar.Item>
                 <Sidebar.Item href="/settings" icon={HiCog}>
-                  {!sidebarCollapsed && t("dashboard.sidebar.settings")}
+                  <div className="truncate w-[150px]">
+                    {!sidebarCollapsed && t("dashboard.sidebar.settings")}
+                  </div>
                 </Sidebar.Item>
               </Sidebar.ItemGroup>
             </Sidebar.Items>

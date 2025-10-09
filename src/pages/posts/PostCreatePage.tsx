@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Card, Button, Spinner, Tabs } from "flowbite-react";
 import { HiArrowLeft } from "react-icons/hi";
-import { KuInput, KuButton, KuArrayForm } from "@/components/form";
+import { KuInput, KuButton, KuArrayForm, KUMultipleAutocomplete } from "@/components/form";
 import { useToast } from "@/hooks/useToast";
 import { postsService } from "@/services/postsService";
 import { FileManager } from "@/components/common";
@@ -23,6 +23,7 @@ export default function PostCreatePage() {
     author: "",
     tags: [],
     coauthors: [],
+    relatedPosts: [],
   });
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
@@ -35,6 +36,13 @@ export default function PostCreatePage() {
   });
 
   const handleInputChange = (name: string, value: string | number | string[] | ICoauthor[]) => {
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleRelatedPostsChange = (name: string, value: string[]) => {
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -68,6 +76,7 @@ export default function PostCreatePage() {
         publishedAt: formData.publishedAt ? formData.publishedAt : undefined,
         tags: formData.tags.length > 0 ? formData.tags : undefined,
         coauthors: formData.coauthors.length > 0 ? formData.coauthors : undefined,
+        relatedPosts: formData.relatedPosts.length > 0 ? formData.relatedPosts : undefined,
       };
 
       const createdPost = await postsService.createPost(postData);
@@ -208,6 +217,26 @@ export default function PostCreatePage() {
                       className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500"
                     />
                   </div>
+
+                  {/* Related Posts */}
+                  <KUMultipleAutocomplete
+                    name="relatedPosts"
+                    label="Posts Relacionados"
+                    value={formData.relatedPosts}
+                    onChange={handleRelatedPostsChange}
+                    apiConfig={{
+                      endpoint: "/posts",
+                      searchParam: "title",
+                      labelField: "title",
+                      valueField: "_id",
+                      limit: 20,
+                    }}
+                    placeholder="Pesquisar posts relacionados"
+                    isDisabled={loading}
+                    tooltip="Adicione posts relacionados a este post"
+                    excludeIds={[]}
+                    loadSelectedItems={true}
+                  />
                 </div>
               </Tabs.Item>
 

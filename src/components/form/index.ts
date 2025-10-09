@@ -6,3 +6,4 @@ export { default as KuFieldset } from "./KuFieldset";
 export { default as KuArray } from "./KuArray";
 export { default as KuArrayForm } from "./KuArrayForm";
 export { default as KuAutocomplete } from "./KuAutocomplete";
+export { default as KUMultipleAutocomplete } from "./KUMultipleAutocomplete";

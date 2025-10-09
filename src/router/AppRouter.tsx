@@ -51,6 +51,7 @@ export default function AppRouter() {
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/workspace" element={<WorkspacePage />} />
           <Route path="/workspace/add-member" element={<AddMemberPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
           
           {/* Posts Routes */}
           <Route path="/posts" element={<PostsListPage />} />
@@ -65,10 +66,6 @@ export default function AppRouter() {
           <Route path="/profile/setup" element={<ProfileSetupPage />} />
         </Route>
 
-        {/* Other Protected Routes with Main Layout */}
-        <Route element={<MainLayout />}>
-          <Route path="/settings" element={<SettingsPage />} />
-        </Route>
       </Route>
     </Routes>
   );

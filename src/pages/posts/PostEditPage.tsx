@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Card, Button, Spinner, Alert, Tabs } from "flowbite-react";
 import { HiArrowLeft } from "react-icons/hi";
-import { KuInput, KuButton, KuArrayForm } from "@/components/form";
+import { KuInput, KuButton, KuArrayForm, KUMultipleAutocomplete } from "@/components/form";
 import { useToast } from "@/hooks/useToast";
 import { postsService } from "@/services/postsService";
 import { FileManager } from "@/components/common";
@@ -25,6 +25,7 @@ export default function PostEditPage() {
     author: "",
     tags: [],
     coauthors: [],
+    relatedPosts: [],
   });
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -61,6 +62,7 @@ export default function PostEditPage() {
         author: postData.author,
         tags: postData.tags || [],
         coauthors: postData.coauthors || [],
+        relatedPosts: postData.relatedPosts || [],
       });
       
       const fileFields = Object.keys(postData);
@@ -109,6 +111,13 @@ export default function PostEditPage() {
     }));
   };
 
+  const handleRelatedPostsChange = (name: string, value: string[]) => {
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
   const handleFilesChange = (field: string, files: IFileItem[]) => {
     setFiles(prev => ({ ...prev, [field]: files }));
   };
@@ -138,6 +147,7 @@ export default function PostEditPage() {
         publishedAt: formData.publishedAt ? formData.publishedAt : undefined,
         tags: formData.tags.length > 0 ? formData.tags : undefined,
         coauthors: formData.coauthors.length > 0 ? formData.coauthors : undefined,
+        relatedPosts: formData.relatedPosts.length > 0 ? formData.relatedPosts : undefined,
       };
 
       await postsService.updatePost(post._id, updateData);
@@ -304,6 +314,26 @@ export default function PostEditPage() {
                       className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-cyan-500 focus:ring-cyan-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-cyan-500 dark:focus:ring-cyan-500"
                     />
                   </div>
+
+                  {/* Related Posts */}
+                  <KUMultipleAutocomplete
+                    name="relatedPosts"
+                    label="Posts Relacionados"
+                    value={formData.relatedPosts}
+                    onChange={handleRelatedPostsChange}
+                    apiConfig={{
+                      endpoint: "/posts",
+                      searchParam: "title",
+                      labelField: "title",
+                      valueField: "_id",
+                      limit: 20,
+                    }}
+                    placeholder="Pesquisar posts relacionados"
+                    isDisabled={saving}
+                    tooltip="Adicione posts relacionados a este post"
+                    excludeIds={post?._id ? [post._id] : []}
+                    loadSelectedItems={true}
+                  />
                 </div>
               </Tabs.Item>
 

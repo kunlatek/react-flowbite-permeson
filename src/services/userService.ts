@@ -31,7 +31,7 @@ const changePassword = async (oldPassword: string, newPassword: string) => {
 };
 
 const softDeleteOwnProfile = async () => {
-  const response = await api.delete("/users");
+  const response = await api.delete("/auth/account");
   return response.data;
 };
 

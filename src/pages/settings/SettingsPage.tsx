@@ -1,104 +1,66 @@
-import { useState, useEffect } from "react";
-import { Card } from "flowbite-react";
-import { useAccountDeletion } from "@/hooks/useAccountDeletion";
-import { Spinner } from "flowbite-react";
+import { useState } from "react";
+import { Card, Alert } from "flowbite-react";
 import KuModal from "@/components/common/KuModal";
 import KuButton from "@/components/form/KuButton";
-import ChangePasswordForm from "@/components/pages/settings/ChangePasswordForm";
 import DeleteAccountConfirm from "@/components/pages/settings/DeleteAccountConfirm";
-import AccountRestorationNotice from "@/components/pages/dashboard/AccountRestorationNotice";
 
 export default function SettingsPage() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [showPasswordModal, setShowPasswordModal] = useState(false);
-  const { isDeleted, fetchDeletionStatus, loading } = useAccountDeletion();
-
-  useEffect(() => {
-    fetchDeletionStatus();
-  }, [fetchDeletionStatus]);
-
-  if (loading && isDeleted === null) {
-    return (
-      <div className="flex justify-center py-10">
-        <Spinner size="xl" />
-      </div>
-    );
-  }
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-        Configurações da Conta
-      </h1>
-      <p className="text-gray-600 dark:text-gray-400 mb-6">
-        Gerencie suas preferências e configurações de conta.
-      </p>
+    <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto">
+      <div className="mx-auto max-w-4xl">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+            Configurações
+          </h1>
+          <p className="mt-2 text-gray-600 dark:text-gray-400">
+            Gerencie as configurações da sua conta.
+          </p>
+        </div>
 
-      {isDeleted ? (
-        <AccountRestorationNotice />
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Card>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">
-              Segurança
-            </h2>
-            <div className="space-y-4">
-              <div>
-                <h3 className="text-lg font-medium dark:text-white">Alterar Senha</h3>
-                <p className="text-gray-600 dark:text-gray-400 my-2">
-                  Recomendamos alterar sua senha regularmente.
+        <Card>
+          <div className="p-6">
+            <div className="mb-6">
+              <h2 className="text-xl font-bold text-red-600 dark:text-red-500 mb-2">
+                Exclusão de Conta
+              </h2>
+              <p className="text-gray-600 dark:text-gray-400 mb-4">
+                Esta ação é irreversível após 90 dias. Todos os seus dados serão
+                perdidos permanentemente.
+              </p>
+              <Alert color="warning" className="mb-4">
+                <span className="font-medium">Atenção!</span>
+                <p>
+                  A exclusão da conta é um processo que pode ser revertido dentro de 90 dias.
+                  Após esse período, todos os dados serão permanentemente removidos.
                 </p>
-                <KuButton
-                  id="change-pass-modal-btn"
-                  type="button"
-                  actionType="apiRequest"
-                  onClick={() => setShowPasswordModal(true)}
-                  label="Alterar senha"
-                />
-              </div>
+              </Alert>
             </div>
-          </Card>
-          <Card>
-            <h2 className="text-xl font-bold text-red-600 dark:text-red-500 mb-2">
-              Exclusão de Conta
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
-              Esta ação é irreversível após 90 dias. Todos os seus dados serão
-              perdidos.
-            </p>
+            
             <KuButton
               id="delete-account-modal-btn"
               type="button"
-              actionType="apiRequest"
+              actionType="button"
               variant="danger"
               onClick={() => setShowDeleteModal(true)}
               label="Excluir minha conta"
+              customClass="px-6 py-3"
             />
-          </Card>
-        </div>
-      )}
+          </div>
+        </Card>
 
-      <KuModal
-        show={showPasswordModal}
-        title="Alterar Senha"
-        onClose={() => setShowPasswordModal(false)}
-      >
-        <ChangePasswordForm
-          onSuccess={() => setShowPasswordModal(false)}
-          onCancel={() => setShowPasswordModal(false)}
-        />
-      </KuModal>
-
-      <KuModal
-        show={showDeleteModal}
-        title="Confirmar Exclusão"
-        onClose={() => setShowDeleteModal(false)}
-      >
-        <DeleteAccountConfirm
-          onSuccess={() => setShowDeleteModal(false)}
-          onCancel={() => setShowDeleteModal(false)}
-        />
-      </KuModal>
+        <KuModal
+          show={showDeleteModal}
+          title="Confirmar Exclusão da Conta"
+          onClose={() => setShowDeleteModal(false)}
+        >
+          <DeleteAccountConfirm
+            onSuccess={() => setShowDeleteModal(false)}
+            onCancel={() => setShowDeleteModal(false)}
+          />
+        </KuModal>
+      </div>
     </div>
   );
 }

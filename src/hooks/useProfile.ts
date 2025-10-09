@@ -16,9 +16,15 @@ export const usePersonProfile = () => {
       const data = await profileService.getPersonProfile();
       setProfile(data);
     } catch (err: any) {
-      const errorMessage = err.response?.data?.message || err.message || 'Erro ao carregar perfil';
-      setError(errorMessage);
-      toast.error(errorMessage);
+      // Se o perfil não existe (404), não é um erro - apenas não há dados ainda
+      if (err.response?.status === 404) {
+        setProfile(null);
+        setError(null);
+      } else {
+        const errorMessage = err.response?.data?.message || err.message || 'Erro ao carregar perfil';
+        setError(errorMessage);
+        toast.error(errorMessage);
+      }
     } finally {
       setLoading(false);
     }
@@ -29,12 +35,21 @@ export const usePersonProfile = () => {
       setLoading(true);
       setError(null);
       delete profileData._id;
-      const response = await profileService.updatePersonProfile(profileData);
-      toast.success(response.message || 'Perfil atualizado com sucesso!');
+      
+      let response;
+      // Se o perfil não existe ainda, criar; senão atualizar
+      if (!profile || !profile._id) {
+        response = await profileService.createPersonProfile(profileData);
+        toast.success(response.message || 'Perfil criado com sucesso!');
+      } else {
+        response = await profileService.updatePersonProfile(profileData);
+        toast.success(response.message || 'Perfil atualizado com sucesso!');
+      }
+      
       await fetchProfile(); // Refresh the profile data
       return true;
     } catch (err: any) {
-      const errorMessage = err.response?.data?.message || err.message || 'Erro ao atualizar perfil';
+      const errorMessage = err.response?.data?.message || err.message || 'Erro ao salvar perfil';
       setError(errorMessage);
       toast.error(errorMessage);
       return false;
@@ -69,9 +84,15 @@ export const useCompanyProfile = () => {
       const data = await profileService.getCompanyProfile();
       setProfile(data);
     } catch (err: any) {
-      const errorMessage = err.response?.data?.message || err.message || 'Erro ao carregar perfil';
-      setError(errorMessage);
-      toast.error(errorMessage);
+      // Se o perfil não existe (404), não é um erro - apenas não há dados ainda
+      if (err.response?.status === 404) {
+        setProfile(null);
+        setError(null);
+      } else {
+        const errorMessage = err.response?.data?.message || err.message || 'Erro ao carregar perfil';
+        setError(errorMessage);
+        toast.error(errorMessage);
+      }
     } finally {
       setLoading(false);
     }
@@ -82,12 +103,21 @@ export const useCompanyProfile = () => {
       setLoading(true);
       setError(null);
       delete profileData._id;
-      const response = await profileService.updateCompanyProfile(profileData);
-      toast.success(response.message || 'Perfil atualizado com sucesso!');
+      
+      let response;
+      // Se o perfil não existe ainda, criar; senão atualizar
+      if (!profile || !profile._id) {
+        response = await profileService.createCompanyProfile(profileData);
+        toast.success(response.message || 'Perfil criado com sucesso!');
+      } else {
+        response = await profileService.updateCompanyProfile(profileData);
+        toast.success(response.message || 'Perfil atualizado com sucesso!');
+      }
+      
       await fetchProfile(); // Refresh the profile data
       return true;
     } catch (err: any) {
-      const errorMessage = err.response?.data?.message || err.message || 'Erro ao atualizar perfil';
+      const errorMessage = err.response?.data?.message || err.message || 'Erro ao salvar perfil';
       setError(errorMessage);
       toast.error(errorMessage);
       return false;

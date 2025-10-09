@@ -18,6 +18,7 @@ export interface IPost {
   cover?: IFileItem[];
   tags?: string[];
   coauthors?: ICoauthor[];
+  relatedPosts?: string[];
   createdAt: string;
   updatedAt: string;
 }
@@ -30,6 +31,7 @@ export interface ICreatePost {
   author: string;
   tags?: string[];
   coauthors?: ICoauthor[];
+  relatedPosts?: string[];
 }
 
 export interface IUpdatePost {
@@ -40,6 +42,7 @@ export interface IUpdatePost {
   author?: string;
   tags?: string[];
   coauthors?: ICoauthor[];
+  relatedPosts?: string[];
 }
 
 export interface IPostsResponse {
@@ -59,4 +62,5 @@ export interface IPostFormData {
   author: string;
   tags: string[];
   coauthors: ICoauthor[];
+  relatedPosts: string[];
 }

@@ -15,6 +15,18 @@ export const postsService = {
     }
   },
 
+  // Search posts by title
+  searchPosts: async (query: string, page: number = 1, limit: number = 10): Promise<IPostsResponse> => {
+    try {
+      const response = await api.get("/posts", {
+        params: { title: query, page, limit }
+      });
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
   // Get single post by ID
   getPostById: async (id: string): Promise<IPost> => {
     try {

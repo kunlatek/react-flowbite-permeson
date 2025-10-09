@@ -32,7 +32,7 @@ export default function EditInvitationPage() {
         toast.error("Falha ao carregar o convite.");
       })
       .finally(() => setPageLoading(false));
-  }, [id, navigate, toast]);
+  }, [id]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

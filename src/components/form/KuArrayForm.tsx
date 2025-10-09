@@ -275,7 +275,7 @@ export default function KuArrayForm({
         className="w-full mt-3"
       >
         <HiPlus className="mr-2 h-4 w-4" />
-        Adicionar {itemType === "string" ? "Item" : "Coautor"}
+        Adicionar {itemType === "string" ? "Item" : label}
       </Button>
 
       {hasError && <HelperText color="failure">{error}</HelperText>}

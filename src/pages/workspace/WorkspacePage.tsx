@@ -4,11 +4,13 @@ import { Card, Button, Spinner, Alert, Modal } from "flowbite-react";
 import { HiUserAdd, HiRefresh, HiTrash } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
 import { useWorkspace } from "@/hooks/useWorkspace";
+import { useUserPermissions } from "@/hooks/useUserPermissions";
 
 export default function WorkspacePage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { workspace, loading, error, fetchWorkspace, removeMember } = useWorkspace();
+  const { permissions } = useUserPermissions();
   const [removeModalOpen, setRemoveModalOpen] = useState(false);
   const [userToRemove, setUserToRemove] = useState<{ userId: string; userName?: string } | null>(null);
   
@@ -82,7 +84,7 @@ export default function WorkspacePage() {
                 <HiRefresh className="mr-2 h-4 w-4" />
                 {t("workspace.refresh")}
               </Button>
-              {workspace?.isOwner && (
+              {permissions.canCreateWorkspaces && (
                 <Button
                   color="primary"
                   className="bg-blue-600 hover:bg-blue-700 text-white border-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:text-white"
@@ -157,7 +159,7 @@ export default function WorkspacePage() {
                       <div className="text-sm text-gray-500 dark:text-gray-400">
                         #{index + 1}
                       </div>
-                      {!isOwner && workspace?.isOwner && (
+                      {!isOwner && permissions.canDeleteWorkspaces && (
                         <Button
                           size="sm"
                           color="failure"

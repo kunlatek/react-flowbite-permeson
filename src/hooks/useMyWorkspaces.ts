@@ -80,11 +80,11 @@ export const useMyWorkspaces = () => {
     setSelectedWorkspaceId(workspaceId);
     localStorage.setItem('selectedWorkspaceId', workspaceId);
     
-    toast.success("Workspace alterado com sucesso! Recarregando página...");
+    toast.success("Workspace alterado com sucesso! Redirecionando...");
     
-    // Refresh da página para atualizar todos os dados
+    // Redirecionar para dashboard e depois recarregar
     setTimeout(() => {
-      window.location.reload();
+      window.location.href = '/dashboard';
     }, 1000); // Aguarda 1 segundo para o usuário ver a mensagem
     
     return true;

@@ -54,34 +54,35 @@ export default function KuDataTable<T extends { _id: string }>({
   );
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
 
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const params = new URLSearchParams();
-      params.append("page", String(currentPage));
-      params.append("limit", String(pageSize));
-      if (sortColumn) {
-        params.append("sortBy", String(sortColumn));
-        params.append("sortDir", sortDirection);
-      }
-      const result = await dataSource(params);
-      setData(result.data);
-      setTotalItems(result.total);
-    } catch (err: unknown) {
-      if (axios.isAxiosError(err)) {
-        setError(err.response?.data?.message || "Failed to fetch data");
-      } else {
-        setError("An unknown error occurred");
-      }
-    } finally {
-      setLoading(false);
-    }
-  }, [currentPage, pageSize, sortColumn, sortDirection, dataSource]);
-
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        const params = new URLSearchParams();
+        params.append("page", String(currentPage));
+        params.append("limit", String(pageSize));
+        if (sortColumn) {
+          params.append("sortBy", String(sortColumn));
+          params.append("sortDir", sortDirection);
+        }
+        const result = await dataSource(params);
+        setData(result.data);
+        setTotalItems(result.total);
+      } catch (err: unknown) {
+        if (axios.isAxiosError(err)) {
+          setError(err.response?.data?.message || "Failed to fetch data");
+        } else {
+          setError("An unknown error occurred");
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+    
     fetchData();
-  }, [fetchData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentPage, pageSize, sortColumn, sortDirection]);
 
   const handleSort = (columnKey: keyof T | string) => {
     if (sortColumn === columnKey) {

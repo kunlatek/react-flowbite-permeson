@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Card, Button, TextInput, Spinner, Alert } from "flowbite-react";
-import { HiSearch, HiUserAdd, HiArrowLeft, HiCheckCircle } from "react-icons/hi";
+import { Card, Button, TextInput, Spinner, Alert, Label, Select } from "flowbite-react";
+import { HiSearch, HiUserAdd, HiArrowLeft, HiCheckCircle, HiShieldCheck } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
 import { useUserSearch, useWorkspace } from "@/hooks/useWorkspace";
+import { useRoles } from "@/hooks/useRoles";
 import type { IUserSearch } from "@/models/workspace";
 
 export default function AddMemberPage() {
@@ -11,11 +12,13 @@ export default function AddMemberPage() {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedUser, setSelectedUser] = useState<IUserSearch | null>(null);
+  const [selectedRoleId, setSelectedRoleId] = useState<string>("");
   const [adding, setAdding] = useState(false);
   const [success, setSuccess] = useState(false);
   
   const { searchResults, searching, searchUsers } = useUserSearch();
   const { workspace, addMember } = useWorkspace();
+  const { roles, loading: rolesLoading } = useRoles();
 
   useEffect(() => {
     if (searchTerm && searchTerm.length >= 2) {
@@ -34,12 +37,13 @@ export default function AddMemberPage() {
     if (!selectedUser) return;
     
     setAdding(true);
-    const success = await addMember(selectedUser.userId);
+    const success = await addMember(selectedUser.userId, selectedRoleId || undefined);
     if (success) {
       setSuccess(true);
       // Reset form
       setSearchTerm("");
       setSelectedUser(null);
+      setSelectedRoleId("");
       // Auto redirect after 2 seconds
       setTimeout(() => {
         navigate("/workspace");
@@ -172,6 +176,33 @@ export default function AddMemberPage() {
                       </div>
                     </div>
                   </div>
+                </div>
+              )}
+
+              {/* Role Selection */}
+              {selectedUser && (
+                <div>
+                  <Label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <HiShieldCheck className="inline h-4 w-4 mr-1" />
+                    {t("workspace.select_role_label")}
+                  </Label>
+                  <Select
+                    value={selectedRoleId}
+                    onChange={(e) => setSelectedRoleId(e.target.value)}
+                    disabled={adding || rolesLoading}
+                  >
+                    <option value="">
+                      {rolesLoading ? t("workspace.loading_roles") : t("workspace.select_role_placeholder")}
+                    </option>
+                    {roles.map((role) => (
+                      <option key={role._id || role.id} value={role._id || role.id}>
+                        {role.name}
+                      </option>
+                    ))}
+                  </Select>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                    {t("workspace.select_role_help")}
+                  </p>
                 </div>
               )}
             </div>

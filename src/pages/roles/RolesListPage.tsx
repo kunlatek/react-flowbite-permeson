@@ -5,49 +5,49 @@ import KuDataTable, { type IColumn, type IAction, type IHeaderAction } from "@/c
 import { useToast } from "@/hooks/useToast";
 import { useWorkspace } from "@/hooks/useWorkspace";
 import { useUserPermissions } from "@/hooks/useUserPermissions";
-import { postsService } from "@/services/postsService";
-import PostDeleteConfirm from "@/components/pages/posts/PostDeleteConfirm";
-import type { IPost, IPostsResponse } from "@/models/posts";
+import { rolesService } from "@/services/rolesService";
+import RoleDeleteConfirm from "@/components/pages/roles/RoleDeleteConfirm";
+import type { IRole, IRolesResponse, IRoleTable } from "@/models/roles";
 
-export default function PostsListPage() {
+export default function RolesListPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const toast = useToast();
   const { workspace } = useWorkspace();
   const { permissions } = useUserPermissions();
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
-  const [postToDelete, setPostToDelete] = useState<IPost | null>(null);
+  const [roleToDelete, setRoleToDelete] = useState<IRole | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
 
-  const handleView = (post: IPost) => {
-    navigate(`/posts/${post._id}`);
+  const handleView = (role: IRoleTable) => {
+    navigate(`/roles/${role._id}`);
   };
 
-  const canEditPost = (post: IPost) => {
+  const canEditRole = (role: IRoleTable) => {
     if (!workspace?.currentUserId) return false;
     
     const isOwner = workspace.isOwner;
-    const isCreator = String(post.createdBy) === String(workspace.currentUserId);
+    const isCreator = String(role.createdBy) === String(workspace.currentUserId);
     
     return isOwner || isCreator;
   };
 
-  const handleDeleteClick = (post: IPost) => {
-    setPostToDelete(post);
+  const handleDeleteClick = (role: IRoleTable) => {
+    setRoleToDelete(role);
     setDeleteModalOpen(true);
   };
 
   const handleDeleteConfirm = async () => {
-    if (!postToDelete) return;
+    if (!roleToDelete) return;
 
     setDeleteLoading(true);
     try {
-      await postsService.deletePost(postToDelete._id);
-      toast.success(t("posts.delete_success"));
+      await rolesService.deleteRole(roleToDelete._id || roleToDelete.id || '');
+      toast.success(t("roles.delete_success"));
       setDeleteModalOpen(false);
-      setPostToDelete(null);
+      setRoleToDelete(null);
     } catch (err: any) {
-      toast.error(err.message || t("posts.error.delete_failed"));
+      toast.error(err.message || t("roles.error.delete_failed"));
     } finally {
       setDeleteLoading(false);
     }
@@ -55,7 +55,7 @@ export default function PostsListPage() {
 
   const handleDeleteCancel = () => {
     setDeleteModalOpen(false);
-    setPostToDelete(null);
+    setRoleToDelete(null);
   };
 
   const formatDate = (dateString: string) => {
@@ -79,72 +79,68 @@ export default function PostsListPage() {
     }
   };
 
-  const formatReadingTime = (minutes: number) => {
-    return t("posts.reading_time", { minutes });
+  const formatPermissions = (permissions: any[]) => {
+    if (!permissions || permissions.length === 0) return "-";
+    return `${permissions.length} módulo${permissions.length > 1 ? 's' : ''}`;
   };
 
   // Função para buscar dados compatível com KuDataTable
-  const fetchPosts = async (params: URLSearchParams) => {
+  const fetchRoles = async (params: URLSearchParams) => {
     const page = Number(params.get("page")) || 1;
     const limit = Number(params.get("limit")) || 10;
     
-    const response: IPostsResponse = await postsService.getPosts(page, limit);
+    const response: IRolesResponse = await rolesService.getRoles(page, limit);
+    
+    // Garantir que todos os dados têm _id para compatibilidade com KuDataTable
+    const normalizedData: IRoleTable[] = (response.data || []).map(role => ({
+      ...role,
+      _id: role._id || role.id || ''
+    })).filter(role => role._id); // Filtrar apenas roles com _id válido
     
     return {
-      data: response.data || [],
+      data: normalizedData,
       total: response.total || 0,
     };
   };
 
   // Definição das colunas da tabela
-  const columns: IColumn<IPost>[] = [
+  const columns: IColumn<IRoleTable>[] = [
     {
-      key: "title",
-      header: t("posts.form.title"),
+      key: "name",
+      header: t("roles.form.name"),
       sortable: true,
     },
     {
-      key: "author",
-      header: t("posts.form.author"),
-      sortable: true,
-    },
-    {
-      key: "readingTime",
-      header: t("posts.form.reading_time"),
-      sortable: true,
-      formatValue: (value) => formatReadingTime(Number(value)),
+      key: "permissions",
+      header: t("roles.permissions"),
+      sortable: false,
+      formatValue: (value) => formatPermissions(value as any[]),
     },
     {
       key: "createdAt",
-      header: t("posts.created_at"),
+      header: t("roles.created_at"),
       sortable: true,
       formatValue: (value) => formatDate(value as string),
     },
   ];
 
   // Definição das ações da tabela
-  const getActions = (post: IPost): IAction<IPost>[] => {
-    const baseActions: IAction<IPost>[] = [
-      {
-        label: t("posts.view"),
-        color: "secondary",
-        handler: handleView,
-      },
-    ];
+  const getActions = (role: IRoleTable): IAction<IRoleTable>[] => {
+    const baseActions: IAction<IRoleTable>[] = [];
 
     // Adicionar ações de editar e deletar apenas se o usuário tiver permissão
-    if (canEditPost(post)) {
-      if (permissions.canEditPosts) {
+    if (canEditRole(role)) {
+      if (permissions.canEditRoles) {
         baseActions.push({
-          label: t("posts.edit"),
+          label: t("roles.edit"),
           color: "primary",
-          handler: (post) => navigate(`/posts/${post._id}/edit`),
+          handler: (role) => navigate(`/roles/${role._id}/edit`),
         });
       }
       
-      if (permissions.canDeletePosts) {
+      if (permissions.canDeleteRoles) {
         baseActions.push({
-          label: t("posts.delete"),
+          label: t("roles.delete"),
           color: "danger",
           handler: handleDeleteClick,
         });
@@ -157,21 +153,21 @@ export default function PostsListPage() {
   // Ações do header
   const headerActions: IHeaderAction[] = [];
   
-  if (permissions.canCreatePosts) {
+  if (permissions.canCreateRoles) {
     headerActions.push({
-      label: t("posts.new_post"),
+      label: t("roles.new_role"),
       color: "primary",
-      handler: () => navigate("/posts/new"),
+      handler: () => navigate("/roles/new"),
     });
   }
 
   return (
     <div className="flex-1 p-4 sm:p-6 lg:p-8">
       <div className="mx-auto max-w-7xl">
-        <KuDataTable<IPost>
-          title={t("posts.title")}
+        <KuDataTable<IRoleTable>
+          title={t("roles.title")}
           columns={columns}
-          dataSource={fetchPosts}
+          dataSource={fetchRoles}
           getActions={getActions}
           headerActions={headerActions}
           pageSize={10}
@@ -179,8 +175,8 @@ export default function PostsListPage() {
       </div>
 
       {/* Modal de confirmação de exclusão */}
-      <PostDeleteConfirm
-        post={postToDelete}
+      <RoleDeleteConfirm
+        role={roleToDelete}
         show={deleteModalOpen}
         loading={deleteLoading}
         onClose={handleDeleteCancel}

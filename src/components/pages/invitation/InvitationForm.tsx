@@ -1,9 +1,7 @@
-import { KuInput, KuSelect, KuButton } from "@/components/form";
-import type { ISelectOption } from "@/models/form";
+import { KuInput, KuButton } from "@/components/form";
 
 interface InvitationFormData {
   email: string;
-  role: string;
 }
 
 interface InvitationFormProps {
@@ -21,11 +19,6 @@ export default function InvitationForm({
   onCancel,
   loading,
 }: InvitationFormProps) {
-  const rolesOptions: ISelectOption[] = [
-    { label: "Admin", value: "admin" },
-    { label: "User", value: "user" },
-  ];
-
   return (
     <form onSubmit={onSubmit} className="max-w-lg">
       <div className="space-y-4">
@@ -37,18 +30,6 @@ export default function InvitationForm({
           value={invitation.email || ""}
           onChange={(e) =>
             onInvitationChange({ ...invitation, email: e.target.value })
-          }
-          isRequired
-        />
-        <KuSelect
-          type="select"
-          dataType="text"
-          name="role"
-          label="Papel"
-          options={rolesOptions}
-          value={invitation.role || ""}
-          onChange={(name, value) =>
-            onInvitationChange({ ...invitation, role: String(value) })
           }
           isRequired
         />

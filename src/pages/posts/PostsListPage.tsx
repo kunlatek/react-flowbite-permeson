@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import KuDataTable, { type IColumn, type IAction, type IHeaderAction } from "@/components/data/KuDataTable";
 import { useToast } from "@/hooks/useToast";
 import { useWorkspace } from "@/hooks/useWorkspace";
-import { useUserPermissions } from "@/hooks/useUserPermissions";
 import { postsService } from "@/services/postsService";
 import PostDeleteConfirm from "@/components/pages/posts/PostDeleteConfirm";
 import type { IPost, IPostsResponse } from "@/models/posts";
@@ -14,7 +13,6 @@ export default function PostsListPage() {
   const navigate = useNavigate();
   const toast = useToast();
   const { workspace } = useWorkspace();
-  const { permissions } = useUserPermissions();
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [postToDelete, setPostToDelete] = useState<IPost | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -134,36 +132,30 @@ export default function PostsListPage() {
 
     // Adicionar ações de editar e deletar apenas se o usuário tiver permissão
     if (canEditPost(post)) {
-      if (permissions.canEditPosts) {
-        baseActions.push({
-          label: t("posts.edit"),
-          color: "primary",
-          handler: (post) => navigate(`/posts/${post._id}/edit`),
-        });
-      }
+      baseActions.push({
+        label: t("posts.edit"),
+        color: "primary",
+        handler: (post) => navigate(`/posts/${post._id}/edit`),
+      });
       
-      if (permissions.canDeletePosts) {
-        baseActions.push({
-          label: t("posts.delete"),
-          color: "danger",
-          handler: handleDeleteClick,
-        });
-      }
+      baseActions.push({
+        label: t("posts.delete"),
+        color: "danger",
+        handler: handleDeleteClick,
+      });
     }
 
     return baseActions;
   };
 
   // Ações do header
-  const headerActions: IHeaderAction[] = [];
-  
-  if (permissions.canCreatePosts) {
-    headerActions.push({
+  const headerActions: IHeaderAction[] = [
+    {
       label: t("posts.new_post"),
       color: "primary",
       handler: () => navigate("/posts/new"),
-    });
-  }
+    }
+  ];
 
   return (
     <div className="flex-1 p-4 sm:p-6 lg:p-8">

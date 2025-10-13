@@ -24,7 +24,7 @@ const checkUserProfiles = async (): Promise<ProfileStatus> => {
 
 // --- Person Profile Methods ---
 const createPersonProfile = async (profileData: Partial<IPersonProfile>) => {
-  const response = await api.post("/profiles/person", profileData);
+  const response = await api.put("/profiles/person", profileData);
   return response.data;
 };
 
@@ -53,7 +53,7 @@ const updatePersonProfileById = async (
 
 // --- Company Profile Methods ---
 const createCompanyProfile = async (profileData: Partial<ICompanyProfile>) => {
-  const response = await api.post("/profiles/company", profileData);
+  const response = await api.put("/profiles/company", profileData);
   return response.data;
 };
 

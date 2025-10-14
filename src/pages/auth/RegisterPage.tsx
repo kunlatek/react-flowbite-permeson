@@ -10,7 +10,7 @@ export default function RegisterPage() {
   const [searchParams] = useSearchParams();
   const email = searchParams.get('email') || '';
   const token = searchParams.get('token') || '';
-  
+
   const signup = useSignup(token);
   const { t } = useTranslation();
 

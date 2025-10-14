@@ -30,7 +30,6 @@
     "title": "Welcome",
     "description": "To get started, select an option below.",
     "login_platform": "Sign in to Platform",
-    "create_account": "Create Account",
     "go_to_dashboard": "Go to Dashboard"
   },
   "login": {
@@ -44,18 +43,6 @@
     "forgot_password": "Forgot your password?",
     "no_account": "Don't have an account?",
     "create_account": "Create account"
-  },
-  "preRegister": {
-    "title": "Request Registration",
-    "description": "Enter your email to receive the registration link for your account.",
-    "email_label": "Email",
-    "email_placeholder": "Enter your email",
-    "email_required": "Email is required",
-    "submit_button": "Send Registration Email",
-    "submit_loading": "Sending...",
-    "success_message": "Registration email sent successfully! Check your inbox.",
-    "already_have_account": "Already have an account?",
-    "login_link": "Sign in"
   },
   "register": {
     "title": "Create Account",
@@ -108,6 +95,7 @@
       "profile": "Profile",
       "posts": "Posts",
       "roles": "Roles",
+      "invitations": "Invitations",
       "collaborators": "Collaborators",
       "settings": "Settings",
       "logout": "Logout",
@@ -489,6 +477,60 @@
       "not_found": "Role not found",
       "role_not_available": "The requested role is not available",
       "invalid_id": "Invalid role ID",
+      "required_fields": "Please fill in all required fields"
+    }
+  },
+  "invitations": {
+    "title": "Invitations",
+    "subtitle": "Manage workspace invitations",
+    "new_invitation": "New Invitation",
+    "create_first_invitation": "Create First Invitation",
+    "no_invitations": "No invitations found",
+    "no_invitations_description": "Start by creating your first invitation to invite users to your workspace.",
+    "view": "View",
+    "edit": "Edit",
+    "delete": "Delete",
+    "resend": "Resend Email",
+    "delete_title": "Delete Invitation",
+    "confirm_delete_title": "Confirm Deletion",
+    "confirm_delete_message": "Are you sure you want to delete the invitation for {{email}}?",
+    "delete_warning": "This action cannot be undone.",
+    "create": "Create Invitation",
+    "creating": "Creating...",
+    "resending": "Resending...",
+    "update": "Update Invitation",
+    "updating": "Updating...",
+    "cancel": "Cancel",
+    "back_to_list": "Back to List",
+    "edit_invitation": "Edit Invitation",
+    "created_at": "Created At",
+    "status": {
+      "title": "Status",
+      "pending": "Pending",
+      "accepted": "Accepted"
+    },
+    "form": {
+      "email": "Email",
+      "email_placeholder": "Enter email address",
+      "email_invalid": "Please enter a valid email address",
+      "role": "Role",
+      "role_placeholder": "Select a role",
+      "role_required": "Please select a role"
+    },
+    "create_success": "Invitation created successfully",
+    "update_success": "Invitation updated successfully",
+    "delete_success": "Invitation deleted successfully",
+    "resend_success": "Invitation email resent successfully",
+    "not_found": "Invitation not found",
+    "error": {
+      "fetch_failed": "Error loading invitations",
+      "create_failed": "Error creating invitation",
+      "update_failed": "Error updating invitation",
+      "delete_failed": "Error deleting invitation",
+      "resend_failed": "Error resending invitation email",
+      "not_found": "Invitation not found",
+      "workspace_required": "Workspace information is required",
+      "invalid_id": "Invalid invitation ID",
       "required_fields": "Please fill in all required fields"
     }
   },

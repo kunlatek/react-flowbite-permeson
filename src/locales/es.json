@@ -30,7 +30,6 @@
     "title": "Bienvenido",
     "description": "Para iniciar, seleccione una opción a continuación.",
     "login_platform": "Iniciar Sesión en la Plataforma",
-    "create_account": "Crear Cuenta",
     "go_to_dashboard": "Ir al Dashboard"
   },
   "login": {
@@ -44,18 +43,6 @@
     "forgot_password": "¿Olvidó su contraseña?",
     "no_account": "¿No tiene una cuenta?",
     "create_account": "Crear cuenta"
-  },
-  "preRegister": {
-    "title": "Solicitar Registro",
-    "description": "Ingrese su email para recibir el enlace de registro de su cuenta.",
-    "email_label": "Email",
-    "email_placeholder": "Ingrese su email",
-    "email_required": "El email es obligatorio",
-    "submit_button": "Enviar Email de Registro",
-    "submit_loading": "Enviando...",
-    "success_message": "¡Email de registro enviado exitosamente! Revise su bandeja de entrada.",
-    "already_have_account": "¿Ya tiene una cuenta?",
-    "login_link": "Iniciar sesión"
   },
   "register": {
     "title": "Crear Cuenta",
@@ -108,6 +95,7 @@
       "profile": "Perfil",
       "posts": "Posts",
       "roles": "Papéis",
+      "invitations": "Invitaciones",
       "collaborators": "Colaboradores",
       "settings": "Configuraciones",
       "logout": "Cerrar Sesión",
@@ -489,6 +477,60 @@
       "not_found": "Rol no encontrado",
       "role_not_available": "El rol solicitado no está disponible",
       "invalid_id": "ID del rol inválido",
+      "required_fields": "Complete todos los campos obligatorios"
+    }
+  },
+  "invitations": {
+    "title": "Invitaciones",
+    "subtitle": "Gestiona las invitaciones del workspace",
+    "new_invitation": "Nueva Invitación",
+    "create_first_invitation": "Crear Primera Invitación",
+    "no_invitations": "No se encontraron invitaciones",
+    "no_invitations_description": "Comienza creando tu primera invitación para invitar usuarios a tu workspace.",
+    "view": "Ver",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "resend": "Reenviar Email",
+    "delete_title": "Eliminar Invitación",
+    "confirm_delete_title": "Confirmar Eliminación",
+    "confirm_delete_message": "¿Estás seguro de que quieres eliminar la invitación para {{email}}?",
+    "delete_warning": "Esta acción no se puede deshacer.",
+    "create": "Crear Invitación",
+    "creating": "Creando...",
+    "resending": "Reenviando...",
+    "update": "Actualizar Invitación",
+    "updating": "Actualizando...",
+    "cancel": "Cancelar",
+    "back_to_list": "Volver a la Lista",
+    "edit_invitation": "Editar Invitación",
+    "created_at": "Creado En",
+    "status": {
+      "title": "Estado",
+      "pending": "Pendiente",
+      "accepted": "Aceptado"
+    },
+    "form": {
+      "email": "Email",
+      "email_placeholder": "Ingrese la dirección de email",
+      "email_invalid": "Ingrese una dirección de email válida",
+      "role": "Rol",
+      "role_placeholder": "Seleccione un rol",
+      "role_required": "Seleccione un rol"
+    },
+    "create_success": "Invitación creada exitosamente",
+    "update_success": "Invitación actualizada exitosamente",
+    "delete_success": "Invitación eliminada exitosamente",
+    "resend_success": "Email de invitación reenviado exitosamente",
+    "not_found": "Invitación no encontrada",
+    "error": {
+      "fetch_failed": "Error al cargar invitaciones",
+      "create_failed": "Error al crear invitación",
+      "update_failed": "Error al actualizar invitación",
+      "delete_failed": "Error al eliminar invitación",
+      "resend_failed": "Error al reenviar email de invitación",
+      "not_found": "Invitación no encontrada",
+      "workspace_required": "La información del workspace es obligatoria",
+      "invalid_id": "ID de invitación inválido",
       "required_fields": "Complete todos los campos obligatorios"
     }
   },

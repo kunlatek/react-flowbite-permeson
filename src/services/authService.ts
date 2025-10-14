@@ -7,10 +7,6 @@ const login = async (email: string, password: string) => {
 
 const logout = () => {};
 
-const registerInit = async (email: string) => {
-  const response = await api.post("/auth/register-init", { email });
-  return response.data;
-};
 
 const forgotPassword = async (email: string) => {
   const response = await api.post("/auth/forgot-password", { email });
@@ -30,7 +26,6 @@ const switchRole = async (role: string) => {
 export const authService = {
   login,
   logout,
-  registerInit,
   forgotPassword,
   resetPassword,
   switchRole,

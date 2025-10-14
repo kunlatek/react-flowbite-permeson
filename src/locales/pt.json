@@ -30,7 +30,6 @@
     "title": "Bem-vindo",
     "description": "Para iniciar, selecione uma opção abaixo.",
     "login_platform": "Entrar na Plataforma",
-    "create_account": "Criar Conta",
     "go_to_dashboard": "Ir para o Dashboard"
   },
   "login": {
@@ -44,18 +43,6 @@
     "forgot_password": "Esqueceu sua senha?",
     "no_account": "Não tem uma conta?",
     "create_account": "Criar conta"
-  },
-  "preRegister": {
-    "title": "Solicitar Registro",
-    "description": "Digite seu e-mail para receber o link de registro da sua conta.",
-    "email_label": "E-mail",
-    "email_placeholder": "Digite seu e-mail",
-    "email_required": "E-mail é obrigatório",
-    "submit_button": "Enviar E-mail de Registro",
-    "submit_loading": "Enviando...",
-    "success_message": "E-mail de registro enviado com sucesso! Verifique sua caixa de entrada.",
-    "already_have_account": "Já tem uma conta?",
-    "login_link": "Fazer login"
   },
   "register": {
     "title": "Criar Conta",
@@ -108,6 +95,7 @@
       "profile": "Perfil",
       "posts": "Posts",
       "roles": "Papéis",
+      "invitations": "Convites",
       "collaborators": "Colaboradores",
       "settings": "Configurações",
       "logout": "Sair",
@@ -489,6 +477,60 @@
       "not_found": "Papel não encontrado",
       "role_not_available": "O papel solicitado não está disponível",
       "invalid_id": "ID do papel inválido",
+      "required_fields": "Preencha todos os campos obrigatórios"
+    }
+  },
+  "invitations": {
+    "title": "Convites",
+    "subtitle": "Gerencie os convites do workspace",
+    "new_invitation": "Novo Convite",
+    "create_first_invitation": "Criar Primeiro Convite",
+    "no_invitations": "Nenhum convite encontrado",
+    "no_invitations_description": "Comece criando seu primeiro convite para convidar usuários para seu workspace.",
+    "view": "Visualizar",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "resend": "Reenviar E-mail",
+    "delete_title": "Excluir Convite",
+    "confirm_delete_title": "Confirmar Exclusão",
+    "confirm_delete_message": "Tem certeza que deseja excluir o convite para {{email}}?",
+    "delete_warning": "Esta ação não pode ser desfeita.",
+    "create": "Criar Convite",
+    "creating": "Criando...",
+    "resending": "Reenviando...",
+    "update": "Atualizar Convite",
+    "updating": "Atualizando...",
+    "cancel": "Cancelar",
+    "back_to_list": "Voltar para Lista",
+    "edit_invitation": "Editar Convite",
+    "created_at": "Criado Em",
+    "status": {
+      "title": "Status",
+      "pending": "Pendente",
+      "accepted": "Aceito"
+    },
+    "form": {
+      "email": "Email",
+      "email_placeholder": "Digite o endereço de email",
+      "email_invalid": "Digite um endereço de email válido",
+      "role": "Papel",
+      "role_placeholder": "Selecione um papel",
+      "role_required": "Selecione um papel"
+    },
+    "create_success": "Convite criado com sucesso",
+    "update_success": "Convite atualizado com sucesso",
+    "delete_success": "Convite excluído com sucesso",
+    "resend_success": "E-mail do convite reenviado com sucesso",
+    "not_found": "Convite não encontrado",
+    "error": {
+      "fetch_failed": "Erro ao carregar convites",
+      "create_failed": "Erro ao criar convite",
+      "update_failed": "Erro ao atualizar convite",
+      "delete_failed": "Erro ao excluir convite",
+      "resend_failed": "Erro ao reenviar e-mail do convite",
+      "not_found": "Convite não encontrado",
+      "workspace_required": "Informações do workspace são obrigatórias",
+      "invalid_id": "ID do convite inválido",
       "required_fields": "Preencha todos os campos obrigatórios"
     }
   },

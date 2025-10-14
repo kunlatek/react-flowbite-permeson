@@ -27,7 +27,8 @@ import {
   HiMoon,
   HiMenu,
   HiDocumentText,
-  HiShieldCheck
+  HiShieldCheck,
+  HiMail
 } from "react-icons/hi";
 
 export default function DashboardLayout() {
@@ -109,6 +110,15 @@ export default function DashboardLayout() {
                   <Sidebar.Item href="/roles" icon={HiShieldCheck}>
                     <div className="truncate w-[150px]">
                       {!sidebarCollapsed && t("dashboard.sidebar.roles")}
+                    </div>
+                  </Sidebar.Item>
+                )}
+                
+                {/* Invitations - sempre visível para owner, senão depende de permissão */}
+                {(isOwner || permissions.canViewInvitations) && (
+                  <Sidebar.Item href="/invitations" icon={HiMail}>
+                    <div className="truncate w-[150px]">
+                      {!sidebarCollapsed && t("dashboard.sidebar.invitations")}
                     </div>
                   </Sidebar.Item>
                 )}

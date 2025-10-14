@@ -4,18 +4,6 @@ interface UserDetails {
   deletedAt?: string;
 }
 
-const registerWithToken = async (
-  email: string,
-  password: string,
-  token: string
-) => {
-  const response = await api.post("/auth/signup", {
-    email,
-    password,
-    registerToken: token,
-  });
-  return response.data;
-};
 
 const getCurrentUserDetails = async (): Promise<UserDetails> => {
   const response = await api.get("/users/me");
@@ -55,7 +43,6 @@ const calculateDaysRemaining = (deletedAt: string | null): number => {
 };
 
 export const userService = {
-  registerWithToken,
   getCurrentUserDetails,
   changePassword,
   softDeleteOwnProfile,

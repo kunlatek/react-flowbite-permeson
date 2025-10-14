@@ -6,7 +6,6 @@ import ProfilePage from "@/pages/profile/ProfilePage";
 import ProfileTypeSelectionPage from "@/pages/profile/ProfileTypeSelectionPage";
 import ProfileSetupPage from "@/pages/profile/ProfileSetupPage";
 import RegisterPage from "@/pages/auth/RegisterPage";
-import PreRegisterPage from "@/pages/auth/PreRegisterPage";
 import ForgotPasswordPage from "@/pages/auth/ForgotPasswordPage";
 import ResetPasswordPage from "@/pages/auth/ResetPasswordPage";
 import SettingsPage from "@/pages/settings/SettingsPage";
@@ -29,6 +28,9 @@ import RolesListPage from "@/pages/roles/RolesListPage";
 import RoleCreatePage from "@/pages/roles/RoleCreatePage";
 import RoleEditPage from "@/pages/roles/RoleEditPage";
 
+// Invitations
+import { InvitationsListPage, InvitationCreatePage, InvitationEditPage } from "@/pages/invitations";
+
 export default function AppRouter() {
   return (
     <Routes>
@@ -40,7 +42,6 @@ export default function AppRouter() {
       {/* Rotas de Autenticação com Layout de Autenticação */}
       <Route element={<AuthLayout />}>
         <Route path="/auth/login" element={<LoginPage />} />
-        <Route path="/auth/pre-register" element={<PreRegisterPage />} />
         <Route path="/auth/register" element={<RegisterPage />} />
         <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
         <Route
@@ -103,6 +104,23 @@ export default function AppRouter() {
           <Route path="/roles/:id/edit" element={
             <PermissionGuard requiredPermission="canEditRoles">
               <RoleEditPage />
+            </PermissionGuard>
+          } />
+          
+          {/* Invitations Routes */}
+          <Route path="/invitations" element={
+            <PermissionGuard requiredPermission="canViewInvitations">
+              <InvitationsListPage />
+            </PermissionGuard>
+          } />
+          <Route path="/invitations/new" element={
+            <PermissionGuard requiredPermission="canCreateInvitations">
+              <InvitationCreatePage />
+            </PermissionGuard>
+          } />
+          <Route path="/invitations/:id/edit" element={
+            <PermissionGuard requiredPermission="canEditInvitations">
+              <InvitationEditPage />
             </PermissionGuard>
           } />
         </Route>

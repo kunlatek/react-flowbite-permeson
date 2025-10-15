@@ -2,11 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import KuInput from "@/components/form/KuInput";
-import KuSelect from "@/components/form/KuSelect";
 import KuButton from "@/components/form/KuButton";
 import { useToast } from "@/hooks/useToast";
-import { useWorkspace } from "@/hooks/useWorkspace";
-import { useRoles } from "@/hooks/useRoles";
 import { invitationsService } from "@/services/invitationsService";
 
 export default function InvitationEditPage() {
@@ -14,13 +11,11 @@ export default function InvitationEditPage() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const toast = useToast();
-  const { roles } = useRoles();
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
   const [invitation, setInvitation] = useState<any>(null);
 
   const [email, setEmail] = useState('');
-  const [roleId, setRoleId] = useState('');
 
   useEffect(() => {
     const fetchInvitation = async () => {
@@ -31,7 +26,6 @@ export default function InvitationEditPage() {
         const data = await invitationsService.getInvitationById(id);
         setInvitation(data);
         setEmail(data.email);
-        setRoleId(data.roleId);
       } catch (err: any) {
         toast.error(err.message || t("invitations.error.fetch_failed"));
         navigate("/invitations");
@@ -50,7 +44,6 @@ export default function InvitationEditPage() {
     try {
       await invitationsService.updateInvitation(id, {
         email: email,
-        roleId: roleId,
       });
       
       toast.success(t("invitations.update_success"));
@@ -122,22 +115,6 @@ export default function InvitationEditPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 error={""}
                 isRequired
-              />
-
-              <KuSelect
-                type="select"
-                name="roleId"
-                dataType="text"
-                label={t("invitations.form.role")}
-                placeholder={t("invitations.form.role_placeholder")}
-                value={roleId || ""}
-                onChange={(name, value) => setRoleId(String(value))}
-                error={""}
-                isRequired
-                options={roles.map((role) => ({
-                  label: role.name,
-                  value: role._id || role.id || "",
-                }))}
               />
 
               <div className="flex justify-end space-x-3">

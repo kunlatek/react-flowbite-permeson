@@ -4,7 +4,6 @@ import { useTranslation } from "react-i18next";
 import KuDataTable, { type IColumn, type IAction, type IHeaderAction } from "@/components/data/KuDataTable";
 import { useToast } from "@/hooks/useToast";
 import { useWorkspace } from "@/hooks/useWorkspace";
-import { useUserPermissions } from "@/hooks/useUserPermissions";
 import { invitationsService } from "@/services/invitationsService";
 import InvitationDeleteConfirm from "@/components/pages/invitations/InvitationDeleteConfirm";
 import type { IInvitation, IInvitationsResponse, IInvitationTable } from "@/models/invitations";
@@ -14,7 +13,6 @@ export default function InvitationsListPage() {
   const navigate = useNavigate();
   const toast = useToast();
   const { workspace } = useWorkspace();
-  const { permissions } = useUserPermissions();
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [invitationToDelete, setInvitationToDelete] = useState<IInvitation | null>(null);
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -164,7 +162,7 @@ export default function InvitationsListPage() {
     const baseActions: IAction<IInvitationTable>[] = [];
 
     // Adicionar ação de reenvio se o convite for pendente e o usuário tiver permissão
-    if (canResendInvitation(invitation) && permissions.canEditInvitations) {
+    if (canResendInvitation(invitation)) {
       const isResending = resendLoading === (invitation._id || invitation.id);
       baseActions.push({
         label: isResending ? t("invitations.resending") || "Reenviando..." : t("invitations.resend"),
@@ -173,38 +171,32 @@ export default function InvitationsListPage() {
       });
     }
 
-    // Adicionar ações de editar e deletar apenas se o usuário tiver permissão
+    // Adicionar ações de editar e deletar apenas se o usuário puder editar o convite
     if (canEditInvitation(invitation)) {
-      if (permissions.canEditInvitations) {
-        baseActions.push({
-          label: t("invitations.edit"),
-          color: "primary",
-          handler: (invitation) => navigate(`/invitations/${invitation._id}/edit`),
-        });
-      }
+      baseActions.push({
+        label: t("invitations.edit"),
+        color: "primary",
+        handler: (invitation) => navigate(`/invitations/${invitation._id}/edit`),
+      });
       
-      if (permissions.canDeleteInvitations) {
-        baseActions.push({
-          label: t("invitations.delete"),
-          color: "danger",
-          handler: handleDeleteClick,
-        });
-      }
+      baseActions.push({
+        label: t("invitations.delete"),
+        color: "danger",
+        handler: handleDeleteClick,
+      });
     }
 
     return baseActions;
   };
 
   // Ações do header
-  const headerActions: IHeaderAction[] = [];
-  
-  if (permissions.canCreateInvitations) {
-    headerActions.push({
+  const headerActions: IHeaderAction[] = [
+    {
       label: t("invitations.new_invitation"),
       color: "primary",
       handler: () => navigate("/invitations/new"),
-    });
-  }
+    }
+  ];
 
   return (
     <div className="flex-1 p-4 sm:p-6 lg:p-8">

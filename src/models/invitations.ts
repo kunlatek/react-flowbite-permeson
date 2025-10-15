@@ -3,7 +3,6 @@ export interface IInvitation {
   id?: string;
   email: string;
   accepted: boolean;
-  roleId: string;
   workspaceId: string;
   createdBy: string;
   createdAt: string;
@@ -17,14 +16,12 @@ export interface IInvitationTable extends IInvitation {
 
 export interface ICreateInvitation {
   email: string;
-  roleId: string;
   workspaceId: string;
   createdBy: string;
 }
 
 export interface IUpdateInvitation {
   email?: string;
-  roleId?: string;
   accepted?: boolean;
 }
 
@@ -39,7 +36,6 @@ export interface IInvitationsResponse {
 
 export interface IInvitationFormData {
   email: string;
-  roleId: string;
 }
 
 export interface IInvitationFilters {

@@ -13,7 +13,6 @@ const normalizeInvitation = (data: any): IInvitation => {
     id: data.id || data._id,
     email: data.email,
     accepted: data.accepted,
-    roleId: data.roleId,
     workspaceId: data.workspaceId,
     createdBy: data.createdBy,
     createdAt: data.createdAt,

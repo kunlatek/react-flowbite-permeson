@@ -15,18 +15,12 @@ import MainLayout from "@/components/layout/MainLayout";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import AuthLayout from "@/components/layout/AuthLayout";
 import ProtectedRoute from "./ProtectedRoute";
-import PermissionGuard from "@/components/auth/PermissionGuard";
 
 // Posts
 import PostsListPage from "@/pages/posts/PostsListPage";
 import PostCreatePage from "@/pages/posts/PostCreatePage";
 import PostEditPage from "@/pages/posts/PostEditPage";
 import PostViewPage from "@/pages/posts/PostViewPage";
-
-// Roles
-import RolesListPage from "@/pages/roles/RolesListPage";
-import RoleCreatePage from "@/pages/roles/RoleCreatePage";
-import RoleEditPage from "@/pages/roles/RoleEditPage";
 
 // Invitations
 import { InvitationsListPage, InvitationCreatePage, InvitationEditPage } from "@/pages/invitations";
@@ -56,73 +50,20 @@ export default function AppRouter() {
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/workspace" element={
-            <PermissionGuard requiredPermission="canViewWorkspaces">
-              <WorkspacePage />
-            </PermissionGuard>
-          } />
-          <Route path="/workspace/add-member" element={
-            <PermissionGuard requiredPermission="canCreateWorkspaces">
-              <AddMemberPage />
-            </PermissionGuard>
-          } />
+          <Route path="/workspace" element={<WorkspacePage />} />
+          <Route path="/workspace/add-member" element={<AddMemberPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           
           {/* Posts Routes */}
-          <Route path="/posts" element={
-            <PermissionGuard requiredPermission="canViewPosts">
-              <PostsListPage />
-            </PermissionGuard>
-          } />
-          <Route path="/posts/new" element={
-            <PermissionGuard requiredPermission="canCreatePosts">
-              <PostCreatePage />
-            </PermissionGuard>
-          } />
-          <Route path="/posts/:id" element={
-            <PermissionGuard requiredPermission="canViewPosts">
-              <PostViewPage />
-            </PermissionGuard>
-          } />
-          <Route path="/posts/:id/edit" element={
-            <PermissionGuard requiredPermission="canEditPosts">
-              <PostEditPage />
-            </PermissionGuard>
-          } />
-          
-          {/* Roles Routes */}
-          <Route path="/roles" element={
-            <PermissionGuard requiredPermission="canViewRoles">
-              <RolesListPage />
-            </PermissionGuard>
-          } />
-          <Route path="/roles/new" element={
-            <PermissionGuard requiredPermission="canCreateRoles">
-              <RoleCreatePage />
-            </PermissionGuard>
-          } />
-          <Route path="/roles/:id/edit" element={
-            <PermissionGuard requiredPermission="canEditRoles">
-              <RoleEditPage />
-            </PermissionGuard>
-          } />
+          <Route path="/posts" element={<PostsListPage />} />
+          <Route path="/posts/new" element={<PostCreatePage />} />
+          <Route path="/posts/:id" element={<PostViewPage />} />
+          <Route path="/posts/:id/edit" element={<PostEditPage />} />
           
           {/* Invitations Routes */}
-          <Route path="/invitations" element={
-            <PermissionGuard requiredPermission="canViewInvitations">
-              <InvitationsListPage />
-            </PermissionGuard>
-          } />
-          <Route path="/invitations/new" element={
-            <PermissionGuard requiredPermission="canCreateInvitations">
-              <InvitationCreatePage />
-            </PermissionGuard>
-          } />
-          <Route path="/invitations/:id/edit" element={
-            <PermissionGuard requiredPermission="canEditInvitations">
-              <InvitationEditPage />
-            </PermissionGuard>
-          } />
+          <Route path="/invitations" element={<InvitationsListPage />} />
+          <Route path="/invitations/new" element={<InvitationCreatePage />} />
+          <Route path="/invitations/:id/edit" element={<InvitationEditPage />} />
         </Route>
 
         {/* Profile Setup Routes */}

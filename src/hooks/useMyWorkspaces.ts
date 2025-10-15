@@ -9,10 +9,6 @@ interface IWorkspace {
   name: string;
   owner: string;
   team: string[];
-  acl: Array<{
-    userId: string;
-    role: string;
-  }>;
 }
 
 export const useMyWorkspaces = () => {

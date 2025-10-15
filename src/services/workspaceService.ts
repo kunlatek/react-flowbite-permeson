@@ -19,12 +19,8 @@ const searchUsers = async (username: string): Promise<IUserSearch[]> => {
   return data as IUserSearch[];
 };
 
-const addTeamMember = async (userId: string, roleId?: string): Promise<void> => {
-  const payload: any = { userId };
-  
-  if (roleId) {
-    payload.roleId = roleId;
-  }
+const addTeamMember = async (userId: string): Promise<void> => {
+  const payload = { userId };
   
   const response = await api.post("/workspaces/team-user", payload);
   return response.data;

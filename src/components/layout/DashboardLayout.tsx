@@ -2,7 +2,6 @@ import { Outlet } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { useMyWorkspaces } from "@/hooks/useMyWorkspaces";
 import { useTheme } from "@/hooks/useTheme";
-import { useUserPermissions } from "@/hooks/useUserPermissions";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import { 
@@ -27,7 +26,6 @@ import {
   HiMoon,
   HiMenu,
   HiDocumentText,
-  HiShieldCheck,
   HiMail
 } from "react-icons/hi";
 
@@ -35,7 +33,6 @@ export default function DashboardLayout() {
   const { user, logout } = useAuth();
   const { workspaces, selectedWorkspaceId, loading: workspacesLoading, switchWorkspace } = useMyWorkspaces();
   const { isDarkMode, toggleTheme } = useTheme();
-  const { permissions, isOwner } = useUserPermissions();
   const { t, i18n } = useTranslation();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
@@ -96,41 +93,26 @@ export default function DashboardLayout() {
                   </div>
                 </Sidebar.Item>
                 
-                {/* Posts - sempre visível para owner, senão depende de permissão */}
-                {(isOwner || permissions.canViewPosts) && (
-                  <Sidebar.Item href="/posts" icon={HiDocumentText}>
-                    <div className="truncate w-[150px]">
-                      {!sidebarCollapsed && t("dashboard.sidebar.posts")}
-                    </div>
-                  </Sidebar.Item>
-                )}
+                {/* Posts - sempre visível */}
+                <Sidebar.Item href="/posts" icon={HiDocumentText}>
+                  <div className="truncate w-[150px]">
+                    {!sidebarCollapsed && t("dashboard.sidebar.posts")}
+                  </div>
+                </Sidebar.Item>
                 
-                {/* Roles - sempre visível para owner, senão depende de permissão */}
-                {(isOwner || permissions.canViewRoles) && (
-                  <Sidebar.Item href="/roles" icon={HiShieldCheck}>
-                    <div className="truncate w-[150px]">
-                      {!sidebarCollapsed && t("dashboard.sidebar.roles")}
-                    </div>
-                  </Sidebar.Item>
-                )}
+                {/* Invitations - sempre visível */}
+                <Sidebar.Item href="/invitations" icon={HiMail}>
+                  <div className="truncate w-[150px]">
+                    {!sidebarCollapsed && t("dashboard.sidebar.invitations")}
+                  </div>
+                </Sidebar.Item>
                 
-                {/* Invitations - sempre visível para owner, senão depende de permissão */}
-                {(isOwner || permissions.canViewInvitations) && (
-                  <Sidebar.Item href="/invitations" icon={HiMail}>
-                    <div className="truncate w-[150px]">
-                      {!sidebarCollapsed && t("dashboard.sidebar.invitations")}
-                    </div>
-                  </Sidebar.Item>
-                )}
-                
-                {/* Collaborators - sempre visível para owner, senão depende de permissão */}
-                {(isOwner || permissions.canViewWorkspaces) && (
-                  <Sidebar.Item href="/workspace" icon={HiUserGroup}>
-                    <div className="truncate w-[150px]">
-                      {!sidebarCollapsed && t("dashboard.sidebar.collaborators")}
-                    </div>
-                  </Sidebar.Item>
-                )}
+                {/* Collaborators - sempre visível */}
+                <Sidebar.Item href="/workspace" icon={HiUserGroup}>
+                  <div className="truncate w-[150px]">
+                    {!sidebarCollapsed && t("dashboard.sidebar.collaborators")}
+                  </div>
+                </Sidebar.Item>
                 
                 {/* Settings - sempre visível */}
                 <Sidebar.Item href="/settings" icon={HiCog}>

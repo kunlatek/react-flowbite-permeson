@@ -7,7 +7,6 @@ export interface IWorkspace {
   currentUserId?: string; // ID do usuário atual (dono)
   currentUserType?: 'person' | 'company'; // Tipo do perfil atual
   isOwner?: boolean; // Se o usuário atual é o dono do workspace
-  acl: string[];
   createdAt: string;
   updatedAt: string;
 }

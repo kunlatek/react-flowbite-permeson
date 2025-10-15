@@ -2,11 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import KuInput from "@/components/form/KuInput";
-import KuSelect from "@/components/form/KuSelect";
 import KuButton from "@/components/form/KuButton";
 import { useToast } from "@/hooks/useToast";
 import { useWorkspace } from "@/hooks/useWorkspace";
-import { useRoles } from "@/hooks/useRoles";
 import { invitationsService } from "@/services/invitationsService";
 
 export default function InvitationCreatePage() {
@@ -14,14 +12,12 @@ export default function InvitationCreatePage() {
   const navigate = useNavigate();
   const toast = useToast();
   const { workspace } = useWorkspace();
-  const { roles } = useRoles();
   const [loading, setLoading] = useState(false);
 
   const [email, setEmail] = useState('');
-  const [roleId, setRoleId] = useState('');
 
   const onSubmit = async () => {
-    if (!workspace?.id || !workspace?.currentUserId || !email || !roleId) {
+    if (!workspace?.id || !workspace?.currentUserId || !email) {
       toast.error(t("invitations.error.workspace_required"));
       return;
     }
@@ -30,7 +26,6 @@ export default function InvitationCreatePage() {
     try {
       await invitationsService.createInvitation({
         email: email,
-        roleId: roleId,
         workspaceId: String(workspace.id),
         createdBy: workspace.currentUserId,
       });
@@ -68,22 +63,6 @@ export default function InvitationCreatePage() {
                 onChange={(e) => setEmail(e.target.value)}
                 error={""}
                 isRequired
-              />
-
-              <KuSelect
-                type="select"
-                name="roleId"
-                dataType="text"
-                label={t("invitations.form.role")}
-                placeholder={t("invitations.form.role_placeholder")}
-                value={roleId || ""}
-                onChange={(name, value) => setRoleId(String(value))}
-                error={""}
-                isRequired
-                options={roles.map((role) => ({
-                  label: role.name,
-                  value: role._id || role.id || "",
-                }))}
               />
 
               <div className="flex justify-end space-x-3">

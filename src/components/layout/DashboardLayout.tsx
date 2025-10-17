@@ -96,13 +96,11 @@ export default function DashboardLayout() {
                 </Sidebar.Item>
                 
                 {/* Posts - sempre visível para owner, senão depende de permissão */}
-                {(isOwner || permissions.canViewPosts) && (
-                  <Sidebar.Item href="/posts" icon={HiDocumentText}>
-                    <div className="truncate w-[150px]">
-                      {!sidebarCollapsed && t("dashboard.sidebar.posts")}
-                    </div>
-                  </Sidebar.Item>
-                )}
+                <Sidebar.Item href="/posts" icon={HiDocumentText} className={(isOwner || permissions.canViewPosts) ? '' : 'hidden'}>
+                  <div className="truncate w-[150px]">
+                    {!sidebarCollapsed && t("dashboard.sidebar.posts")}
+                  </div>
+                </Sidebar.Item>
                 
                 {/* Roles - sempre visível para owner, senão depende de permissão */}
                 {(isOwner || permissions.canViewRoles) && (

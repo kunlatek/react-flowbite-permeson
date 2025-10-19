@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Alert, Spinner } from 'flowbite-react';
@@ -6,7 +6,7 @@ import { usePersonProfile } from '@/hooks/useProfile';
 import { useCompanyProfile } from '@/hooks/useProfile';
 import PersonProfileTab from './PersonProfileTab';
 import CompanyProfileTab from './CompanyProfileTab';
-import KuButton from '@/components/form/KuButton';
+import { ICompanyProfile, IPersonProfile } from '@/models/profile';
 
 export default function ProfileSetupPage() {
   const { t } = useTranslation();
@@ -27,14 +27,19 @@ export default function ProfileSetupPage() {
     }
   }, [profileType, navigate]);
 
-  const handleSaveAndContinue = async () => {
-    // Save the profile and navigate to dashboard
+  const handleSaveAndContinue = async (data: Partial<IPersonProfile | ICompanyProfile>): Promise<boolean> => {
+    try {
     if (profileType === 'person') {
-      await personProfile.updateProfile(personProfile.profile || {});
-    } else {
-      await companyProfile.updateProfile(companyProfile.profile || {});
+        await personProfile.updateProfile(data as Partial<IPersonProfile>);
+      } else {
+        await companyProfile.updateProfile(data as Partial<ICompanyProfile>);
+      }
+      navigate('/dashboard');
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
     }
-    navigate('/dashboard');
   };
 
   if (!profileType || !['person', 'company'].includes(profileType)) {
@@ -89,8 +94,7 @@ export default function ProfileSetupPage() {
               <PersonProfileTab 
                 profile={personProfile.profile}
                 loading={personProfile.loading}
-                onUpdate={personProfile.updateProfile}
-                hideSaveButton={true}
+                onUpdate={handleSaveAndContinue}
               />
             </div>
           ) : (
@@ -98,22 +102,10 @@ export default function ProfileSetupPage() {
               <CompanyProfileTab 
                 profile={companyProfile.profile}
                 loading={companyProfile.loading}
-                onUpdate={companyProfile.updateProfile}
-                hideSaveButton={true}
+                onUpdate={handleSaveAndContinue}
               />
             </div>
           )}
-        </div>
-
-        <div className="mt-8 flex justify-end">
-          <KuButton
-            id="save-profile"
-            type="button"
-            actionType="button"
-            label={t("profile.setup.save")}
-            onClick={handleSaveAndContinue}
-            customClass="px-8 py-3"
-          />
         </div>
       </div>
     </div>

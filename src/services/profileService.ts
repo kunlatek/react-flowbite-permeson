@@ -2,7 +2,7 @@ import api from "./api";
 import type {
   IPersonProfile,
   ICompanyProfile,
-} from "@/models/profile";
+} from "@/features/profile/models/PersonProfile";
 
 interface ProfileCheckResponse {
   person: boolean;
@@ -51,26 +51,12 @@ const updatePersonProfileById = async (
   return response.data;
 };
 
-// --- Company Profile Methods ---
-const createCompanyProfile = async (profileData: Partial<ICompanyProfile>) => {
-  const response = await api.put("/profiles/company", profileData);
-  return response.data;
-};
-
-const getCompanyProfile = async (): Promise<ICompanyProfile> => {
-  const response = await api.get("/profiles/company");
-  return response.data.data;
-};
-
 const getCompanyProfileById = async (id: string): Promise<ICompanyProfile> => {
   const response = await api.get(`/profiles/company/${id}`);
   return response.data.data;
 };
 
-const updateCompanyProfile = async (profileData: Partial<ICompanyProfile>) => {
-  const response = await api.put("/profiles/company", profileData);
-  return response.data;
-};
+
 
 const updateCompanyProfileById = async (
   id: string,

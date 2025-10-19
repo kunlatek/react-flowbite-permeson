@@ -1,24 +1,13 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+
 import { Card } from 'flowbite-react';
 import { HiUser, HiOfficeBuilding } from 'react-icons/hi';
 import KuButton from '@/components/form/KuButton';
+import { useProfileTypeSelection } from '../hooks/useProfileTypeSelection';
+import { useTranslation } from 'react-i18next';
 
 export default function ProfileTypeSelectionPage() {
+  const profileTypeSelection = useProfileTypeSelection();
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const [selectedType, setSelectedType] = useState<'person' | 'company' | null>(null);
-
-  const handleTypeSelection = (type: 'person' | 'company') => {
-    setSelectedType(type);
-  };
-
-  const handleContinue = () => {
-    if (selectedType) {
-      navigate(`/profile/setup?type=${selectedType}`);
-    }
-  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
@@ -38,23 +27,22 @@ export default function ProfileTypeSelectionPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Pessoa Física */}
           <Card 
             className={`cursor-pointer transition-all duration-200 hover:shadow-lg ${
-              selectedType === 'person' 
+              profileTypeSelection.selectedType === 'person' 
                 ? 'ring-2 ring-cyan-500 bg-cyan-50 dark:bg-cyan-900/20' 
                 : 'hover:shadow-md'
             }`}
-            onClick={() => handleTypeSelection('person')}
+            onClick={() => profileTypeSelection.handleTypeSelection('person')}
           >
             <div className="p-6 text-center">
               <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full mb-4 ${
-                selectedType === 'person' 
+                profileTypeSelection.selectedType === 'person' 
                   ? 'bg-cyan-100 dark:bg-cyan-800' 
                   : 'bg-gray-100 dark:bg-gray-700'
               }`}>
                 <HiUser className={`w-8 h-8 ${
-                  selectedType === 'person' 
+                  profileTypeSelection.selectedType === 'person' 
                     ? 'text-cyan-600 dark:text-cyan-400' 
                     : 'text-gray-600 dark:text-gray-400'
                 }`} />
@@ -73,23 +61,22 @@ export default function ProfileTypeSelectionPage() {
             </div>
           </Card>
 
-          {/* Pessoa Jurídica */}
           <Card 
             className={`cursor-pointer transition-all duration-200 hover:shadow-lg ${
-              selectedType === 'company' 
+              profileTypeSelection.selectedType === 'company' 
                 ? 'ring-2 ring-cyan-500 bg-cyan-50 dark:bg-cyan-900/20' 
                 : 'hover:shadow-md'
             }`}
-            onClick={() => handleTypeSelection('company')}
+            onClick={() => profileTypeSelection.handleTypeSelection('company')}
           >
             <div className="p-6 text-center">
               <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full mb-4 ${
-                selectedType === 'company' 
+                profileTypeSelection.selectedType === 'company' 
                   ? 'bg-cyan-100 dark:bg-cyan-800' 
                   : 'bg-gray-100 dark:bg-gray-700'
               }`}>
                 <HiOfficeBuilding className={`w-8 h-8 ${
-                  selectedType === 'company' 
+                  profileTypeSelection.selectedType === 'company' 
                     ? 'text-cyan-600 dark:text-cyan-400' 
                     : 'text-gray-600 dark:text-gray-400'
                 }`} />
@@ -115,8 +102,8 @@ export default function ProfileTypeSelectionPage() {
             type="button"
             actionType="button"
             label={t("profile.type_selection.continue")}
-            onClick={handleContinue}
-            isDisabled={!selectedType}
+            onClick={profileTypeSelection.handleContinue}
+            isDisabled={!profileTypeSelection.selectedType}
             customClass="px-8 py-3"
           />
         </div>

@@ -2,9 +2,9 @@ import { Routes, Route } from "react-router-dom";
 import LoginPage from "@/pages/login/LoginPage";
 import HomePage from "@/pages/home/HomePage";
 import DashboardPage from "@/pages/dashboard/DashboardPage";
-import ProfilePage from "@/pages/profile/ProfilePage";
-import ProfileTypeSelectionPage from "@/pages/profile/ProfileTypeSelectionPage";
-import ProfileSetupPage from "@/pages/profile/ProfileSetupPage";
+import ProfilePage from "@/features/profile/pages/PersonProfilePage";
+import ProfileTypeSelectionPage from "@/features/profile/pages/ProfileTypeSelectionPage";
+import CreateProfilePage from "@/features/profile/pages/CreateProfilePage";
 import RegisterPage from "@/pages/auth/RegisterPage";
 import PreRegisterPage from "@/pages/auth/PreRegisterPage";
 import ForgotPasswordPage from "@/pages/auth/ForgotPasswordPage";
@@ -110,7 +110,7 @@ export default function AppRouter() {
         {/* Profile Setup Routes */}
         <Route element={<MainLayout />}>
           <Route path="/profile/type-selection" element={<ProfileTypeSelectionPage />} />
-          <Route path="/profile/setup" element={<ProfileSetupPage />} />
+          <Route path="/profile/setup" element={<CreateProfilePage />} />
         </Route>
 
       </Route>

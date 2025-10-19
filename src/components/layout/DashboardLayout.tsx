@@ -95,12 +95,7 @@ export default function DashboardLayout() {
                   </div>
                 </Sidebar.Item>
                 
-                {/* Posts - sempre visível para owner, senão depende de permissão */}
-                <Sidebar.Item href="/posts" icon={HiDocumentText} className={(isOwner || permissions.canViewPosts) ? '' : 'hidden'}>
-                  <div className="truncate w-[150px]">
-                    {!sidebarCollapsed && t("dashboard.sidebar.posts")}
-                  </div>
-                </Sidebar.Item>
+                {/* Project Modules Sidebar Items */}
                 
                 {/* Roles - sempre visível para owner, senão depende de permissão */}
                 {(isOwner || permissions.canViewRoles) && (

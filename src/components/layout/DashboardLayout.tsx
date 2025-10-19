@@ -93,12 +93,7 @@ export default function DashboardLayout() {
                   </div>
                 </Sidebar.Item>
                 
-                {/* Posts - sempre visível */}
-                <Sidebar.Item href="/posts" icon={HiDocumentText}>
-                  <div className="truncate w-[150px]">
-                    {!sidebarCollapsed && t("dashboard.sidebar.posts")}
-                  </div>
-                </Sidebar.Item>
+                {/* Project Modules Sidebar Items */}
                 
                 {/* Invitations - sempre visível */}
                 <Sidebar.Item href="/invitations" icon={HiMail}>

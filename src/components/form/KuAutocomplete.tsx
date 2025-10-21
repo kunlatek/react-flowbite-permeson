@@ -49,7 +49,7 @@ export default function KuAutocomplete({
 
   const fetchOptions = useCallback(
     async (query = "") => {
-      if (!optionsApi.endpoint) return;
+      if (!optionsApi.endpoint || query.length < 3) return;
       setLoading(true);
       try {
         const params = new URLSearchParams();
@@ -304,7 +304,6 @@ export default function KuAutocomplete({
         <div
           role="button"
           tabIndex={0}
-          onClick={() => !isDisabled && setShowDropdown(!showDropdown)}
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
@@ -357,6 +356,7 @@ export default function KuAutocomplete({
             <Spinner size="sm" />
           ) : (
             <HiChevronDown
+              onClick={() => !isDisabled && setShowDropdown(!showDropdown)}
               className={`w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform ${
                 showDropdown ? "rotate-180" : ""
               }`}

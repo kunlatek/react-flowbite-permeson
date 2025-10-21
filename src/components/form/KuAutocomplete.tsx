@@ -54,9 +54,10 @@ export default function KuAutocomplete({
       try {
         const params = new URLSearchParams();
         if (query && optionsApi.paramsToFilter.length > 0) {
-          optionsApi.paramsToFilter.forEach((param) => {
-            params.append(param, query);
-          });
+          const filters = optionsApi.paramsToFilter?.map((param) => ({[param]: query}));
+          if (filters && filters.length > 0) {
+            params.append("filters", JSON.stringify(filters));
+          }
         }
 
         const endpoint = optionsApi.endpoint.startsWith("/api")

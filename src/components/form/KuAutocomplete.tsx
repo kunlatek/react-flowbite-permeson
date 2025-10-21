@@ -35,6 +35,8 @@ export default function KuAutocomplete({
   const [searchTerm, setSearchTerm] = useState("");
   const [options, setOptions] = useState<ISelectOption[]>([]);
   const [loading, setLoading] = useState(false);
+  const [selectedItems, setSelectedItems] = useState<ISelectOption[]>([]);
+  const [loadingSelected, setLoadingSelected] = useState(false);
   const mainElementRef = useRef<HTMLDivElement>(null);
   const hasError = !!error;
 
@@ -81,7 +83,22 @@ export default function KuAutocomplete({
               return { label, value };
             }
           );
-          setOptions(formattedOptions);
+
+          // Filter out already selected options
+          const selectedValues = isMultiple && Array.isArray(value) 
+            ? value.map(item => {
+                if (typeof item === "object" && item && "value" in item) {
+                  return item.value;
+                }
+                return item;
+              })
+            : [];
+
+          const filteredOptions = formattedOptions.filter(option => 
+            !selectedValues.includes(option.value)
+          );
+
+          setOptions(filteredOptions);
         }
       } catch (err) {
         console.error("Erro ao buscar opções:", err);
@@ -90,7 +107,7 @@ export default function KuAutocomplete({
         setLoading(false);
       }
     },
-    [optionsApi]
+    [optionsApi, isMultiple, value]
   );
 
   const evaluateConditions = useCallback(
@@ -232,6 +249,74 @@ export default function KuAutocomplete({
     };
   }, [searchTerm, fetchOptions, showDropdown]);
 
+  // Load selected items data for multiple mode
+  useEffect(() => {
+    const loadSelectedItemsData = async () => {
+      if (isMultiple && value && Array.isArray(value) && value.length > 0) {
+        setLoadingSelected(true);
+        try {
+          const itemsData = await Promise.all(
+            value.map(async (item) => {
+              // If item already has label, use it
+              if (typeof item === "object" && item && "label" in item && item.label) {
+                return item;
+              }
+              
+              // Otherwise, fetch the full data from API
+              try {
+                const itemId = typeof item === "object" && item && "value" in item 
+                  ? item.value 
+                  : item;
+                
+                const endpoint = optionsApi.endpoint.startsWith("/api")
+                  ? optionsApi.endpoint.slice(4)
+                  : optionsApi.endpoint;
+                
+                const response = await api.get(`${endpoint}/${itemId}`);
+                const apiItem = response.data.data || response.data;
+                
+                return {
+                  label: optionsApi.labelField
+                    .map((field) => String(resolveNestedValue(apiItem, field) || ""))
+                    .join(" "),
+                  value: resolveNestedValue(apiItem, optionsApi.valueField) as
+                    | string
+                    | number
+                    | boolean,
+                };
+              } catch (error) {
+                console.error(`Error loading item ${item}:`, error);
+                // Return a fallback item with the ID as label
+                return {
+                  label: String(item),
+                  value: item,
+                };
+              }
+            })
+          );
+          setSelectedItems(itemsData.filter((item): item is ISelectOption => item !== null));
+        } catch (error) {
+          console.error("Error loading selected items:", error);
+          // Fallback: create basic options from the value array
+          setSelectedItems(value.map(item => ({
+            label: typeof item === "object" && item && "label" in item 
+              ? String(item.label) 
+              : String(item),
+            value: typeof item === "object" && item && "value" in item 
+              ? item.value 
+              : item,
+          })));
+        } finally {
+          setLoadingSelected(false);
+        }
+      } else if (isMultiple) {
+        setSelectedItems([]);
+      }
+    };
+    
+    loadSelectedItemsData();
+  }, [value, isMultiple, optionsApi]);
+
   useEffect(() => {
     if (!isMultiple && value && typeof value === "object" && "label" in value) {
       setSearchTerm(value.label);
@@ -271,17 +356,21 @@ export default function KuAutocomplete({
       onChange(name, option);
       setSearchTerm(option.label);
     }
+    
+    // Clear the options list after selection to prevent showing already selected items
+    setOptions([]);
     setShowDropdown(false);
     if (isMultiple) setSearchTerm("");
   };
 
   const removeItem = (itemValue: string | number | boolean) => {
     if (isDisabled || !isMultiple || !Array.isArray(value)) return;
-    const newValue = value.filter((v) => v.value !== itemValue);
+    const newValue = value.filter((v) => {
+      const vValue = typeof v === "object" && v && "value" in v ? v.value : v;
+      return vValue !== itemValue;
+    });
     onChange(name, newValue);
   };
-
-  const selectedItems = isMultiple ? (value as ISelectOption[]) || [] : [];
 
   if (!showComponent) {
     return null;
@@ -316,7 +405,14 @@ export default function KuAutocomplete({
           }`}
         >
           <div className="flex flex-wrap gap-1 items-center flex-grow">
+            {isMultiple && loadingSelected && (
+              <div className="flex items-center text-sm text-gray-500">
+                <Spinner size="sm" className="mr-2" />
+                Carregando itens selecionados...
+              </div>
+            )}
             {isMultiple &&
+              !loadingSelected &&
               selectedItems.length > 0 &&
               selectedItems.map((item) => (
                 <Badge
@@ -345,7 +441,7 @@ export default function KuAutocomplete({
               onFocus={() => setShowDropdown(true)}
               placeholder={
                 (!isMultiple && value) ||
-                (isMultiple && selectedItems.length > 0)
+                (isMultiple && (selectedItems.length > 0 || loadingSelected))
                   ? ""
                   : placeholder
               }

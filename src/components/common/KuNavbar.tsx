@@ -1,10 +1,10 @@
 import { Navbar, Button, Dropdown, Sidebar } from "flowbite-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/use-auth";
 import { useAccountDeletion } from "@/hooks/useAccountDeletion";
 import { useTheme } from "@/hooks/useTheme";
-import KuButton from "@/components/form/KuButton";
+import { KuButton } from "@/components/form";
 import KuModal from "@/components/common/KuModal";
 import { useState } from "react";
 import {

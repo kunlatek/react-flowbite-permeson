@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { workspaceService } from "@/services/workspaceService";
 import { useToast } from "@/hooks/useToast";
-import { useAuth } from "@/hooks/useAuth";
+import { useAuth } from "@/hooks/use-auth";
 import { useNavigate } from "react-router-dom";
 
 interface IWorkspace {

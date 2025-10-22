@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import KuDataTable, { type IColumn, type IAction, type IHeaderAction } from "@/components/data/KuDataTable";
+import KuDataTable, { type IColumn, type IAction, type IHeaderAction } from "@/components/data/ku-data-table";
 import { useToast } from "@/hooks/useToast";
 import { useWorkspace } from "@/hooks/useWorkspace";
 import { useUserPermissions } from "@/hooks/useUserPermissions";

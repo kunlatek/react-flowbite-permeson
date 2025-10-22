@@ -1,7 +1,7 @@
 import { Card } from "flowbite-react";
 import { useAccountDeletion } from "@/hooks/useAccountDeletion";
 import { useToast } from "@/hooks/useToast";
-import KuButton from "@/components/form/KuButton";
+import { KuButton } from "@/components/form";
 
 export default function AccountRestorationNotice() {
   const { daysRemaining, restoreAccount, loading } = useAccountDeletion();

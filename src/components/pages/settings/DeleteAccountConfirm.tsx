@@ -1,7 +1,7 @@
 import { Alert } from "flowbite-react";
 import { useAccountDeletion } from "@/hooks/useAccountDeletion";
 import { useToast } from "@/hooks/useToast";
-import KuButton from "@/components/form/KuButton";
+import { KuButton } from "@/components/form";
 
 interface DeleteAccountConfirmProps {
   onSuccess: () => void;

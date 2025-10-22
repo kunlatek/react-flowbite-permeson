@@ -1,9 +1,8 @@
-import { useAuth } from "@/hooks/useAuth";
-import KuButton from "@/components/form/KuButton";
+import { useAuth } from "@/hooks/use-auth";
+import { KuButton } from "@/components/form";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { profileService } from "@/services/profileService";
 
 export default function HomePage() {
   const { isAuthenticated, loading } = useAuth();

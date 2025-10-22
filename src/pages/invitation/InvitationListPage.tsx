@@ -7,7 +7,7 @@ import KuDataTable, {
   type IColumn,
   type IAction,
   type IHeaderAction,
-} from "@/components/data/KuDataTable";
+} from "@/components/data/ku-data-table";
 
 export default function InvitationListPage() {
   const navigate = useNavigate();

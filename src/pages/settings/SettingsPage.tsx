@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card, Alert } from "flowbite-react";
 import KuModal from "@/components/common/KuModal";
-import KuButton from "@/components/form/KuButton";
+import { KuButton } from "@/components/form";
 import DeleteAccountConfirm from "@/components/pages/settings/DeleteAccountConfirm";
 
 export default function SettingsPage() {

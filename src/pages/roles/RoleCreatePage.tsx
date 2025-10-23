@@ -5,7 +5,7 @@ import { Card, Button, Spinner, Tabs, Badge, Label, Checkbox } from "flowbite-re
 import { HiArrowLeft, HiTrash, HiPlus } from "react-icons/hi";
 import { KuInput, KuButton } from "@/components/form";
 import { useToast } from "@/hooks/useToast";
-import { useWorkspace } from "@/hooks/useWorkspace";
+import { useWorkspace } from "@/features/workspace/hooks/use-workspace";
 import { rolesService } from "@/services/rolesService";
 import { AVAILABLE_MODULES, AVAILABLE_ACTIONS } from "@/models/roles";
 import type { IRoleFormData, IPermission } from "@/models/roles";

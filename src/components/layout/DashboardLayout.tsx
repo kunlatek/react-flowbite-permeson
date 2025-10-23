@@ -1,10 +1,10 @@
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { useAuth } from "@/hooks/use-auth";
-import { useMyWorkspaces } from "@/hooks/useMyWorkspaces";
+import { useMyWorkspaces } from "@/features/workspace/hooks/use-my-workspaces";
 import { useTheme } from "@/hooks/useTheme";
 import { useUserPermissions } from "@/hooks/useUserPermissions";
 import { useTranslation } from "react-i18next";
-import { useState, useEffect } from "react";
 import { 
   Navbar, 
   Sidebar, 

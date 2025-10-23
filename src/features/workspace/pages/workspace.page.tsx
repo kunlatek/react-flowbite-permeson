@@ -1,41 +1,14 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Card, Button, Spinner, Alert, Modal } from "flowbite-react";
 import { HiUserAdd, HiRefresh, HiTrash } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
-import { useWorkspace } from "@/hooks/useWorkspace";
-import { useUserPermissions } from "@/hooks/useUserPermissions";
+import { useWorkspace } from "../hooks/use-workspace";
 
 export default function WorkspacePage() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const { workspace, loading, error, fetchWorkspace, removeMember } = useWorkspace();
-  const { permissions } = useUserPermissions();
-  const [removeModalOpen, setRemoveModalOpen] = useState(false);
-  const [userToRemove, setUserToRemove] = useState<{ userId: string; userName?: string } | null>(null);
-  
-  const handleAddMember = () => {
-    navigate("/workspace/add-member");
-  };
 
-  const handleRemoveMember = async (userId: string) => {
-    const success = await removeMember(userId);
-    if (success) {
-      setRemoveModalOpen(false);
-      setUserToRemove(null);
-    }
-  };
+  const workspace = useWorkspace();
 
-  const handleRefresh = () => {
-    fetchWorkspace();
-  };
-
-  const openRemoveModal = (userId: string, userName?: string) => {
-    setUserToRemove({ userId, userName });
-    setRemoveModalOpen(true);
-  };
-
-  if (loading && !workspace) {
+  if (workspace.loading && !workspace) {
     return (
       <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto">
         <div className="mx-auto max-w-7xl">
@@ -47,13 +20,13 @@ export default function WorkspacePage() {
     );
   }
 
-  if (error) {
+  if (workspace.error) {
     return (
       <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto">
         <div className="mx-auto max-w-7xl">
           <Alert color="failure">
             <span className="font-medium">{t("workspace.error_title")}</span>
-            <p>{error}</p>
+            <p>{workspace.error}</p>
           </Alert>
         </div>
       </div>
@@ -77,19 +50,19 @@ export default function WorkspacePage() {
             <div className="flex gap-2">
               <Button
                 color="gray"
-                onClick={handleRefresh}
-                disabled={loading}
-                isProcessing={loading}
+                onClick={workspace.handleRefresh}
+                disabled={workspace.loading}
+                isProcessing={workspace.loading}
               >
                 <HiRefresh className="mr-2 h-4 w-4" />
                 {t("workspace.refresh")}
               </Button>
-              {permissions.canCreateWorkspaces && (
+              {workspace.permissions.canCreateWorkspaces && (
                 <Button
                   color="primary"
                   className="bg-blue-600 hover:bg-blue-700 text-white border-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:text-white"
-                  onClick={handleAddMember}
-                  disabled={loading}
+                  onClick={workspace.handleAddMember}
+                  disabled={workspace.loading}
                 >
                   <HiUserAdd className="mr-2 h-4 w-4" />
                   {t("workspace.add_member")}
@@ -106,16 +79,16 @@ export default function WorkspacePage() {
               {t("workspace.team_members")}
             </h2>
             <span className="text-sm text-gray-500 dark:text-gray-400">
-              {workspace?.team?.length || 0} {t("workspace.members")}
+              {workspace.workspace?.team?.length || 0} {t("workspace.members")}
             </span>
           </div>
 
-          {workspace?.team && workspace.team.length > 0 ? (
+          {workspace.workspace?.team && workspace.workspace.team.length > 0 ? (
             <div className="grid gap-4">
-              {workspace.team.map((userId, index) => {
-                const userInfo = workspace.teamMembers?.find(member => String(member.userId) === String(userId));
+              {workspace.workspace.team.map((userId, index) => {
+                const userInfo = workspace.workspace?.teamMembers?.find(member => String(member.userId) === String(userId));
                 
-                const isOwner = String(userId) === String(workspace.owner);
+                const isOwner = String(userId) === String(workspace.workspace?.owner);
                 
                 return (
                   <div
@@ -150,8 +123,8 @@ export default function WorkspacePage() {
                           )}
                         </div>
                         <div className="text-sm text-gray-500 dark:text-gray-400">
-                          {userInfo ? `ID: ${userId}` : (loading ? t("workspace.loading_names") : t("workspace.user_id"))}
-                          {isOwner && ` (${t(`workspace.profile_type.${workspace.currentUserType}`)})`}
+                          {userInfo ? `ID: ${userId}` : (workspace.loading ? t("workspace.loading_names") : t("workspace.user_id"))}
+                          {isOwner && ` (${t(`workspace.profile_type.${workspace.workspace?.currentUserType}`)})`}
                         </div>
                       </div>
                     </div>
@@ -159,12 +132,12 @@ export default function WorkspacePage() {
                       <div className="text-sm text-gray-500 dark:text-gray-400">
                         #{index + 1}
                       </div>
-                      {!isOwner && permissions.canDeleteWorkspaces && (
+                      {!isOwner && workspace.permissions.canDeleteWorkspaces && (
                         <Button
                           size="sm"
                           color="failure"
-                          onClick={() => openRemoveModal(userId, userInfo?.userName)}
-                          disabled={loading}
+                          onClick={() => workspace.openRemoveModal(userId, userInfo?.userName)}
+                          disabled={workspace.loading}
                           className="ml-2"
                         >
                           <HiTrash className="h-4 w-4" />
@@ -186,10 +159,10 @@ export default function WorkspacePage() {
               <p className="text-gray-500 dark:text-gray-400 mb-4">
                 {t("workspace.no_members_description")}
               </p>
-              {workspace?.isOwner && (
+              {workspace.workspace?.isOwner && (
                 <Button
                   color="primary"
-                  onClick={handleAddMember}
+                  onClick={workspace.handleAddMember}
                 >
                   <HiUserAdd className="mr-2 h-4 w-4" />
                   {t("workspace.add_first_member")}
@@ -202,8 +175,8 @@ export default function WorkspacePage() {
 
         {/* Remove Member Confirmation Modal */}
         <Modal 
-          show={removeModalOpen} 
-          onClose={() => setRemoveModalOpen(false)} 
+          show={workspace.removeModalOpen} 
+          onClose={() => workspace.setRemoveModalOpen(false)} 
           size="md" 
           position="center"
           className="backdrop-blur-sm"
@@ -227,16 +200,16 @@ export default function WorkspacePage() {
           <Modal.Footer className="px-6 py-4">
             <Button
               color="gray"
-              onClick={() => setRemoveModalOpen(false)}
-              disabled={loading}
+              onClick={() => workspace.setRemoveModalOpen(false)}
+              disabled={workspace.loading}
             >
               {t("common.cancel")}
             </Button>
             <Button
               color="failure"
-              onClick={() => userToRemove && handleRemoveMember(userToRemove.userId)}
-              disabled={loading}
-              isProcessing={loading}
+              onClick={() => workspace.userToRemove && workspace.handleRemoveMember(workspace.userToRemove.userId)}
+              disabled={workspace.loading}
+              isProcessing={workspace.loading}
             >
               <HiTrash className="mr-2 h-4 w-4" />
               {t("workspace.remove_member")}

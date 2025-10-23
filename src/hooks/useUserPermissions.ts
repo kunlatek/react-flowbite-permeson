@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useWorkspace } from "./useWorkspace";
+import { useWorkspace } from "../features/workspace/hooks/use-workspace";
 import { useRoles } from "./useRoles";
 import type { IRole, IPermission } from "@/models/roles";
 
@@ -68,7 +68,7 @@ const hasPermission = (permissions: IPermission[], module: string, action: strin
   return modulePermission.actionList.includes(action);
 };
 
-export const useUserPermissions = () => {
+export const useUserPermissions = (): { permissions: IUserPermissions; userRole: IRole | null; loading: boolean; isOwner: boolean } => {
   const { workspace } = useWorkspace();
   const { roles } = useRoles();
   const [userPermissions, setUserPermissions] = useState<IUserPermissions>(getDefaultPermissions());

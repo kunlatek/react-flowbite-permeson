@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import KuDataTable, { type IColumn, type IAction, type IHeaderAction } from "@/components/data/ku-data-table";
 import { useToast } from "@/hooks/useToast";
-import { useWorkspace } from "@/hooks/useWorkspace";
+import { useWorkspace } from "@/features/workspace/hooks/use-workspace";
 import { useUserPermissions } from "@/hooks/useUserPermissions";
 import { postsService } from "@/services/postsService";
 import PostDeleteConfirm from "@/components/pages/posts/PostDeleteConfirm";

@@ -1,19 +1,11 @@
 import { useState, useEffect } from "react";
-import { workspaceService } from "@/services/workspaceService";
+import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/useToast";
 import { useAuth } from "@/hooks/use-auth";
-import { useNavigate } from "react-router-dom";
-
-interface IWorkspace {
-  _id: string;
-  name: string;
-  owner: string;
-  team: string[];
-  acl: Array<{
-    userId: string;
-    role: string;
-  }>;
-}
+import type { IWorkspace } from "../interfaces";
+import { fetchWorkspaces } from "../api/fetch-workspaces";
+import { fetchWorkspaceToken } from "../api/fetch-workspace-token";
+import { fetchCurrentUserProfile } from "../api/fetch-current-user-profile";
 
 export const useMyWorkspaces = () => {
   const [workspaces, setWorkspaces] = useState<IWorkspace[]>([]);
@@ -24,11 +16,11 @@ export const useMyWorkspaces = () => {
   const { updateToken, user } = useAuth();
   const navigate = useNavigate();
 
-  const fetchWorkspaces = async () => {
+  const getWorkspaces = async () => {
     try {
       setLoading(true);
       setError(null);
-      const data = await workspaceService.getMyWorkspaces();
+      const data = await fetchWorkspaces();
       setWorkspaces(data);
       
       // Carregar workspace selecionado do localStorage
@@ -38,7 +30,7 @@ export const useMyWorkspaces = () => {
         // Se o workspace salvo ainda existe, use-o
         setSelectedWorkspaceId(storedWorkspaceId);
       } else if (data.length > 0) {
-        const profile = await workspaceService.getCurrentUserProfile();
+        const profile = await fetchCurrentUserProfile();
         const ownerWorkspace = data.find(ws => ws.owner === profile?.userId);
         
         if (ownerWorkspace) {
@@ -71,7 +63,7 @@ export const useMyWorkspaces = () => {
       setError(null);
       
       // Obter novo token para o workspace
-      const newToken = await workspaceService.getWorkspaceToken(workspaceId);
+      const newToken = await fetchWorkspaceToken(workspaceId);
       
       // Atualizar apenas o token na sessão
       updateToken(newToken);
@@ -105,7 +97,7 @@ export const useMyWorkspaces = () => {
   };
 
   useEffect(() => {
-    fetchWorkspaces();
+    getWorkspaces();
   }, []);
 
   return {
@@ -113,7 +105,7 @@ export const useMyWorkspaces = () => {
     selectedWorkspaceId,
     loading,
     error,
-    fetchWorkspaces,
+    fetchWorkspaces: getWorkspaces,
     switchWorkspace,
     resetWorkspace,
   };

@@ -1,36 +1,24 @@
 import { Alert } from "flowbite-react";
-import { useAccountDeletion } from "@/hooks/useAccountDeletion";
-import { useToast } from "@/hooks/useToast";
 import { KuButton } from "@/components/form";
+import { useDeleteAccount } from "../hooks/use-delete-account";
 
-interface DeleteAccountConfirmProps {
+interface DeleteAccountFormProps {
   onSuccess: () => void;
   onCancel: () => void;
 }
 
-export default function DeleteAccountConfirm({
+export default function DeleteAccountForm({
   onSuccess,
   onCancel,
-}: DeleteAccountConfirmProps) {
-  const { softDeleteAccount, loading, error } = useAccountDeletion();
-  const toast = useToast();
-
-  const handleDelete = async () => {
-    try {
-      await softDeleteAccount();
-      toast.success("Sua conta foi marcada para exclusão.");
-      onSuccess();
-    } catch (err: unknown) {
-      console.error("Error deleting account:", err);
-      toast.error("Ocorreu um erro ao tentar excluir sua conta.");
-    }
-  };
+}: DeleteAccountFormProps) {
+  
+  const deleteAccount = useDeleteAccount(onSuccess);
 
   return (
     <div className="text-center">
-      {error && (
+      {deleteAccount.error && (
         <Alert color="failure" className="mb-4 text-left">
-          {error}
+          {deleteAccount.error}
         </Alert>
       )}
       <h3 className="mb-5 text-lg font-normal text-gray-800 dark:text-gray-400">
@@ -47,7 +35,7 @@ export default function DeleteAccountConfirm({
           actionType="apiRequest"
           variant="secondary"
           onClick={onCancel}
-          isDisabled={loading}
+          isDisabled={deleteAccount.loading}
           label="Cancelar"
         />
         <KuButton
@@ -55,8 +43,8 @@ export default function DeleteAccountConfirm({
           type="button"
           actionType="apiRequest"
           variant="danger"
-          onClick={handleDelete}
-          loading={loading}
+          onClick={deleteAccount.handleDelete}
+          loading={deleteAccount.loading}
           label="Sim, excluir"
         />
       </div>

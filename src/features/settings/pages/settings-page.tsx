@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Card, Alert } from "flowbite-react";
 import KuModal from "@/components/common/KuModal";
 import { KuButton } from "@/components/form";
-import DeleteAccountConfirm from "@/components/pages/settings/DeleteAccountConfirm";
+import DeleteAccountForm from "../components/delete-account-form";
 
 export default function SettingsPage() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -55,7 +55,7 @@ export default function SettingsPage() {
           title="Confirmar Exclusão da Conta"
           onClose={() => setShowDeleteModal(false)}
         >
-          <DeleteAccountConfirm
+          <DeleteAccountForm
             onSuccess={() => setShowDeleteModal(false)}
             onCancel={() => setShowDeleteModal(false)}
           />

@@ -1,16 +1,10 @@
 import api from "@/services/api";
-import { useTranslation } from "react-i18next";
 
 export const fetchPersonProfile = async () => {
-    const { t } = useTranslation();
-    try {
-        const response = await api.get("/person/profile");
-        if (response.status === 200) {
-            return response.data.data;
-        } else {
-            throw new Error(response.data.message || t("profile.error_title"));
-        }
-    } catch (error: any) {
-        throw new Error(error.message || t("profile.error_title"));
+    const response = await api.get("/profiles/person");
+    if (response.status === 200) {
+        return response.data.data;
+    } else {
+        throw new Error(response.data.message || "Erro ao buscar perfil do usuário");
     }
 };

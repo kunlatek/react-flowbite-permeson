@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useToast } from "@/hooks/useToast";
+import { useToast } from "@/hooks/use-toast";
 import { useParams, useNavigate } from "react-router-dom";
 import { resetPassword } from "../api/reset-password";
 

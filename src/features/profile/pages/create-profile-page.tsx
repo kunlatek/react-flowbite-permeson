@@ -58,16 +58,16 @@ export default function CreateProfilePage() {
           {createProfile.profileType === 'person' ? (
             <div className="p-6">
               <PersonProfileForm
-                profile={createProfile.personProfile.profile}
-                loading={createProfile.personProfile.loading}
+                profile={createProfile.activeProfile.profile}
+                loading={createProfile.activeProfile.loading}
                 onUpdate={async (data) => await createProfile.handleSaveAndContinue(data as Partial<PersonProfile>)}
               />
             </div>
           ) : (
             <div className="p-6">
               <CompanyProfileForm
-                profile={createProfile.companyProfile.profile}
-                loading={createProfile.companyProfile.loading}
+                profile={createProfile.activeProfile.profile}
+                loading={createProfile.activeProfile.loading}
                 onUpdate={async (data) => await createProfile.handleSaveAndContinue(data as Partial<CompanyProfile>)}
               />
             </div>

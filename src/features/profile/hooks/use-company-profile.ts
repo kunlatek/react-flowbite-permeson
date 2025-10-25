@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useToast } from '../../../hooks/useToast';
+import { useToast } from '../../../hooks/use-toast';
 import type { CompanyProfile } from '@/features/profile/models/company-profile';
 import { fetchCompanyProfile } from '../api/fetch-company-profile';
 import { useTranslation } from 'react-i18next';

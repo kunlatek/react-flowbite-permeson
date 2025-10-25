@@ -1,9 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { useTranslation } from "react-i18next";
-import { useToast } from "../../../hooks/useToast";
+import { useToast } from "../../../hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 
-import { useUserPermissions } from "@/hooks/useUserPermissions";
 
 import type { IWorkspace } from "../interfaces";
 
@@ -132,7 +131,6 @@ export const useWorkspace = () => {
     gethWorkspace();
   }, []);
 
-  const { permissions } = useUserPermissions();
   const [removeModalOpen, setRemoveModalOpen] = useState(false);
   const [userToRemove, setUserToRemove] = useState<{ userId: string; userName?: string } | null>(null);
 
@@ -171,6 +169,5 @@ export const useWorkspace = () => {
     setRemoveModalOpen,
     userToRemove,
     openRemoveModal,
-    permissions,
   };
 };

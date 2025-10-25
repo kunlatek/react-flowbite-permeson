@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import type { IAccountDeletionContext } from "@/models/accountDeletion";
+import type { IAccountDeletionContext } from "@/models/account-deletion";
 
 export const AccountDeletionContext = createContext<
   IAccountDeletionContext | undefined

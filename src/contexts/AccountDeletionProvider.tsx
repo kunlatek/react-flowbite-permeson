@@ -1,8 +1,8 @@
 import { useState, useCallback, type ReactNode } from "react";
 import axios from "axios";
 import { AccountDeletionContext } from "./AccountDeletionContext";
-import { userService } from "@/services/userService";
-import type { IAccountDeletionState } from "@/models/accountDeletion";
+import { userService } from "@/services/user-service";
+import type { IAccountDeletionState } from "@/models/account-deletion";
 
 export const AccountDeletionProvider = ({
   children,

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useToast } from '@/hooks/useToast';
+import { useToast } from '@/hooks/use-toast';
 import { login } from "../api/login";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';

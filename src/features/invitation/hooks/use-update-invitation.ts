@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "@/hooks/useToast";
+import { useToast } from "@/hooks/use-toast";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { updateInvitation } from "../api/update-invitation";

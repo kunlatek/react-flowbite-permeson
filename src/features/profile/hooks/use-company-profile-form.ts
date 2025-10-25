@@ -43,7 +43,7 @@ export const useCompanyProfileForm = (props: { profile?: CompanyProfile, onUpdat
       if (profile) {
         setFormData(profile);
       }
-    }, [profile]);
+    }, [profile?._id, profile?.companyName]);
   
     const handleInputChange = (field: string, value: any) => {
       setFormData(prev => ({

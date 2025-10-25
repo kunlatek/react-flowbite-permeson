@@ -19,15 +19,14 @@ import ProtectedRoute from "./ProtectedRoute";
 import PermissionGuard from "@/components/auth/PermissionGuard";
 
 // Posts
-import PostsListPage from "@/pages/posts/PostsListPage";
-import PostCreatePage from "@/pages/posts/PostCreatePage";
-import PostEditPage from "@/pages/posts/PostEditPage";
-import PostViewPage from "@/pages/posts/PostViewPage";
+import PostListPage from "@/features/posts/pages/post-list-page";
+import PostCreatePage from "@/features/posts/pages/post-create-page";
+import PostEditPage from "@/features/posts/pages/post-edit-page";
 
 // Roles
-import RolesListPage from "@/pages/roles/RolesListPage";
-import RoleCreatePage from "@/pages/roles/RoleCreatePage";
-import RoleEditPage from "@/pages/roles/RoleEditPage";
+import RolesListPage from "@/features/roles/pages/roles-list-page";
+import RoleCreatePage from "@/features/roles/pages/role-create-page";
+import RoleUpdatePage from "@/features/roles/pages/role-update-page";
 
 export default function AppRouter() {
   return (
@@ -70,17 +69,12 @@ export default function AppRouter() {
           {/* Posts Routes */}
           <Route path="/posts" element={
             <PermissionGuard requiredPermission="canViewPosts">
-              <PostsListPage />
+              <PostListPage />
             </PermissionGuard>
           } />
           <Route path="/posts/new" element={
             <PermissionGuard requiredPermission="canCreatePosts">
               <PostCreatePage />
-            </PermissionGuard>
-          } />
-          <Route path="/posts/:id" element={
-            <PermissionGuard requiredPermission="canViewPosts">
-              <PostViewPage />
             </PermissionGuard>
           } />
           <Route path="/posts/:id/edit" element={
@@ -102,7 +96,7 @@ export default function AppRouter() {
           } />
           <Route path="/roles/:id/edit" element={
             <PermissionGuard requiredPermission="canEditRoles">
-              <RoleEditPage />
+              <RoleUpdatePage />
             </PermissionGuard>
           } />
         </Route>

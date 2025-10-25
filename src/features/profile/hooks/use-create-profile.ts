@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { usePersonProfile, useCompanyProfile } from ".";
 import { PersonProfile, CompanyProfile } from "../models";
@@ -8,11 +8,14 @@ export const useCreateProfile = () => {
     const navigate = useNavigate();
     const profileType = searchParams.get('type') as 'person' | 'company';
 
+    // Always call hooks, but only use the relevant one
     const personProfile = usePersonProfile();
     const companyProfile = useCompanyProfile();
 
-    const isLoading = personProfile.loading || companyProfile.loading;
-    const hasError = personProfile.error || companyProfile.error;
+    // Determine which profile to use based on type
+    const activeProfile = profileType === 'person' ? personProfile : companyProfile;
+    const isLoading = activeProfile.loading;
+    const hasError = activeProfile.error;
 
     useEffect(() => {
         if (!profileType || !['person', 'company'].includes(profileType)) {
@@ -22,11 +25,7 @@ export const useCreateProfile = () => {
 
     const handleSaveAndContinue = async (data: Partial<PersonProfile> | Partial<CompanyProfile>) => {
         try {
-            if (profileType === 'person') {
-                await personProfile.updateProfile(data as Partial<PersonProfile>);
-            } else if (profileType === 'company') {
-                await companyProfile.updateProfile(data as Partial<CompanyProfile>);
-            }
+            await activeProfile.updateProfile(data as any);
             navigate('/dashboard');
             return true;
         } catch (error) {
@@ -41,5 +40,6 @@ export const useCreateProfile = () => {
         profileType, 
         personProfile, 
         companyProfile,
+        activeProfile,
     };
 };

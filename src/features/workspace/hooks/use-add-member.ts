@@ -4,8 +4,8 @@ import { ITeamMember } from "../interfaces";
 
 import { useUserSearch } from "./use-user-search";
 import { useWorkspace } from "./use-workspace";
-
-import { useRoles } from "@/hooks/useRoles";
+import { useRolesList } from "@/features/roles/hooks/use-roles-list";
+import { useUserPermissions } from "@/hooks/use-user-permissions";
 
 export const useAddMember = () => {
     const navigate = useNavigate();
@@ -17,8 +17,9 @@ export const useAddMember = () => {
       
       const { searchResults, searching, searchUsers } = useUserSearch();
       const { workspace, addMember } = useWorkspace();
-      const { roles, loading: rolesLoading } = useRoles();
-    
+      const { permissions } = useUserPermissions();
+      const { roles, rolesLoading } = useRolesList(permissions);
+        
       useEffect(() => {
         if (searchTerm && searchTerm.length >= 2) {
           const timeoutId = setTimeout(() => {

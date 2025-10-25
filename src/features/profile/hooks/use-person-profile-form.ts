@@ -40,7 +40,7 @@ export const usePersonProfileForm = (props: { profile?: PersonProfile, onUpdate:
       if (profile) {
         setFormData(profile);
       }
-    }, [profile]);
+    }, [profile?._id, profile?.personName]);
   
     const handleInputChange = (field: string, value: any) => {
       setFormData(prev => ({

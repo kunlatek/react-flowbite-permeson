@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from './AuthContext';
 import type { AuthContextType, AuthUser } from '@/models/auth';
 import { login as loginApi } from '@/features/login/api/login';
-import { useToast } from '@/hooks/useToast';
+import { useToast } from '@/hooks/use-toast';
 
 interface AuthProviderProps {
   children: ReactNode;

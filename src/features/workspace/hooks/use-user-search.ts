@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { useToast } from "../../../hooks/useToast";
+import { useToast } from "../../../hooks/use-toast";
 import { fetchUsers } from "../api/fetch-users";
 
 import type { ITeamMember } from "../interfaces";

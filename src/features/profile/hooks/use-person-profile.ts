@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useToast } from '../../../hooks/useToast';
+import { useToast } from '../../../hooks/use-toast';
 import type { PersonProfile } from '@/features/profile/models/person-profile';
 import { useTranslation } from 'react-i18next';
 import { fetchPersonProfile } from '../api/fetch-person-profile';
 import { updatePersonProfile } from '../api/update-person-profile';
+
 
 export const usePersonProfile = () => {
   const [profile, setProfile] = useState<PersonProfile | null>(null);
@@ -11,7 +12,7 @@ export const usePersonProfile = () => {
   const [error, setError] = useState<string | null>(null);
   const toast = useToast();
   const { t } = useTranslation();
-
+  
   const getPersonProfile = async () => {
     try {
       setLoading(true);

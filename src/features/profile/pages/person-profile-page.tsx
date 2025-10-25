@@ -8,13 +8,13 @@ export default function ProfilePage() {
 
   const personProfile = usePersonProfile();
 
-  if (personProfile.loading) {
-    return (
-      <div className="flex h-full items-center justify-center">
-        <Spinner size="xl" />
-      </div>
-    );
-  }
+  // if (personProfile.loading) {
+  //   return (
+  //     <div className="flex h-full items-center justify-center">
+  //       <Spinner size="xl" />
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto">

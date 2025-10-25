@@ -1,5 +1,5 @@
-import { useAccountDeletion } from "@/hooks/useAccountDeletion";
-import { useToast } from "@/hooks/useToast";
+import { useAccountDeletion } from "@/hooks/use-account-deletion";
+import { useToast } from "@/hooks/use-toast";
 
 export const useDeleteAccount = (onSuccess: () => void) => {
     const { softDeleteAccount, loading, error } = useAccountDeletion();

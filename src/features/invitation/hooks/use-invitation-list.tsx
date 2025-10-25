@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useToast } from "@/hooks/useToast";
+import { useToast } from "@/hooks/use-toast";
 import { Badge } from "flowbite-react";
 import type { IColumn, IAction, IHeaderAction } from "@/components/data/ku-data-table";
 import type { IInvitation } from "../interfaces/invitation.interface";

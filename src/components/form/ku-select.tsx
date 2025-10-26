@@ -19,7 +19,7 @@ interface KuSelectProps extends IFormSelect {
   error?: string;
 }
 
-export function KuSelect({
+export const KuSelect = ({
   name,
   label,
   value,
@@ -31,7 +31,7 @@ export function KuSelect({
   isMultiple = false,
   error = "",
   tooltip = "",
-}: KuSelectProps) {
+}: KuSelectProps) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const mainElementRef = useRef<HTMLDivElement>(null);
@@ -249,4 +249,4 @@ export function KuSelect({
       {hasError && <HelperText color="failure">{error}</HelperText>}
     </div>
   );
-}
+};

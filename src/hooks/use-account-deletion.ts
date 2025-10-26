@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AccountDeletionContext } from "@/contexts/AccountDeletionContext";
+import { AccountDeletionContext } from "@/contexts/account-deletion-context";
 
 export const useAccountDeletion = () => {
   const context = useContext(AccountDeletionContext);

@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import { useWorkspace } from "../features/workspace/hooks/use-workspace";
-import { fetchRoles } from "@/features/roles/api/fetch-roles";
+import { useWorkspace } from "@/modules/workspace/hooks/use-workspace";
+import { fetchRoles } from "@/modules/roles/api/fetch-roles";
 
-import type { IRole } from "@/features/roles/interfaces";
-import type { IPermission } from "@/features/roles/interfaces/permission.interface";
+import type { IRole } from "@/modules/roles/interfaces";
+import type { IPermission } from "@/modules/roles/interfaces/permission.interface";
 
 export interface IUserPermissions {
   canViewPosts: boolean;

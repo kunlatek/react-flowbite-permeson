@@ -7,14 +7,14 @@ interface KuFileProps extends IFormFile {
   // onChange e value a serem adicionados para controle de estado
 }
 
-export function KuFile({
+export const KuFile = ({
   name,
   label,
   helperText,
   error,
   isRequired,
   isDisabled,
-}: KuFileProps) {
+}: KuFileProps) => {
   const hasError = !!error;
   return (
     <div>
@@ -35,4 +35,4 @@ export function KuFile({
       {hasError && <HelperText color="failure">{error}</HelperText>}
     </div>
   );
-}
+};

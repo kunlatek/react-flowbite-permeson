@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { Table, Spinner, Card } from "flowbite-react";
-import KuPagination from "@/components/navigation/KuPagination";
+import KuPagination from "@/components/navigation/ku-pagination";
 import { KuButton, type ButtonVariant } from "@/components/form";
 import axios from "axios";
 
@@ -35,7 +35,7 @@ interface KuDataTableProps<T> {
   pageSize?: number;
 }
 
-export default function KuDataTable<T extends { _id: string }>({
+export const KuDataTable = <T extends { _id: string }>({
   title,
   columns,
   dataSource,
@@ -43,7 +43,7 @@ export default function KuDataTable<T extends { _id: string }>({
   getActions,
   headerActions = [],
   pageSize = 10,
-}: KuDataTableProps<T>) {
+}: KuDataTableProps<T>) => {
   const [data, setData] = useState<T[]>([]);
   const [totalItems, setTotalItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -201,4 +201,4 @@ export default function KuDataTable<T extends { _id: string }>({
       )}
     </Card>
   );
-}
+};

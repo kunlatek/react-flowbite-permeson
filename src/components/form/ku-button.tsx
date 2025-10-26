@@ -46,7 +46,7 @@ type KuButtonProps = IFormButton &
     loading?: boolean;
   };
 
-export function KuButton({
+export const KuButton = ({
   label,
   actionType = "submit",
   variant,
@@ -59,7 +59,7 @@ export function KuButton({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   type: _type,
   ...props
-}: KuButtonProps) {
+}: KuButtonProps) => {
   const getButtonType = (): "submit" | "reset" | "button" => {
     switch (actionType) {
       case "submit":
@@ -101,4 +101,4 @@ export function KuButton({
       {buttonContent}
     </FlowbiteButton>
   );
-}
+};

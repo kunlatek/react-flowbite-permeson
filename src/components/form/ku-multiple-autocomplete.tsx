@@ -31,7 +31,7 @@ interface KUMultipleAutocompleteProps {
   loadSelectedItems?: boolean; // Whether to load full data for selected items
 }
 
-export function KUMultipleAutocomplete({
+export const KUMultipleAutocomplete = ({
   name,
   label,
   value = [],
@@ -44,7 +44,7 @@ export function KUMultipleAutocomplete({
   tooltip = "",
   excludeIds = [],
   loadSelectedItems = true,
-}: KUMultipleAutocompleteProps) {
+}: KUMultipleAutocompleteProps) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [options, setOptions] = useState<Option[]>([]);
@@ -290,4 +290,4 @@ export function KUMultipleAutocomplete({
       {hasError && <HelperText color="failure">{error}</HelperText>}
     </div>
   );
-}
+};

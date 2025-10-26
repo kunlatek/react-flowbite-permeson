@@ -15,13 +15,13 @@ interface KuTabProps {
   conditions?: IFormCondition[];
 }
 
-export function KuTab({
+export const KuTab = ({
   tabs,
   activeTabId,
   onTabChange,
   formState,
   conditions,
-}: KuTabProps) {
+}: KuTabProps) => {
   const evaluateConditions = useCallback(
     (state: Record<string, unknown>, conds?: IFormCondition[]): boolean => {
       if (!conds || conds.length === 0) return true;
@@ -184,4 +184,4 @@ export function KuTab({
       </ul>
     </div>
   );
-}
+};

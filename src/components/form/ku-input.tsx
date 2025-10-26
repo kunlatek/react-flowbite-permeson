@@ -9,7 +9,7 @@ interface KuInputProps extends IFormInput {
   error?: string;
 }
 
-export function KuInput({
+export const KuInput = ({
   name,
   label,
   value,
@@ -20,7 +20,7 @@ export function KuInput({
   isDisabled = false,
   error = "",
   tooltip = "",
-}: KuInputProps) {
+}: KuInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const isPassword = dataType === "password";
@@ -66,4 +66,4 @@ export function KuInput({
       {hasError && <HelperText color="failure">{error}</HelperText>}
     </div>
   );
-}
+};

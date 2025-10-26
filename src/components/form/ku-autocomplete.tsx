@@ -16,7 +16,7 @@ interface KuAutocompleteProps extends IFormAutocomplete {
   formState: Record<string, unknown>;
 }
 
-export function KuAutocomplete({
+export const KuAutocomplete = ({
   name,
   label,
   value,
@@ -30,7 +30,7 @@ export function KuAutocomplete({
   tooltip = "",
   conditions,
   formState,
-}: KuAutocompleteProps) {
+}: KuAutocompleteProps) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [options, setOptions] = useState<ISelectOption[]>([]);
@@ -394,4 +394,4 @@ export function KuAutocomplete({
       {hasError && <HelperText color="failure">{error}</HelperText>}
     </div>
   );
-}
+};

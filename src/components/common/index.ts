@@ -1,6 +1,5 @@
-export { default as KuFooter } from './KuFooter';
-export { default as KuModal } from './KuModal';
-export { default as KuNavbar } from './KuNavbar';
-export { default as KuToast } from './KuToast';
-export { default as FileManager } from './FileManager';
-export type { IFileItem } from './FileManager';
+export * from './ku-modal';
+export * from './file-manager';
+export * from './ku-navbar';
+export * from './ku-toast';
+export type { IFileItem } from './file-manager';

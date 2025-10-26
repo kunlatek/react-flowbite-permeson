@@ -13,13 +13,13 @@ interface KuArrayProps<T> {
   ) => React.ReactNode;
 }
 
-export function KuArray<T>({
+export const KuArray = <T extends { _id: string }>({
   title,
   items,
   onItemsChange,
   defaultNewItem,
   renderItem,
-}: KuArrayProps<T>) {
+}: KuArrayProps<T>) => {
   const handleAddItem = () => {
     onItemsChange([...items, defaultNewItem]);
   };
@@ -64,4 +64,4 @@ export function KuArray<T>({
       )}
     </fieldset>
   );
-}
+};

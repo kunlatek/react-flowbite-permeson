@@ -4,7 +4,7 @@ type KuFieldsetProps = Omit<IFormFieldset, "elements" | "type"> & {
   children: React.ReactNode;
 };
 
-export function KuFieldset({ id, title, children }: KuFieldsetProps) {
+export const KuFieldset = ({ id, title, children }: KuFieldsetProps) => {
   return (
     <fieldset
       id={id}
@@ -16,4 +16,4 @@ export function KuFieldset({ id, title, children }: KuFieldsetProps) {
       <div className="space-y-4">{children}</div>
     </fieldset>
   );
-}
+};

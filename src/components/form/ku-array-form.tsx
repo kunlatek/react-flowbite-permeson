@@ -157,7 +157,7 @@ interface KuArrayFormProps {
   }>;
 }
 
-export function KuArrayForm({
+export const KuArrayForm = ({
   name,
   label,
   value = [],
@@ -169,7 +169,7 @@ export function KuArrayForm({
   error = "",
   tooltip = "",
   fields = [],
-}: KuArrayFormProps) {
+}: KuArrayFormProps) => {
   const hasError = !!error;
   
   const sensors = useSensors(
@@ -281,4 +281,4 @@ export function KuArrayForm({
       {hasError && <HelperText color="failure">{error}</HelperText>}
     </div>
   );
-}
+};

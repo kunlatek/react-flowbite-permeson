@@ -6,27 +6,12 @@ export const fetchRoles = async (page: number = 1, limit: number = 10): Promise<
         const response = await api.get("/roles", {
             params: { page, limit }
         });
-        const data = response.data;
-
-        const _id = data._id || data.id;
-        if (!_id) {
-            throw new Error('Role ID is required');
-        }
-        const role = data.role;
-
         return {
             ...response.data,
-            data: {
-                _id,
-                id: data.id || data._id,
-                name: role.name,
-                permissions: role.permissions || [],
-                createdBy: role.createdBy,
-                workspaceId: role.workspaceId || role.workspace,
-                workspace: role.workspace || role.workspaceId,
-                createdAt: role.createdAt,
-                updatedAt: role.updatedAt,
-            }
+            data: response.data.data.map((role: any) => ({
+                ...role.role,
+                _id: role._id || role.id || ''
+            })).filter((role: IRole) => role._id),
         };
     } catch (error) {
         throw error;

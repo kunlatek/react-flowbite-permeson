@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Table, Spinner, Card } from "flowbite-react";
 import KuPagination from "@/components/navigation/ku-pagination";
 import { KuButton, type ButtonVariant } from "@/components/form";
@@ -116,7 +116,7 @@ export const KuDataTable = <T extends { _id: string }>({
   };
 
   return (
-    <Card className="!static !relative z-0">
+    <>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold dark:text-white">{title}</h2>
         <div className="flex gap-2">
@@ -199,6 +199,6 @@ export const KuDataTable = <T extends { _id: string }>({
           )}
         </div>
       )}
-    </Card>
+    </>
   );
 };

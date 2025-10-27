@@ -1,19 +1,26 @@
 import { KuDataTable } from "@/components/data";
 import { useInvitationList } from "../hooks/use-invitation-list";
+import { Card } from "flowbite-react";
+import { useTranslation } from "react-i18next";
 
-export default function InvitationListPage() {
+export const InvitationListPage = () => {
+  const { t } = useTranslation();
   const invitationList = useInvitationList();
 
   return (
-    <KuDataTable
-      title="Convites"
-      columns={invitationList.columns}
-      dataSource={async (params: URLSearchParams) => {
-        const response = await invitationList.getInvitations(params);
-        return { data: response, total: response.length };
-      }}
-      actions={invitationList.actions}
-      headerActions={invitationList.headerActions}
-    />
+    <Card className="card">
+      <KuDataTable
+        title={t("invitations.title")}
+        columns={invitationList.columns}
+        dataSource={async (params: URLSearchParams) => {
+          const response = await invitationList.getInvitations(params);
+          return { data: response, total: response.length };
+        }}
+        actions={invitationList.actions}
+        headerActions={invitationList.headerActions}
+      />
+    </Card>
   );
-}
+};
+
+export default InvitationListPage;

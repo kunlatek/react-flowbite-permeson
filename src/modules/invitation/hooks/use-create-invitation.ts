@@ -6,13 +6,13 @@ import { createInvitation } from "../api/create-invitation";
 
 interface InvitationFormData {
     email: string;
-    role: string;
+    roleId: string;
 }
 
 export const useCreateInvitation = () => {
     const [invitation, setInvitation] = useState<Partial<InvitationFormData>>({
         email: "",
-        role: "",
+        roleId: "",
     });
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -20,7 +20,7 @@ export const useCreateInvitation = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!invitation.email || !invitation.role) {
+        if (!invitation.email || !invitation.roleId) {
             toast.error("Email e Papel são obrigatórios.");
             return;
         }
@@ -28,7 +28,7 @@ export const useCreateInvitation = () => {
         try {
             await createInvitation({
                 email: invitation.email,
-                role: invitation.role,
+                roleId: invitation.roleId,
             });
             toast.success("Convite criado com sucesso!");
             navigate("/invitations");

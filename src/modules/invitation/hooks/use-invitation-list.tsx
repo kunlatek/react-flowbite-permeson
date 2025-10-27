@@ -5,11 +5,13 @@ import type { IColumn, IAction, IHeaderAction } from "@/components/data/ku-data-
 import type { IInvitation } from "../interfaces/invitation.interface";
 import { fetchInvitations } from "../api/fetch-invitations";
 import { sendInvitation } from "../api/send-invitation";
+import { useTranslation } from "react-i18next";
 
 export const useInvitationList = () => {
     const navigate = useNavigate();
     const toast = useToast();
-  
+    const { t } = useTranslation();
+    
     const columns: IColumn<IInvitation>[] = [
       { key: "email", header: "Email", sortable: true },
       { key: "role", header: "Papel", sortable: true },
@@ -49,7 +51,7 @@ export const useInvitationList = () => {
     ];
   
     const headerActions: IHeaderAction[] = [
-      { label: "Novo Convite", handler: () => navigate("/invitations/new") },
+      { label: t("invitations.new_invitation"), handler: () => navigate("/invitations/new") },
     ];
     const getInvitations = async (params: URLSearchParams) => {
         const response = await fetchInvitations(params);

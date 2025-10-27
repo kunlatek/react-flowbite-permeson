@@ -159,14 +159,6 @@ export const KuNavbar = () => {
                 href="/auth/login"
                 label={t("nav.login")}
               />
-              <KuButton
-                id="nav-register"
-                type="button"
-                actionType="link"
-                href="/auth/pre-register"
-                variant="secondary"
-                label={t("nav.create_account")}
-              />
             </div>
           )}
           <Navbar.Toggle />
@@ -176,9 +168,6 @@ export const KuNavbar = () => {
             <>
               <Navbar.Link as={Link} to="/auth/login" className="md:hidden">
                 {t("nav.login")}
-              </Navbar.Link>
-              <Navbar.Link as={Link} to="/auth/pre-register" className="md:hidden">
-                {t("nav.create_account")}
               </Navbar.Link>
             </>
           )}

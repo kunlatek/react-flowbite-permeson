@@ -106,6 +106,7 @@
     "sidebar": {
       "dashboard": "Dashboard",
       "profile": "Perfil",
+      "invitations": "Invitaciones",
       "posts": "Posts",
       "roles": "Papéis",
       "collaborators": "Colaboradores",
@@ -356,6 +357,16 @@
     "cannot_remove_owner": "No se puede eliminar al propietario del workspace.",
     "not_owner_error": "Solo el propietario del workspace puede agregar o eliminar colaboradores."
   },
+  "invitations": {
+    "title": "Invitaciones",
+    "new_invitation": "Nueva Invitación",
+    "edit_invitation": "Editar Invitación",
+    "resend_invitation": "Reenviar Invitación",
+    "invitation_list": "Lista de Invitaciones",
+    "invitation_list_description": "Gestiona tus invitaciones",
+    "create_invitation": "Crear Invitación",
+    "send_invitation": "Enviar Invitación"
+  },
   "posts": {
     "title": "Posts",
     "subtitle": "Gestiona tus posts del blog",
@@ -494,7 +505,10 @@
   },
   "common": {
     "cancel": "Cancelar",
-    "back": "Volver"
+    "back": "Volver",
+    "loading": "Cargando...",
+    "sending": "Enviando...",
+    "send": "Enviar"
   },
   "fileManager": {
     "label": "Archivos",

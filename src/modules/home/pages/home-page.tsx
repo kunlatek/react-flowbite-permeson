@@ -46,15 +46,6 @@ export default function HomePage() {
               size="xl"
               label={t("home.login_platform")}
             />
-            <KuButton
-              id="register-home"
-              type="button"
-              actionType="link"
-              href="/auth/pre-register"
-              size="xl"
-              variant="secondary"
-              label={t("home.create_account")}
-            />
           </>
         )}
       </div>

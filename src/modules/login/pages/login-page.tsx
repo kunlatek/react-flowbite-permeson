@@ -61,18 +61,6 @@ export default function LoginPage() {
             isDisabled={login.loading || !login.email || !login.password}
             customClass="w-full"
           />
-
-          <div className="text-sm text-center mt-6">
-            <p className="text-gray-500 dark:text-gray-400">
-              {t("login.no_account")}{" "}
-              <a
-                href="/auth/pre-register"
-                className="font-medium text-cyan-700 hover:underline dark:text-cyan-500"
-              >
-                {t("login.create_account")}
-              </a>
-            </p>
-          </div>
         </form>
       </div>
     </div>

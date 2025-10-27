@@ -1,9 +1,10 @@
-import { KuInput, KuSelect, KuButton } from "@/components/form";
+import { KuInput, KuSelect, KuButton, KuAutocomplete } from "@/components/form";
 import type { ISelectOption } from "@/models/form";
+import { useTranslation } from "react-i18next";
 
 interface InvitationFormData {
   email: string;
-  role: string;
+  roleId: string;
 }
 
 interface InvitationFormProps {
@@ -21,13 +22,10 @@ export default function InvitationForm({
   onCancel,
   loading,
 }: InvitationFormProps) {
-  const rolesOptions: ISelectOption[] = [
-    { label: "Admin", value: "admin" },
-    { label: "User", value: "user" },
-  ];
+  const { t } = useTranslation();
 
   return (
-    <form onSubmit={onSubmit} className="max-w-lg">
+    <form onSubmit={onSubmit}>
       <div className="space-y-4">
         <KuInput
           type="input"
@@ -40,17 +38,29 @@ export default function InvitationForm({
           }
           isRequired
         />
-        <KuSelect
-          type="select"
+        <KuAutocomplete
+          type="autocomplete"
           dataType="text"
-          name="role"
-          label="Papel"
-          options={rolesOptions}
-          value={invitation.role || ""}
+          name="roleId"
+          value={invitation.roleId ? [{ label: invitation.roleId, value: invitation.roleId }] : []}
+          label={t("roles.title")}
+          optionsApi={{
+            endpoint: "/api/roles",
+            labelField: ["role.name"],
+            valueField: "id",
+            paramsToFilter: [],
+            paramType: "query",
+          }}
           onChange={(name, value) =>
-            onInvitationChange({ ...invitation, role: String(value) })
+            onInvitationChange({ ...invitation, roleId: String(value) })
           }
-          isRequired
+          isRequired={true}
+          isMultiple={false}
+          isUnique={true}
+          isDisabled={loading}
+          isAutofocus={false}
+          conditions={[]}
+          formState={{ roleId: invitation.roleId || "" }}
         />
       </div>
       <div className="flex justify-end space-x-4 mt-8">
@@ -59,14 +69,14 @@ export default function InvitationForm({
           type="button"
           actionType="link"
           variant="secondary"
-          label="Cancelar"
+          label={t("common.cancel")}
           onClick={onCancel}
         />
         <KuButton
           id="submit-invitation"
           type="button"
           actionType="submit"
-          label={loading ? "Enviando..." : "Enviar Convite"}
+          label={loading ? t("common.loading") : t("invitations.send_invitation")}
           isDisabled={loading}
         />
       </div>

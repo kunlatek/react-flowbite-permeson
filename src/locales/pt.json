@@ -106,6 +106,7 @@
     "sidebar": {
       "dashboard": "Dashboard",
       "profile": "Perfil",
+      "invitations": "Convites",
       "posts": "Posts",
       "roles": "Papéis",
       "collaborators": "Colaboradores",
@@ -356,6 +357,16 @@
     "cannot_remove_owner": "Não é possível remover o proprietário do workspace.",
     "not_owner_error": "Apenas o proprietário do workspace pode adicionar ou remover colaboradores."
   },
+  "invitations": {
+    "title": "Convites",
+    "new_invitation": "Novo Convite",
+    "edit_invitation": "Editar Convite",
+    "resend_invitation": "Reenviar Convite",
+    "invitation_list": "Lista de Convites",
+    "invitation_list_description": "Gerencie seus convites",
+    "create_invitation": "Criar Convite",
+    "send_invitation": "Enviar Convite"
+  },
   "posts": {
     "title": "Posts",
     "subtitle": "Gerencie seus posts do blog",
@@ -494,7 +505,10 @@
   },
   "common": {
     "cancel": "Cancelar",
-    "back": "Voltar"
+    "back": "Voltar",
+    "loading": "Carregando...",
+    "sending": "Enviando...",
+    "send": "Enviar"
   },
   "fileManager": {
     "label": "Arquivos",

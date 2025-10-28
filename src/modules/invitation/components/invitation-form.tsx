@@ -51,8 +51,8 @@ export default function InvitationForm({
             paramsToFilter: [],
             paramType: "query",
           }}
-          onChange={(name, value) =>
-            onInvitationChange({ ...invitation, roleId: String(value) })
+          onChange={(name, value) => 
+            onInvitationChange({ ...invitation, roleId: (value as ISelectOption)?.value?.toString() ?? "" })
           }
           isRequired={true}
           isMultiple={false}

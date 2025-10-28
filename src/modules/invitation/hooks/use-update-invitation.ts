@@ -8,7 +8,7 @@ import { fetchInvitationById } from "../api/fetch-invitations";
 
 interface InvitationFormData {
     email: string;
-    role: string;
+    roleId: string;
 }
 export const useUpdateInvitation = () => {
     const [invitation, setInvitation] = useState<Partial<InvitationFormData>>({});
@@ -24,7 +24,7 @@ export const useUpdateInvitation = () => {
         return;
       }
       fetchInvitationById(id)
-        .then((data) => setInvitation({ email: data.email, role: data.role }))
+        .then((data) => setInvitation({ email: data.email, roleId: data.roleId }))
         .catch((err: unknown) => {
           console.error("Failed to load invitation:", err);
           toast.error("Falha ao carregar o convite.");
@@ -34,13 +34,13 @@ export const useUpdateInvitation = () => {
   
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
-      if (!id || !invitation.email || !invitation.role) return;
+      if (!id || !invitation.email || !invitation.roleId) return;
   
       setLoading(true);
       try {
         await updateInvitation(id, {
           email: invitation.email,
-          role: invitation.role,
+          roleId: invitation.roleId,
         });
         toast.success("Convite atualizado com sucesso!");
         navigate("/invitations");

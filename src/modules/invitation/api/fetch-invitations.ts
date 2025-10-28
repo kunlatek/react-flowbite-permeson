@@ -10,5 +10,5 @@ export const fetchInvitations = async (
 
 export const fetchInvitationById = async (id: string): Promise<IInvitation> => {
     const response = await api.get(`/invitations/${id}`);
-    return response.data;
+    return response.data.data;
 };

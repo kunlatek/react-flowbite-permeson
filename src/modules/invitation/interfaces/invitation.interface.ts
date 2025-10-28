@@ -1,7 +1,7 @@
 export interface IInvitation {
   _id: string;
   email: string;
-  role: string;
+  roleId: string;
   accepted: boolean;
   createdAt: string;
   updatedAt: string;

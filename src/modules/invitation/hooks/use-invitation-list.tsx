@@ -14,7 +14,6 @@ export const useInvitationList = () => {
     
     const columns: IColumn<IInvitation>[] = [
       { key: "email", header: "Email", sortable: true },
-      { key: "role", header: "Papel", sortable: true },
       {
         key: "accepted",
         header: "Status",

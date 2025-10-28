@@ -3,8 +3,10 @@ import { useToast } from '@/hooks/use-toast';
 import { login } from "../api/login";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks/use-auth';
 
 export const useLogin = () => {
+    const { setSession } = useAuth();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState(false);
@@ -28,6 +30,7 @@ export const useLogin = () => {
 
         try {
             const response = await login(email, password);
+            setSession(response?.data?.access_token, email);
             toast.success(response.message || "Login realizado com sucesso!");
             setSuccess(true);
             setLoading(false);

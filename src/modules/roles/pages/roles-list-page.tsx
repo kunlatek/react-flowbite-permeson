@@ -4,6 +4,7 @@ import RoleDeleteConfirm from "@/modules/roles/components/role-delete-confirm";
 import type { IRoleTable } from "../interfaces";
 import { useRolesList } from "../hooks/use-roles-list";
 import { useUserPermissions } from "@/hooks/use-user-permissions";
+import { Card } from "flowbite-react";
 
 export default function RolesListPage() {
   const { t } = useTranslation();
@@ -11,17 +12,15 @@ export default function RolesListPage() {
   const rolesList = useRolesList(permissions);
 
   return (
-    <div className="flex-1 p-4 sm:p-6 lg:p-8">
-      <div className="mx-auto max-w-7xl">
-        <KuDataTable<IRoleTable>
-          title={t("roles.title")}
-          columns={rolesList.columns}
-          dataSource={rolesList.getRoles}
-          getActions={rolesList.getActions}
-          headerActions={rolesList.headerActions}
-          pageSize={10}
-        />
-      </div>
+    <Card className="card">
+      <KuDataTable<IRoleTable>
+        title={t("roles.title")}
+        columns={rolesList.columns}
+        dataSource={rolesList.getRoles}
+        getActions={rolesList.getActions}
+        headerActions={rolesList.headerActions}
+        pageSize={10}
+      />
 
       {/* Modal de confirmação de exclusão */}
       <RoleDeleteConfirm
@@ -31,6 +30,6 @@ export default function RolesListPage() {
         onClose={rolesList.handleDeleteCancel}
         onConfirm={rolesList.handleDeleteConfirm}
       />
-    </div>
+    </Card>
   );
 }

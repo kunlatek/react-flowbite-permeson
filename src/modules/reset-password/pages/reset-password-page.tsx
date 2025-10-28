@@ -1,6 +1,6 @@
 import { Alert } from "flowbite-react";
 import { useTranslation } from "react-i18next";
-import { KuInput, KuButton } from "@/components/form";
+import { KuInput, KuButton } from "@/components/ku-components";
 import { useResetPassword } from "../hooks/use-reset-password";
 
 export default function ResetPasswordPage() {
@@ -32,7 +32,6 @@ export default function ResetPasswordPage() {
             </p>
             <form onSubmit={resetPassword.handleSubmit} className="w-full space-y-4">
               <KuInput
-                type="input"
                 name="password"
                 dataType="password"
                 label={t("resetPassword.password_label")}
@@ -51,7 +50,6 @@ export default function ResetPasswordPage() {
               />
               
               <KuInput
-                type="input"
                 name="confirmPassword"
                 dataType="password"
                 label={t("resetPassword.confirm_password_label")}

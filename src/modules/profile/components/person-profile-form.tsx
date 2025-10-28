@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Card, Spinner } from 'flowbite-react';
-import { KuInput, KuSelect, KuButton } from '@/components/form';
+import { KuInput, KuSelect, KuButton } from '@/components/ku-components';
 import type { PersonProfile } from '@/modules/profile/models/person-profile';
 import { usePersonProfileForm } from '../hooks';
 import { ProfessionsForm, EducationsForm, CoursesForm, RelatedFilesForm, AddressesForm, BankDataForm, EmailsForm, PhonesForm } from '.';
@@ -34,7 +34,6 @@ export const PersonProfileForm = ({ profile, loading, onUpdate }: PersonProfileT
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <KuInput
             name="personName"
-            type="input"
             dataType="text"
             label={t("profile.person.name")}
             value={personProfileForm.formData.personName || ''}
@@ -43,7 +42,6 @@ export const PersonProfileForm = ({ profile, loading, onUpdate }: PersonProfileT
           />
           <KuInput
             name="personNickname"
-            type="input"
             dataType="text"
             label={t("profile.person.nickname")}
             value={personProfileForm.formData.personNickname || ''}
@@ -64,7 +62,6 @@ export const PersonProfileForm = ({ profile, loading, onUpdate }: PersonProfileT
           />
           <KuInput
             name="birthday"
-            type="input"
             dataType="date"
             label={t("profile.person.birthday")}
             value={personProfileForm.formData.birthday || ''}
@@ -86,7 +83,6 @@ export const PersonProfileForm = ({ profile, loading, onUpdate }: PersonProfileT
           />
           <KuInput
             name="motherName"
-            type="input"
             dataType="text"
             label={t("profile.person.mother_name")}
             value={personProfileForm.formData.motherName || ''}
@@ -116,7 +112,6 @@ export const PersonProfileForm = ({ profile, loading, onUpdate }: PersonProfileT
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <KuInput
             name="linkedin"
-            type="input"
             dataType="text"
             label="LinkedIn"
             value={personProfileForm.formData.linkedin || ''}
@@ -124,7 +119,6 @@ export const PersonProfileForm = ({ profile, loading, onUpdate }: PersonProfileT
           />
           <KuInput
             name="instagram"
-            type="input"
             dataType="text"
             label="Instagram"
             value={personProfileForm.formData.instagram || ''}
@@ -132,7 +126,6 @@ export const PersonProfileForm = ({ profile, loading, onUpdate }: PersonProfileT
           />
           <KuInput
             name="facebook"
-            type="input"
             dataType="text"
             label="Facebook"
             value={personProfileForm.formData.facebook || ''}

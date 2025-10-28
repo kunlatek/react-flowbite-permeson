@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Card, Spinner } from 'flowbite-react';
-import { KuInput, KuSelect, KuButton } from '@/components/form';
+import { KuInput, KuSelect, KuButton } from '@/components/ku-components';
 import { CompanyProfile } from '../models/company-profile';
 import { useCompanyProfileForm } from '../hooks';
 import {PartnersForm, ContactsForm, AddressesForm, BankDataForm, CompanyImageForm, RelatedFilesForm} from '.';
@@ -34,7 +34,6 @@ export const CompanyProfileForm = ({ profile, loading, onUpdate }: CompanyProfil
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <KuInput
             name="companyName"
-            type="input"
             dataType="text"
             label={t("profile.company.name")}
             value={companyProfileForm.formData.companyName || ''}
@@ -43,7 +42,6 @@ export const CompanyProfileForm = ({ profile, loading, onUpdate }: CompanyProfil
           />
           <KuInput
             name="businessName"
-            type="input"
             dataType="text"
             label={t("profile.company.business_name")}
             value={companyProfileForm.formData.businessName || ''}
@@ -51,7 +49,6 @@ export const CompanyProfileForm = ({ profile, loading, onUpdate }: CompanyProfil
           />
           <KuInput
             name="cnpj"
-            type="input"
             dataType="text"
             label="CNPJ"
             value={companyProfileForm.formData.cnpj || ''}
@@ -60,7 +57,6 @@ export const CompanyProfileForm = ({ profile, loading, onUpdate }: CompanyProfil
           />
           <KuInput
             name="birthday"
-            type="input"
             dataType="date"
             label={t("profile.company.foundation_date")}
             value={companyProfileForm.formData.birthday || ''}
@@ -83,7 +79,6 @@ export const CompanyProfileForm = ({ profile, loading, onUpdate }: CompanyProfil
           <div className="md:col-span-2">
             <KuInput
               name="companyDescription"
-              type="input"
               dataType="text"
               label={t("profile.company.description")}
               value={companyProfileForm.formData.companyDescription || ''}

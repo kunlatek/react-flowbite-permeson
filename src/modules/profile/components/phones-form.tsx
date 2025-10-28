@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Card } from 'flowbite-react';
-import { KuInput, KuButton } from '@/components/form';
+import { KuInput, KuButton } from '@/components/ku-components';
 
 interface PhonesFormProps {
   phones: string[];
@@ -53,7 +53,6 @@ export const PhonesForm = ({
           <div className="grid grid-cols-1 gap-4">
             <KuInput
               name={`phone-${index}`}
-              type="input"
               dataType="text"
               label={t("profile.person.phone_number")}
               value={phone || ''}

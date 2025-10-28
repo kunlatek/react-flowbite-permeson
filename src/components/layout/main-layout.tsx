@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
-import { KuNavbar } from "@/components/common";
+import { KuNavbar } from "@/components/ku-components";
 
-const MainLayout = () => {
+export const MainLayout = () => {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50 dark:bg-gray-900">
       <KuNavbar />
@@ -11,5 +11,3 @@ const MainLayout = () => {
     </div>
   );
 };
-
-export default MainLayout;

@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Card } from 'flowbite-react';
-import { KuInput, KuButton } from '@/components/form';
+import { KuInput, KuButton } from '@/components/ku-components';
 import { Profession } from '../models/profession';
 
 interface ProfessionsFormProps {
@@ -54,7 +54,6 @@ export const ProfessionsForm = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <KuInput
               name={`jobDescription-${index}`}
-              type="input"
               dataType="text"
               label={t("profile.person.job_description")}
               value={profession.description || ''}
@@ -62,7 +61,6 @@ export const ProfessionsForm = ({
             />
             <KuInput
               name={`jobStartDateMonth-${index}`}
-              type="input"
               dataType="number"
               label={t("profile.person.job_start_month")}
               value={profession.startDateMonth || 1}
@@ -70,7 +68,6 @@ export const ProfessionsForm = ({
             />
             <KuInput
               name={`jobStartDateYear-${index}`}
-              type="input"
               dataType="number"
               label={t("profile.person.job_start_year")}
               value={profession.startDateYear || new Date().getFullYear()}
@@ -78,7 +75,6 @@ export const ProfessionsForm = ({
             />
             <KuInput
               name={`jobFinishDateMonth-${index}`}
-              type="input"
               dataType="number"
               label={t("profile.person.job_finish_month")}
               value={profession.finishDateMonth || 1}
@@ -86,7 +82,6 @@ export const ProfessionsForm = ({
             />
             <KuInput
               name={`jobFinishDateYear-${index}`}
-              type="input"
               dataType="number"
               label={t("profile.person.job_finish_year")}
               value={profession.finishDateYear || new Date().getFullYear()}

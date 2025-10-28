@@ -1,7 +1,7 @@
 
 import { Card } from 'flowbite-react';
 import { HiUser, HiOfficeBuilding } from 'react-icons/hi';
-import { KuButton } from '@/components/form';
+import { KuButton } from '@/components/ku-components/flowbite/form';
 import { useProfileTypeSelection } from '../hooks/use-profile-type-selection';
 import { useTranslation } from 'react-i18next';
 

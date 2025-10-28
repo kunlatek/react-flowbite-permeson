@@ -15,11 +15,6 @@ import { AuthLayout, DashboardLayout, MainLayout } from "@/components/layout";
 import ProtectedRoute from "./protected-route";
 import { PermissionGuard } from "@/components/auth/permission-guard";
 
-// Posts
-import PostListPage from "@/modules/posts/pages/post-list-page";
-import PostCreatePage from "@/modules/posts/pages/post-create-page";
-import PostEditPage from "@/modules/posts/pages/post-edit-page";
-
 // Roles
 import RolesListPage from "@/modules/roles/pages/roles-list-page";
 import RoleCreatePage from "@/modules/roles/pages/role-create-page";
@@ -30,7 +25,7 @@ import InvitationListPage from "@/modules/invitation/pages/invitation-list-page"
 import InvitationCreatePage from "@/modules/invitation/pages/create-invitation-page";
 import InvitationUpdatePage from "@/modules/invitation/pages/update-invitation-page";
 
-export default function AppRouter() {
+export const AppRouter = () => {
   return (
     <Routes>
       {/* Rotas Públicas com Layout Principal */}
@@ -66,23 +61,6 @@ export default function AppRouter() {
             </PermissionGuard>
           } />
           <Route path="/settings" element={<SettingsPage />} />
-          
-          {/* Posts Routes */}
-          <Route path="/posts" element={
-            <PermissionGuard requiredPermission="canViewPosts">
-              <PostListPage />
-            </PermissionGuard>
-          } />
-          <Route path="/posts/new" element={
-            <PermissionGuard requiredPermission="canCreatePosts">
-              <PostCreatePage />
-            </PermissionGuard>
-          } />
-          <Route path="/posts/:id/edit" element={
-            <PermissionGuard requiredPermission="canEditPosts">
-              <PostEditPage />
-            </PermissionGuard>
-          } />
 
           {/* Invitations Routes */}
           <Route path="/invitations" element={
@@ -117,6 +95,8 @@ export default function AppRouter() {
               <RoleUpdatePage />
             </PermissionGuard>
           } />
+
+          {/* RAPIDA: ROUTES */}
         </Route>
 
         {/* Profile Setup Routes */}

@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Card } from 'flowbite-react';
-import { KuInput, KuButton } from '@/components/form';
+import { KuInput, KuButton } from '@/components/ku-components';
 import { Course } from '../models/course';
 
 interface CoursesFormProps {
@@ -54,7 +54,6 @@ export const CoursesForm = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <KuInput
               name={`personCourseName-${index}`}
-              type="input"
               dataType="text"
               label={t("profile.person.course_name")}
               value={course.name || ''}
@@ -62,7 +61,6 @@ export const CoursesForm = ({
             />
             <KuInput
               name={`personCourseInstitution-${index}`}
-              type="input"
               dataType="text"
               label={t("profile.person.course_institution")}
               value={course.institution || ''}
@@ -70,7 +68,6 @@ export const CoursesForm = ({
             />
             <KuInput
               name={`personCourseStartDate-${index}`}
-              type="input"
               dataType="date"
               label={t("profile.person.course_start_date")}
               value={course.startDate || ''}
@@ -78,7 +75,6 @@ export const CoursesForm = ({
             />
             <KuInput
               name={`personCourseFinishDate-${index}`}
-              type="input"
               dataType="date"
               label={t("profile.person.course_finish_date")}
               value={course.finishDate || ''}
@@ -86,7 +82,6 @@ export const CoursesForm = ({
             />
             <KuInput
               name={`personCourseCertificateFile-${index}`}
-              type="input"
               dataType="text"
               label={t("profile.person.course_certificate")}
               value={course.certificateFile || ''}

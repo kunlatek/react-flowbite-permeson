@@ -1,4 +1,4 @@
-import { KuButton } from "@/components/form";
+import { KuButton } from "@/components/ku-components";
 import { useHome } from "../hooks/use-home";
 import { useTranslation } from "react-i18next";
 

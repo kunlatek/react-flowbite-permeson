@@ -1,4 +1,4 @@
-import { KuDataTable } from "@/components/data";
+import { KuDataTable } from "@/components/ku-components";
 import { useInvitationList } from "../hooks/use-invitation-list";
 import { Card } from "flowbite-react";
 import { useTranslation } from "react-i18next";

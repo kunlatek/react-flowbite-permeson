@@ -28,12 +28,6 @@ A complete application for managing personal and business profiles with secure a
   - Image gallery
   - Related documents
 
-### Posts/Blog System
-- Post creation and editing
-- Draft and publication system
-- Estimated reading time
-- Complete content management
-
 ### Collaboration & Workspaces
 - Personal and business workspace system
 - Add and remove collaborators
@@ -142,9 +136,6 @@ src/
 ### Protected Pages
 - **Dashboard** (`/dashboard`): Main dashboard
 - **Profile** (`/profile`): Personal/business profile management
-- **Posts** (`/posts`): Post listing and management
-- **Create Post** (`/posts/new`): New post creation
-- **Edit Post** (`/posts/:id/edit`): Edit existing post
 - **Workspace** (`/workspace`): Collaborator management
 - **Settings** (`/settings`): Account settings
 

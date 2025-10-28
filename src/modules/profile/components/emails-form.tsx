@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Card } from 'flowbite-react';
-import { KuInput, KuButton } from '@/components/form';
+import { KuInput, KuButton } from '@/components/ku-components';
 
 interface EmailsFormProps {
   emails: string[];
@@ -53,7 +53,6 @@ export const EmailsForm = ({
           <div className="grid grid-cols-1 gap-4">
             <KuInput
               name={`email-${index}`}
-              type="input"
               dataType="email"
               label={t("profile.person.email_address")}
               value={email || ''}

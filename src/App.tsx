@@ -1,5 +1,5 @@
-import AppRouter from "./router/app-router";
-import { KuToast } from "./components/common";
+import { AppRouter, OpenAppRouter } from "./router";
+import { KuToast } from "./components/ku-components";
 
 function App() {
   return (

@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-const AuthLayout = () => {
+export const AuthLayout = () => {
   const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
@@ -16,5 +16,3 @@ const AuthLayout = () => {
     </div>
   );
 };
-
-export default AuthLayout;

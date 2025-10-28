@@ -1,5 +1,5 @@
 import { Alert } from "flowbite-react";
-import { KuButton } from "@/components/form";
+import { KuButton } from "@/components/ku-components";
 import { useDeleteAccount } from "../hooks/use-delete-account";
 
 interface DeleteAccountFormProps {

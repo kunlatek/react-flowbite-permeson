@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Card } from 'flowbite-react';
-import { KuInput, KuButton } from '@/components/form';
+import { KuInput, KuButton } from '@/components/ku-components';
 import { Partner } from '../models/partner';
 
 interface PartnersFormProps {
@@ -54,7 +54,6 @@ export const PartnersForm = ({
           <div className="grid grid-cols-1 gap-4">
             <KuInput
               name={`personId-${index}`}
-              type="input"
               dataType="text"
               label={t("profile.company.partner_person_id")}
               value={partner.personId || ''}

@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import {KuInput, KuButton} from "@/components/form";
+import {KuInput, KuButton} from "@/components/ku-components";
 import { useLogin } from "../hooks/use-login";
 
 export default function LoginPage() {
@@ -21,7 +21,6 @@ export default function LoginPage() {
         <form onSubmit={login.handleSubmit} className="w-full space-y-4">
           <KuInput
             name="email"
-            type="input"
             dataType="email"
             label={t("login.email_label")}
             placeholder={t("login.email_placeholder")}
@@ -33,7 +32,6 @@ export default function LoginPage() {
 
           <KuInput
             name="password"
-            type="input"
             dataType="password"
             label={t("login.password_label")}
             placeholder={t("login.password_placeholder")}

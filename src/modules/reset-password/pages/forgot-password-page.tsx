@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Alert } from "flowbite-react";
 import { useTranslation } from "react-i18next";
-import { KuInput, KuButton } from "@/components/form";
+import { KuInput, KuButton } from "@/components/ku-components";
 import { useForgotPassword } from "../hooks/use-forgot-password";
 
 export default function ForgotPasswordPage() {
@@ -33,7 +33,6 @@ export default function ForgotPasswordPage() {
             </p>
             <form onSubmit={forgotPassword.handleSubmit} className="w-full space-y-4">
               <KuInput
-                type="input"
                 name="email"
                 dataType="email"
                 label={t("forgotPassword.email_label")}

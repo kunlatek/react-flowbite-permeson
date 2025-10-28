@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Card } from 'flowbite-react';
-import { KuInput, KuButton } from '@/components/form';
+import { KuInput, KuButton } from '@/components/ku-components';
 import { Education } from '../models/education';
 
 interface EducationsFormProps {
@@ -54,7 +54,6 @@ export const EducationsForm = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <KuInput
               name={`personEducationCourse-${index}`}
-              type="input"
               dataType="text"
               label={t("profile.person.education_course")}
               value={education.course || ''}
@@ -62,7 +61,6 @@ export const EducationsForm = ({
             />
             <KuInput
               name={`personEducationInstitution-${index}`}
-              type="input"
               dataType="text"
               label={t("profile.person.education_institution")}
               value={education.institution || ''}
@@ -70,7 +68,6 @@ export const EducationsForm = ({
             />
             <KuInput
               name={`personEducationStartDate-${index}`}
-              type="input"
               dataType="date"
               label={t("profile.person.education_start_date")}
               value={education.startDate || ''}
@@ -78,7 +75,6 @@ export const EducationsForm = ({
             />
             <KuInput
               name={`personEducationFinishDate-${index}`}
-              type="input"
               dataType="date"
               label={t("profile.person.education_finish_date")}
               value={education.finishDate || ''}
@@ -87,7 +83,6 @@ export const EducationsForm = ({
             <div className="md:col-span-2">
               <KuInput
                 name={`personEducationDescription-${index}`}
-                type="input"
                 dataType="text"
                 label={t("profile.person.education_description")}
                 value={education.description || ''}
@@ -96,7 +91,6 @@ export const EducationsForm = ({
             </div>
             <KuInput
               name={`personEducationCertificateFile-${index}`}
-              type="input"
               dataType="text"
               label={t("profile.person.education_certificate")}
               value={education.certificateFile || ''}

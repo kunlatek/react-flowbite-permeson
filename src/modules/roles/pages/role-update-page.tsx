@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Card, Button, Spinner, Tabs, Badge, Label, Checkbox } from "flowbite-react";
 import { HiArrowLeft, HiTrash, HiPlus } from "react-icons/hi";
-import { KuInput, KuButton } from "@/components/form";
+import { KuInput, KuButton } from "@/components/ku-components";
 import { useUpdateRole } from "../hooks/use-update-role";
 
 export default function RoleUpdatePage() {
@@ -59,7 +59,6 @@ export default function RoleUpdatePage() {
               <div className="p-6 space-y-6">
                 {/* Role Name */}
                 <KuInput
-                  type="input"
                   name="name"
                   label={t("roles.form.name")}
                   value={updateRole.formData.name}

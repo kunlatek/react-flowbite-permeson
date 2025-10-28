@@ -1,12 +1,12 @@
 // Available modules and actions for the permissions
 export const AVAILABLE_MODULES = [
-    'posts',
     'users',
     'roles',
     'workspaces',
     'invitations',
     'profiles',
-    'settings'
+    'settings',
+    /* RAPIDA: AVAILABLE_MODULES */
 ] as const;
 
 export const AVAILABLE_ACTIONS = [

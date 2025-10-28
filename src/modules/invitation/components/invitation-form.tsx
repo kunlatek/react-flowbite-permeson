@@ -1,4 +1,4 @@
-import { KuInput, KuSelect, KuButton, KuAutocomplete } from "@/components/form";
+import { KuInput, KuButton, KuAutocomplete } from "@/components/ku-components";
 import type { ISelectOption } from "@/models/form";
 import { useTranslation } from "react-i18next";
 

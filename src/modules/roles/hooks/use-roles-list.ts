@@ -2,7 +2,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { type IColumn, type IAction, type IHeaderAction } from "@/components/data/ku-data-table";
+import { type IColumn, type IAction, type IHeaderAction } from "@/components/ku-components/flowbite/ku-data-table";
 
 import { IRole, IRolesResponse, IRoleTable } from "../interfaces";
 

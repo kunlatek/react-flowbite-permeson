@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Card } from 'flowbite-react';
-import { KuInput, KuSelect, KuButton } from '@/components/form';
+import { KuInput, KuSelect, KuButton } from '@/components/ku-components';
 import { Contact } from '../models/contact';
 
 interface ContactsFormProps {
@@ -67,7 +67,6 @@ export const ContactsForm = ({
             />
             <KuInput
               name={`contactValue-${index}`}
-              type="input"
               dataType="text"
               label={t("profile.company.contact_value")}
               value={contact.value || ''}
@@ -75,7 +74,6 @@ export const ContactsForm = ({
             />
             <KuInput
               name={`contactComplement-${index}`}
-              type="input"
               dataType="text"
               label={t("profile.company.contact_complement")}
               value={contact.complement || ''}

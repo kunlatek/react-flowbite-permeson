@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Card } from 'flowbite-react';
-import { KuInput, KuButton } from '@/components/form';
+import { KuInput, KuButton } from '@/components/ku-components';
 
 interface CompanyImagesFormProps {
   companyImages: string[];
@@ -53,7 +53,6 @@ export const CompanyImageForm = ({
           <div className="grid grid-cols-1 gap-4">
             <KuInput
               name={`companyImage-${index}`}
-              type="input"
               dataType="text"
               label={t("profile.company.image_path")}
               value={image || ''}

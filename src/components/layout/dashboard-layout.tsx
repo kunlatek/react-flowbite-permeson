@@ -13,11 +13,9 @@ import {
   Select,
   Button,
   Spinner,
-  SidebarCollapse
 } from "flowbite-react";
 import { 
   HiMenuAlt1, 
-  HiX, 
   HiUser, 
   HiCog, 
   HiLogout,
@@ -27,12 +25,11 @@ import {
   HiSun,
   HiMoon,
   HiMenu,
-  HiDocumentText,
   HiShieldCheck,
   HiMail
 } from "react-icons/hi";
 
-const DashboardLayout = () => {
+export const DashboardLayout = () => {
   const { user, logout } = useAuth();
   const { workspaces, selectedWorkspaceId, loading: workspacesLoading, switchWorkspace } = useMyWorkspaces();
   const { isDarkMode, toggleTheme } = useTheme();
@@ -292,5 +289,3 @@ const DashboardLayout = () => {
     </div>
   );
 };
-
-export default DashboardLayout;

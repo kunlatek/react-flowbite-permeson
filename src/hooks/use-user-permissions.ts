@@ -6,10 +6,6 @@ import type { IRole } from "@/modules/roles/interfaces";
 import type { IPermission } from "@/modules/roles/interfaces/permission.interface";
 
 export interface IUserPermissions {
-  canViewPosts: boolean;
-  canCreatePosts: boolean;
-  canEditPosts: boolean;
-  canDeletePosts: boolean;
   canViewRoles: boolean;
   canCreateRoles: boolean;
   canEditRoles: boolean;
@@ -32,13 +28,10 @@ export interface IUserPermissions {
   canDeleteProfiles: boolean;
   canViewSettings: boolean;
   canEditSettings: boolean;
+  /* RAPIDA: I_USER_PERMISSIONS */
 }
 
 const getDefaultPermissions = (): IUserPermissions => ({
-  canViewPosts: false,
-  canCreatePosts: false,
-  canEditPosts: false,
-  canDeletePosts: false,
   canViewRoles: false,
   canCreateRoles: false,
   canEditRoles: false,
@@ -61,6 +54,7 @@ const getDefaultPermissions = (): IUserPermissions => ({
   canDeleteProfiles: false,
   canViewSettings: true, // Settings sempre visível
   canEditSettings: false,
+  /* RAPIDA: DEFAULT_PERMISSIONS */
 });
 
 const hasPermission = (permissions: IPermission[], module: string, action: string): boolean => {
@@ -75,7 +69,6 @@ export const useUserPermissions = (): { permissions: IUserPermissions; userRole:
   const [userPermissions, setUserPermissions] = useState<IUserPermissions>(getDefaultPermissions());
   const [userRole, setUserRole] = useState<IRole | null>(null);
   const [loading, setLoading] = useState(true);
-  const [roles, setRoles] = useState<IRole[]>([]);
 
   useEffect(() => {
     const calculatePermissions = async () => {
@@ -91,10 +84,6 @@ export const useUserPermissions = (): { permissions: IUserPermissions; userRole:
         // Se é owner do workspace, tem todas as permissões
         if (workspace.workspace?.isOwner) {
           const ownerPermissions: IUserPermissions = {
-            canViewPosts: true,
-            canCreatePosts: true,
-            canEditPosts: true,
-            canDeletePosts: true,
             canViewRoles: true,
             canCreateRoles: true,
             canEditRoles: true,
@@ -117,6 +106,7 @@ export const useUserPermissions = (): { permissions: IUserPermissions; userRole:
             canDeleteProfiles: true,
             canViewSettings: true,
             canEditSettings: true,
+            /* RAPIDA: OWNER_PERMISSIONS */
           };
           
           setUserPermissions(ownerPermissions);
@@ -164,12 +154,6 @@ export const useUserPermissions = (): { permissions: IUserPermissions; userRole:
 
         // Calcular permissões baseadas na role
         const permissions: IUserPermissions = {
-          // Posts
-          canViewPosts: hasPermission(userRole.permissions, 'posts', 'findAll'),
-          canCreatePosts: hasPermission(userRole.permissions, 'posts', 'create'),
-          canEditPosts: hasPermission(userRole.permissions, 'posts', 'update'),
-          canDeletePosts: hasPermission(userRole.permissions, 'posts', 'delete'),
-          
           // Roles
           canViewRoles: hasPermission(userRole.permissions, 'roles', 'findAll'),
           canCreateRoles: hasPermission(userRole.permissions, 'roles', 'create'),
@@ -203,6 +187,8 @@ export const useUserPermissions = (): { permissions: IUserPermissions; userRole:
           // Settings (sempre visível)
           canViewSettings: true,
           canEditSettings: hasPermission(userRole.permissions, 'settings', 'update'),
+
+          /* RAPIDA: PERMISSIONS */
         };
 
         setUserPermissions(permissions);

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Card, Alert } from "flowbite-react";
-import { KuModal } from "@/components/common/ku-modal";
-import { KuButton } from "@/components/form";
+import { KuModal } from "@/components/ku-components";
+import { KuButton } from "@/components/ku-components";
 import DeleteAccountForm from "../components/delete-account-form";
 
 export default function SettingsPage() {

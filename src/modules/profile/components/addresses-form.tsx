@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Card } from 'flowbite-react';
-import { KuInput, KuSelect, KuButton } from '@/components/form';
+import { KuInput, KuSelect, KuButton } from '@/components/ku-components';
 import { Address } from '../models/address';
 
 interface AddressesFormProps {
@@ -24,7 +24,6 @@ export const AddressesForm = ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <KuInput
           name="addressOneCepBrasilApi"
-          type="input"
           dataType="text"
           label={t("profile.company.cep")}
           value={primaryAddress?.cep || ''}
@@ -44,7 +43,6 @@ export const AddressesForm = ({
         />
         <KuInput
           name="addressOneStreet"
-          type="input"
           dataType="text"
           label={t("profile.company.street")}
           value={primaryAddress?.street || ''}
@@ -52,7 +50,6 @@ export const AddressesForm = ({
         />
         <KuInput
           name="addressOneNumber"
-          type="input"
           dataType="text"
           label={t("profile.company.number")}
           value={primaryAddress?.number || ''}
@@ -60,7 +57,6 @@ export const AddressesForm = ({
         />
         <KuInput
           name="addressOneComplement"
-          type="input"
           dataType="text"
           label={t("profile.company.complement")}
           value={primaryAddress?.complement || ''}
@@ -68,7 +64,6 @@ export const AddressesForm = ({
         />
         <KuInput
           name="addressOneCity"
-          type="input"
           dataType="text"
           label={t("profile.company.city")}
           value={primaryAddress?.city || ''}
@@ -76,7 +71,6 @@ export const AddressesForm = ({
         />
         <KuInput
           name="addressOneState"
-          type="input"
           dataType="text"
           label={t("profile.company.state")}
           value={primaryAddress?.state || ''}

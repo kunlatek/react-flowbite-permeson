@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Card } from 'flowbite-react';
-import { KuInput, KuSelect } from '@/components/form';
+import { KuInput, KuSelect } from '@/components/ku-components';
 import { BankData } from '../models/bank-data';
 
 interface BankDatasFormProps {
@@ -32,7 +32,6 @@ export const BankDataForm = ({
           <div className="grid grid-cols-1 gap-4">
             <KuInput
               name="bankDataOne.bankName"
-              type="input"
               dataType="text"
               label={t("profile.company.bank_name")}
               value={primaryBank?.name || ''}
@@ -40,7 +39,6 @@ export const BankDataForm = ({
             />
             <KuInput
               name="bankDataOne.bankBranch"
-              type="input"
               dataType="text"
               label={t("profile.company.bank_branch")}
               value={primaryBank?.branch || ''}
@@ -48,7 +46,6 @@ export const BankDataForm = ({
             />
             <KuInput
               name="bankDataOne.bankAccount"
-              type="input"
               dataType="text"
               label={t("profile.company.bank_account")}
               value={primaryBank?.account || ''}
@@ -77,7 +74,6 @@ export const BankDataForm = ({
           <div className="grid grid-cols-1 gap-4">
             <KuInput
               name="bankDataTwo.bankName"
-              type="input"
               dataType="text"
               label={t("profile.company.bank_name")}
               value={secondaryBank?.name || ''}
@@ -85,7 +81,6 @@ export const BankDataForm = ({
             />
             <KuInput
               name="bankDataTwo.bankBranch"
-              type="input"
               dataType="text"
               label={t("profile.company.bank_branch")}
               value={secondaryBank?.branch || ''}
@@ -93,7 +88,6 @@ export const BankDataForm = ({
             />
             <KuInput
               name="bankDataTwo.bankAccount"
-              type="input"
               dataType="text"
               label={t("profile.company.bank_account")}
               value={secondaryBank?.account || ''}

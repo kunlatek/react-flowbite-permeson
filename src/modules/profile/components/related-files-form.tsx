@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { Card } from 'flowbite-react';
-import { KuInput, KuButton } from '@/components/form';
+import { KuInput, KuButton } from '@/components/ku-components';
 import { RelatedFile } from '../models/related-file';
 
 interface RelatedFilesFormProps {
@@ -54,7 +54,6 @@ export const RelatedFilesForm = ({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <KuInput
               name={`filesDescription-${index}`}
-              type="input"
               dataType="text"
               label={t("profile.company.file_description")}
               value={file.description || ''}
@@ -62,7 +61,6 @@ export const RelatedFilesForm = ({
             />
             <KuInput
               name={`relatedFilesFiles-${index}`}
-              type="input"
               dataType="text"
               label={t("profile.company.file_path")}
               value={file.file || ''}
@@ -70,7 +68,6 @@ export const RelatedFilesForm = ({
             />
             <KuInput
               name={`relatedFilesDateDay-${index}`}
-              type="input"
               dataType="number"
               label={t("profile.company.file_date_day")}
               value={file.dateDay || 0}
@@ -78,7 +75,6 @@ export const RelatedFilesForm = ({
             />
             <KuInput
               name={`relatedFilesDateMonth-${index}`}
-              type="input"
               dataType="number"
               label={t("profile.company.file_date_month")}
               value={file.dateMonth || 0}
@@ -86,7 +82,6 @@ export const RelatedFilesForm = ({
             />
             <KuInput
               name={`relatedFilesDateYear-${index}`}
-              type="input"
               dataType="number"
               label={t("profile.company.file_date_year")}
               value={file.dateYear || 0}

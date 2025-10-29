@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import {KuInput, KuButton} from "@/components/ku-components";
 import { useLogin } from "../hooks/use-login";
 
-export default function LoginPage() {
+export default function LoginWithPreRegisterPage() {
   const login = useLogin();
   const { t } = useTranslation();
 

@@ -247,7 +247,18 @@
       "file_path": "File Path",
       "file_date_day": "Day",
       "file_date_month": "Month",
-      "file_date_year": "Year"
+      "file_date_year": "Year",
+      "phones": "Phones",
+      "add_phone": "Add Phone",
+      "remove_phone": "Remove Phone",
+      "phone": "Phone",
+      "phone_number": "Phone Number",
+      "emails": "Emails",
+      "add_email": "Add Email",
+      "remove_email": "Remove Email",
+      "email": "Email",
+      "email_address": "Email Address",
+      "email_type": "Email Type"
     },
     "company": {
       "company_info": "Company Information",
@@ -307,7 +318,18 @@
       "file_path": "File Path",
       "file_date_day": "Day",
       "file_date_month": "Month",
-      "file_date_year": "Year"
+      "file_date_year": "Year",
+      "phones": "Phones",
+      "add_phone": "Add Phone",
+      "remove_phone": "Remove Phone",
+      "phone": "Phone",
+      "phone_number": "Phone Number",
+      "emails": "Emails",
+      "add_email": "Add Email",
+      "remove_email": "Remove Email",
+      "email": "Email",
+      "email_address": "Email Address",
+      "email_type": "Email Type"
     }
   },
   "workspace": {

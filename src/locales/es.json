@@ -247,7 +247,18 @@
       "file_path": "Ruta del Archivo",
       "file_date_day": "Día",
       "file_date_month": "Mes",
-      "file_date_year": "Año"
+      "file_date_year": "Año",
+      "phones": "Teléfonos",
+      "add_phone": "Agregar Teléfono",
+      "remove_phone": "Eliminar Teléfono",
+      "phone": "Teléfono",
+      "phone_number": "Número de Teléfono",
+      "emails": "Emails",
+      "add_email": "Agregar Email",
+      "remove_email": "Eliminar Email",
+      "email": "Email",
+      "email_address": "Dirección de Email",
+      "email_type": "Tipo de Email"
     },
     "company": {
       "company_info": "Información de la Empresa",
@@ -307,7 +318,18 @@
       "file_path": "Ruta del Archivo",
       "file_date_day": "Día",
       "file_date_month": "Mes",
-      "file_date_year": "Año"
+      "file_date_year": "Año",
+      "phones": "Teléfonos",
+      "add_phone": "Agregar Teléfono",
+      "remove_phone": "Eliminar Teléfono",
+      "phone": "Teléfono",
+      "phone_number": "Número de Teléfono",
+      "emails": "Emails",
+      "add_email": "Agregar Email",
+      "remove_email": "Eliminar Email",
+      "email": "Email",
+      "email_address": "Dirección de Email",
+      "email_type": "Tipo de Email"
     }
   },
   "workspace": {

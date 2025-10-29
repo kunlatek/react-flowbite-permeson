@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import LoginPage from "@/modules/login/pages/login-page";
 import LoginWithPreRegisterPage from "@/modules/login/pages/login-with-pre-register-page";
+import PreRegisterPage from "@/modules/pre-register/pages/pre-register-page";
 import HomePage from "@/modules/home/pages/home-page";
 import DashboardPage from "@/modules/dashboard/pages/dashboard-page";
 import ProfilePage from "@/modules/profile/pages/person-profile-page";
@@ -31,8 +31,8 @@ export const OpenAppRouter = () => {
 
       {/* Rotas de Autenticação com Layout de Autenticação */}
       <Route element={<AuthLayout />}>
-        <Route path="/auth/login" element={<LoginPage />} />
-        <Route path="/auth/pre-register" element={<LoginWithPreRegisterPage />} />
+        <Route path="/auth/login" element={<LoginWithPreRegisterPage />} />
+        <Route path="/auth/pre-register" element={<PreRegisterPage />} />
         <Route path="/auth/register" element={<RegisterPage />} />
         <Route path="/auth/forgot-password" element={<ForgotPasswordPage />} />
         <Route

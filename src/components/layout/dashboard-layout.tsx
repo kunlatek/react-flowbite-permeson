@@ -97,7 +97,7 @@ export const DashboardLayout = () => {
                 {/* Project Modules Sidebar Items */}
 
                 {/* Invitations - sempre visível para owner, senão depende de permissão */}
-                {(isOwner || permissions.canViewInvitations) && (
+                {permissions.canViewInvitations && (
                   <Sidebar.Item href="/invitations" icon={HiMail}>
                     <div className="truncate w-[150px]">
                       {!sidebarCollapsed && t("dashboard.sidebar.invitations")}
@@ -106,7 +106,7 @@ export const DashboardLayout = () => {
                 )}
                 
                 {/* Roles - sempre visível para owner, senão depende de permissão */}
-                {(isOwner || permissions.canViewRoles) && (
+                {permissions.canViewRoles && (
                   <Sidebar.Item href="/roles" icon={HiShieldCheck}>
                     <div className="truncate w-[150px]">
                       {!sidebarCollapsed && t("dashboard.sidebar.roles")}
@@ -115,7 +115,7 @@ export const DashboardLayout = () => {
                 )}
                 
                 {/* Collaborators - sempre visível para owner, senão depende de permissão */}
-                {(isOwner || permissions.canViewWorkspaces) && (
+                {permissions.canViewWorkspaces && (
                   <Sidebar.Item href="/workspace" icon={HiUserGroup}>
                     <div className="truncate w-[150px]">
                       {!sidebarCollapsed && t("dashboard.sidebar.collaborators")}

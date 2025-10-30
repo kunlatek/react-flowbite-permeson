@@ -2,7 +2,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { type IColumn, type IAction, type IHeaderAction } from "@/components/ku-components/flowbite/ku-data-table";
+import type { IColumn, IAction, IHeaderAction } from "@/interfaces/ku-components/ku-data-table.interface";
 
 import { IRole, IRolesResponse, IRoleTable } from "../interfaces";
 
@@ -23,13 +23,22 @@ export const useRolesList = (permissions?: any) => {
     const [roleToDelete, setRoleToDelete] = useState<IRole | null>(null);
     const [deleteLoading, setDeleteLoading] = useState(false);
     const [rolesLoading, setRolesLoading] = useState(false);
+    const [refreshTrigger, setRefreshTrigger] = useState(0);
+    
+    const loadRoles = async () => {
+        setRolesLoading(true);
+        try {
+            const response: IRolesResponse = await fetchRoles(1, 10);
+            setRoles(response.data || []);
+        } catch (error) {
+            console.error('Error loading roles:', error);
+        } finally {
+            setRolesLoading(false);
+        }
+    };
     
     useEffect(() => {
-        setRolesLoading(true);
-        fetchRoles(1, 10).then((response: IRolesResponse) => {
-            setRoles(response.data || []);
-            setRolesLoading(false);
-        });
+        loadRoles();
     }, []);
 
     const canEditRole = (role: IRoleTable) => {
@@ -55,6 +64,9 @@ export const useRolesList = (permissions?: any) => {
             toast.success(t("roles.delete_success"));
             setDeleteModalOpen(false);
             setRoleToDelete(null);
+            
+            // Trigger refresh of the data table
+            setRefreshTrigger(prev => prev + 1);
         } catch (err: any) {
             toast.error(err.message || t("roles.error.delete_failed"));
         } finally {
@@ -123,13 +135,13 @@ export const useRolesList = (permissions?: any) => {
             key: "permissions",
             header: t("roles.permissions"),
             sortable: false,
-            formatValue: (value) => formatPermissions(value as any[]),
+            formatValue: (value: unknown, row: IRoleTable) => formatPermissions(value as any[]),
         },
         {
             key: "createdAt",
             header: t("roles.created_at"),
             sortable: true,
-            formatValue: (value) => formatDate(value as string),
+            formatValue: (value: unknown, row: IRoleTable) => formatDate(value as string),
         },
     ];
 
@@ -143,7 +155,7 @@ export const useRolesList = (permissions?: any) => {
                 baseActions.push({
                     label: t("roles.edit"),
                     color: "primary",
-                    handler: (role) => navigate(`/roles/${role._id}/edit`),
+                    handler: (role: IRoleTable) => navigate(`/roles/${role._id}/edit`),
                 });
             }
 
@@ -161,7 +173,7 @@ export const useRolesList = (permissions?: any) => {
 
     // Ações do header
     const headerActions: IHeaderAction[] = [];
-
+    
     if (permissions?.canCreateRoles) {
         headerActions.push({
             label: t("roles.new_role"),
@@ -182,5 +194,7 @@ export const useRolesList = (permissions?: any) => {
         roleToDelete,
         deleteLoading,
         rolesLoading,
+        loadRoles,
+        refreshTrigger,
     }
 }

@@ -10,7 +10,7 @@ export interface IWorkspace {
     currentUserId?: string;
     currentUserType?: 'person' | 'company';
     isOwner?: boolean;
-    acl: string[];
+    acl: any[];
     createdAt: string;
     updatedAt: string;
 }

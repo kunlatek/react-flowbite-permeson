@@ -108,6 +108,14 @@ export const useCreateRole = () => {
       await createRole(roleData);
 
       toast.success(t("roles.create_success"));
+      
+      // Clear form data
+      setFormData({
+        name: "",
+        permissions: [],
+      });
+      setActiveTab(0);
+      
       navigate("/roles");
     } catch (err: any) {
       toast.error(err.message || t("roles.error.create_failed"));

@@ -1,4 +1,4 @@
-import { ButtonVariant } from "@/components/ku-components/flowbite/form";
+import { type ButtonVariant } from "@/interfaces/ku-components/ku-form/ku-button.interface";
 
 export interface IColumn<T> {
     key: keyof T | string;
@@ -29,4 +29,5 @@ export interface IKuDataTableProps<T> {
     getActions?: (row: T) => IAction<T>[];
     headerActions?: IHeaderAction[];
     pageSize?: number;
+    refreshTrigger?: number;
 }

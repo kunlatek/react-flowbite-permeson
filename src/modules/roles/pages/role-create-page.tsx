@@ -31,7 +31,7 @@ export default function RoleCreatePage() {
 
       {/* Form */}
       <Card>
-        <form onSubmit={roleCreate.handleSubmit}>
+        <form onSubmit={roleCreate.handleSubmit} noValidate>
           {/* Tabs for all information */}
           <Tabs
             aria-label="Role information tabs"
@@ -58,7 +58,7 @@ export default function RoleCreatePage() {
 
             <Tabs.Item
               active={roleCreate.activeTab === 1}
-              title="Permissões"
+              title={t("roles.form.permissions")}
             >
               <div className="p-6 space-y-6">
                 <div>
@@ -78,7 +78,7 @@ export default function RoleCreatePage() {
                       >
                         <div className="flex justify-between items-start mb-4">
                           <h4 className="text-md font-medium text-gray-900 dark:text-white">
-                            Permissão {index + 1}
+                            {t("roles.form.permission")} {index + 1}
                           </h4>
                           <Button
                             size="xs"

@@ -428,7 +428,9 @@
       "select_actions": "Select actions",
       "add_permission": "Add Permission",
       "remove_permission": "Remove Permission",
-      "permission_required": "At least one permission is required"
+      "permission_required": "At least one permission is required",
+      "permission": "Permission",
+      "all": "All"
     },
     "view_role": "View Role",
     "details": "Details",
@@ -436,14 +438,14 @@
     "modules": {
       "users": "Users",
       "roles": "Roles",
-      "workspaces": "Workspaces",
+      "workspaces": "Collaborators",
       "invitations": "Invitations",
       "profiles": "Profiles",
-      "settings": "Settings"
+      "settings": "Settings",
+      "all": "All"
     },
     "actions": {
       "findAll": "View List",
-      "findOne": "View Details",
       "create": "Create",
       "update": "Edit",
       "delete": "Delete"

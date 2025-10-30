@@ -57,7 +57,7 @@ export const useResetPassword = () => {
                 toast.success(response.message || "Senha redefinida com sucesso!");
                 setTimeout(() => {
                     navigate("/auth/login");
-                }, 2000);
+                }, 300);
                 return true;
             } else {
                 throw new Error(response.message || "Erro ao redefinir senha");

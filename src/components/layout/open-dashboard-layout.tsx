@@ -5,19 +5,19 @@ import { useMyWorkspaces } from "@/modules/workspace/hooks/use-my-workspaces";
 import { useTheme } from "@/hooks/use-theme";
 import { useUserPermissions } from "@/hooks/use-user-permissions";
 import { useTranslation } from "react-i18next";
-import { 
-  Navbar, 
-  Sidebar, 
-  Dropdown, 
-  Avatar, 
+import {
+  Navbar,
+  Sidebar,
+  Dropdown,
+  Avatar,
   Select,
   Button,
   Spinner,
 } from "flowbite-react";
-import { 
-  HiMenuAlt1, 
-  HiUser, 
-  HiCog, 
+import {
+  HiMenuAlt1,
+  HiUser,
+  HiCog,
   HiLogout,
   HiHome,
   HiUserGroup,
@@ -56,20 +56,19 @@ export const OpenDashboardLayout = () => {
   return (
     <div className="flex h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden">
       {/* Sidebar */}
-      <Sidebar 
+      <Sidebar
         aria-label="Dashboard sidebar"
-        className={`fixed left-0 top-0 z-40 h-screen transition-transform duration-300 ease-in-out ${
-          sidebarCollapsed ? '-translate-x-full' : 'translate-x-0'
-        }`}
+        className={`fixed left-0 top-0 z-40 h-screen transition-transform duration-300 ease-in-out ${sidebarCollapsed ? '-translate-x-full' : 'translate-x-0'
+          }`}
       >
         <div className="flex h-full flex-col justify-between py-2 bg-white dark:bg-gray-800 p-4">
           <div>
             <div className="mb-[33px] flex items-center">
               <a href="/" className="flex items-center">
-                <img 
-                  src="/src/assets/images/logo.png" 
-                  alt="Logo" 
-                  className="h-8 w-8 mr-3 dark:invert dark:brightness-0 dark:contrast-100" 
+                <img
+                  src="/src/assets/images/logo.png"
+                  alt="Logo"
+                  className="h-8 w-8 mr-3 dark:invert dark:brightness-0 dark:contrast-100"
                 />
                 {!sidebarCollapsed && (
                   <span className="self-center whitespace-nowrap text-xl font-semibold text-gray-900 dark:text-white">
@@ -86,56 +85,51 @@ export const OpenDashboardLayout = () => {
                     {!sidebarCollapsed && t("dashboard.sidebar.dashboard")}
                   </div>
                 </Sidebar.Item>
-                
-                {/* Profile - sempre visível */}
-                <Sidebar.Item href="/profile" icon={HiUser}>
-                  <div className="truncate w-[150px]">
-                    {!sidebarCollapsed && t("dashboard.sidebar.profile")}
-                  </div>
-                </Sidebar.Item>
-                
-                {/* Project Modules Sidebar Items */}
 
-                {/* Invitations - sempre visível para owner, senão depende de permissão */}
-                {(isOwner || permissions.canViewInvitations) && (
-                  <Sidebar.Item href="/invitations" icon={HiMail}>
+                {/* Profile - sempre visível apenas para o owner */}
+                {isOwner && (
+                  <Sidebar.Item href="/profile" icon={HiUser}>
                     <div className="truncate w-[150px]">
-                      {!sidebarCollapsed && t("dashboard.sidebar.invitations")}
+                      {!sidebarCollapsed && t("dashboard.sidebar.profile")}
                     </div>
                   </Sidebar.Item>
                 )}
-                
+
+                {/* Project Modules Sidebar Items */}
+
                 {/* Roles - sempre visível para owner, senão depende de permissão */}
-                {(isOwner || permissions.canViewRoles) && (
+                {permissions.canViewRoles && (
                   <Sidebar.Item href="/roles" icon={HiShieldCheck}>
                     <div className="truncate w-[150px]">
                       {!sidebarCollapsed && t("dashboard.sidebar.roles")}
                     </div>
                   </Sidebar.Item>
                 )}
-                
+
                 {/* Collaborators - sempre visível para owner, senão depende de permissão */}
-                {(isOwner || permissions.canViewWorkspaces) && (
+                {permissions.canViewWorkspaces && (
                   <Sidebar.Item href="/workspace" icon={HiUserGroup}>
                     <div className="truncate w-[150px]">
                       {!sidebarCollapsed && t("dashboard.sidebar.collaborators")}
                     </div>
                   </Sidebar.Item>
                 )}
-                
-                {/* Settings - sempre visível */}
-                <Sidebar.Item href="/settings" icon={HiCog}>
-                  <div className="truncate w-[150px]">
-                    {!sidebarCollapsed && t("dashboard.sidebar.settings")}
-                  </div>
-                </Sidebar.Item>
+
+                {/* Settings - sempre visível apenas para o owner */}
+                {isOwner && (
+                  <Sidebar.Item href="/settings" icon={HiCog}>
+                    <div className="truncate w-[150px]">
+                      {!sidebarCollapsed && t("dashboard.sidebar.settings")}
+                    </div>
+                  </Sidebar.Item>
+                )}
               </Sidebar.ItemGroup>
             </Sidebar.Items>
           </div>
           <Sidebar.Items>
             <Sidebar.ItemGroup>
-              <Sidebar.Item 
-                href="#" 
+              <Sidebar.Item
+                href="#"
                 icon={HiLogout}
                 onClick={handleLogout}
                 className="cursor-pointer text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300"
@@ -148,9 +142,8 @@ export const OpenDashboardLayout = () => {
       </Sidebar>
 
       {/* Main Content */}
-      <div className={`flex-1 flex flex-col transition-all duration-300 ease-in-out ${
-        sidebarCollapsed ? 'ml-0' : 'ml-64'
-      }`}>
+      <div className={`flex-1 flex flex-col transition-all duration-300 ease-in-out ${sidebarCollapsed ? 'ml-0' : 'ml-64'
+        }`}>
         {/* Topbar */}
         <Navbar fluid className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800 w-full flex-shrink-0">
           <div className="w-full p-3 lg:px-5 lg:pl-3">
@@ -177,8 +170,8 @@ export const OpenDashboardLayout = () => {
                     <Spinner size="sm" />
                   </div>
                 ) : (
-                  <Select 
-                    value={selectedWorkspaceId} 
+                  <Select
+                    value={selectedWorkspaceId}
                     onChange={(e) => handleWorkspaceChange(e.target.value)}
                     className="w-48"
                   >
@@ -191,14 +184,14 @@ export const OpenDashboardLayout = () => {
                 )}
 
                 {/* User Menu */}
-                <Dropdown 
-                  arrowIcon={false} 
-                  inline 
+                <Dropdown
+                  arrowIcon={false}
+                  inline
                   label={
-                    <Avatar 
-                      alt="User settings" 
-                      rounded 
-                      size="sm" 
+                    <Avatar
+                      alt="User settings"
+                      rounded
+                      size="sm"
                       className="w-8 h-8"
                     />
                   }
@@ -215,33 +208,30 @@ export const OpenDashboardLayout = () => {
                     <div className="flex items-center justify-between w-full">
                       <span className="text-gray-900 dark:text-white">{t("dashboard.topbar.language")}</span>
                       <div className="flex gap-1 ml-2">
-                        <button 
-                          onClick={() => changeLanguage('pt')} 
-                          className={`px-2 py-1 text-xs rounded ${
-                            i18n.language === 'pt' 
-                              ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' 
+                        <button
+                          onClick={() => changeLanguage('pt')}
+                          className={`px-2 py-1 text-xs rounded ${i18n.language === 'pt'
+                              ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
                               : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                          }`}
+                            }`}
                         >
                           PT
                         </button>
-                        <button 
-                          onClick={() => changeLanguage('en')} 
-                          className={`px-2 py-1 text-xs rounded ${
-                            i18n.language === 'en' 
-                              ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' 
+                        <button
+                          onClick={() => changeLanguage('en')}
+                          className={`px-2 py-1 text-xs rounded ${i18n.language === 'en'
+                              ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
                               : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                          }`}
+                            }`}
                         >
                           EN
                         </button>
-                        <button 
-                          onClick={() => changeLanguage('es')} 
-                          className={`px-2 py-1 text-xs rounded ${
-                            i18n.language === 'es' 
-                              ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' 
+                        <button
+                          onClick={() => changeLanguage('es')}
+                          className={`px-2 py-1 text-xs rounded ${i18n.language === 'es'
+                              ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
                               : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                          }`}
+                            }`}
                         >
                           ES
                         </button>
@@ -281,7 +271,7 @@ export const OpenDashboardLayout = () => {
 
       {/* Overlay for mobile */}
       {!sidebarCollapsed && (
-        <div 
+        <div
           className="fixed inset-0 z-30 bg-gray-600 bg-opacity-75 sm:hidden"
           onClick={toggleSidebar}
         />

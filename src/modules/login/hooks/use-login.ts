@@ -37,7 +37,7 @@ export const useLogin = () => {
 
             setTimeout(() => {
                 navigate("/dashboard");
-            }, 2000);
+            }, 300);
             return true;
         } catch (err: unknown) {
             if (axios.isAxiosError(err)) {

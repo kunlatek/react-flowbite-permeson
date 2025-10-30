@@ -77,7 +77,7 @@ export const useMyWorkspaces = () => {
     // Redirecionar para dashboard e depois recarregar
     setTimeout(() => {
       window.location.href = '/dashboard';
-    }, 1000); // Aguarda 1 segundo para o usuário ver a mensagem
+    }, 300);
     
     return true;
     } catch (err: any) {

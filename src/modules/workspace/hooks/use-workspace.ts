@@ -159,7 +159,7 @@ export const useWorkspace = () => {
     workspace,
     loading,
     error,
-    fetchWorkspace: gethWorkspace,
+    gethWorkspace,
     addMember,
     removeMember,
     handleAddMember,

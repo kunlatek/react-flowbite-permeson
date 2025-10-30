@@ -16,7 +16,7 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
   );
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
 
-  const { title, columns, dataSource, actions = [], getActions, headerActions = [], pageSize = 10 } = props;
+  const { title, columns, dataSource, actions = [], getActions, headerActions = [], pageSize = 10, refreshTrigger } = props;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,7 +46,7 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
     
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage, pageSize, sortColumn, sortDirection]);
+  }, [currentPage, pageSize, sortColumn, sortDirection, refreshTrigger]);
 
   const handleSort = (columnKey: keyof T | string) => {
     if (sortColumn === columnKey) {

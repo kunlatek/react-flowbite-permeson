@@ -428,7 +428,8 @@
       "select_actions": "Selecionar ações",
       "add_permission": "Adicionar Permissão",
       "remove_permission": "Remover Permissão",
-      "permission_required": "Pelo menos uma permissão é obrigatória"
+      "permission_required": "Pelo menos uma permissão é obrigatória",
+      "permission": "Permissão"
     },
     "view_role": "Visualizar Papel",
     "details": "Detalhes",
@@ -436,14 +437,14 @@
     "modules": {
       "users": "Usuários",
       "roles": "Papéis",
-      "workspaces": "Workspaces",
+      "workspaces": "Colaboradores",
       "invitations": "Convites",
       "profiles": "Perfis",
-      "settings": "Configurações"
+      "settings": "Configurações",
+      "all": "Todos"
     },
     "actions": {
       "findAll": "Visualizar Lista",
-      "findOne": "Visualizar Detalhes",
       "create": "Criar",
       "update": "Editar",
       "delete": "Excluir"

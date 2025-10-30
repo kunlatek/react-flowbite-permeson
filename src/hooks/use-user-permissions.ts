@@ -58,7 +58,7 @@ const getDefaultPermissions = (): IUserPermissions => ({
 });
 
 const hasPermission = (permissions: IPermission[], module: string, action: string): boolean => {
-  const modulePermission = permissions.find(p => p.module === module);
+  const modulePermission = permissions.find(p => p.module === module || p.module === 'all');
   if (!modulePermission) return false;
   
   return modulePermission.actionList.includes(action);
@@ -136,12 +136,8 @@ export const useUserPermissions = (): { permissions: IUserPermissions; userRole:
         }
 
         // Buscar a role do usuário atual no workspace
-        // Por enquanto, vamos simular com a primeira role disponível
-        // Em uma implementação real, você teria um endpoint específico para isso
-        const userRole = availableRoles.find((role: IRole) => {
-          // Lógica simplificada: se o usuário criou a role ou se é a primeira role
-          return role.createdBy === currentUserId || role._id === availableRoles[0]._id;
-        });
+        const roleId = (workspace.workspace?.acl ?? []).find((acl: any) => acl.userId === currentUserId)?.roleId;
+        const userRole = availableRoles.find((role: IRole) => role._id === roleId);
 
         if (!userRole) {
           setUserPermissions(getDefaultPermissions());

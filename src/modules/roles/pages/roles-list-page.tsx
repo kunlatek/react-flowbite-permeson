@@ -20,6 +20,7 @@ export default function RolesListPage() {
         getActions={rolesList.getActions}
         headerActions={rolesList.headerActions}
         pageSize={10}
+        refreshTrigger={rolesList.refreshTrigger}
       />
 
       {/* Modal de confirmação de exclusão */}

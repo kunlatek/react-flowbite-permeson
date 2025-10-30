@@ -47,7 +47,7 @@ export const useAddMember = () => {
           // Auto redirect after 2 seconds
           setTimeout(() => {
             navigate("/workspace");
-          }, 2000);
+          }, 300);
         }
         setAdding(false);
       };

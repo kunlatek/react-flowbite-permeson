@@ -135,6 +135,14 @@ export const useUpdateRole = () => {
       await updateRole(id, roleData);
 
       toast.success(t("roles.update_success"));
+      
+      // Clear form data
+      setFormData({
+        name: "",
+        permissions: [],
+      });
+      setActiveTab(0);
+      
       navigate("/roles");
     } catch (err: any) {
       toast.error(err.message || t("roles.error.update_failed"));

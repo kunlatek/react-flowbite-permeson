@@ -46,7 +46,7 @@ export default function RoleUpdatePage() {
 
       {/* Form */}
       <Card>
-        <form onSubmit={updateRole.handleSubmit}>
+        <form onSubmit={updateRole.handleSubmit} noValidate>
           {/* Tabs for all information */}
           <Tabs
             aria-label="Role information tabs"
@@ -73,7 +73,7 @@ export default function RoleUpdatePage() {
 
             <Tabs.Item
               active={updateRole.activeTab === 1}
-              title="Permissões"
+              title={t("roles.form.permissions")}
             >
               <div className="p-6 space-y-6">
                 <div>
@@ -93,7 +93,7 @@ export default function RoleUpdatePage() {
                       >
                         <div className="flex justify-between items-start mb-4">
                           <h4 className="text-md font-medium text-gray-900 dark:text-white">
-                            Permissão {index + 1}
+                            {t("roles.form.permission")} {index + 1}
                           </h4>
                           <Button
                             size="xs"

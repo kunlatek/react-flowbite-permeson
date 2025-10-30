@@ -90,15 +90,6 @@ export const OpenDashboardLayout = () => {
 
                 {/* Project Modules Sidebar Items */}
 
-                {/* Roles - sempre visível para owner, senão depende de permissão */}
-                {permissions.canViewRoles && (
-                  <Sidebar.Item href="/roles" icon={HiShieldCheck}>
-                    <div className="truncate w-[150px]">
-                      {!sidebarCollapsed && t("dashboard.sidebar.roles")}
-                    </div>
-                  </Sidebar.Item>
-                )}
-
                 {/* Collaborators - sempre visível para owner, senão depende de permissão */}
                 {permissions.canViewWorkspaces && (
                   <Sidebar.Item href="/workspace" icon={HiUserGroup}>

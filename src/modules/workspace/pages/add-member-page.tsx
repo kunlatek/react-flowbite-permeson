@@ -124,33 +124,6 @@ export default function AddMemberPage() {
                   </div>
                 </div>
               )}
-
-              {/* Role Selection */}
-              {addMember.selectedUser && (
-                <div>
-                  <Label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    <HiShieldCheck className="inline h-4 w-4 mr-1" />
-                    {t("workspace.select_role_label")}
-                  </Label>
-                  <Select
-                    value={addMember.selectedRoleId}
-                    onChange={(e) => addMember.setSelectedRoleId(e.target.value)}
-                    disabled={addMember.adding || addMember.rolesLoading}
-                  >
-                    <option value="">
-                      {addMember.rolesLoading ? t("workspace.loading_roles") : t("workspace.select_role_placeholder")}
-                    </option>
-                    {addMember.roles.map((role) => (
-                      <option key={role._id || role.id} value={role._id || role.id}>
-                        {role.name}
-                      </option>
-                    ))}
-                  </Select>
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                    {t("workspace.select_role_help")}
-                  </p>
-                </div>
-              )}
             </div>
           </div>
         </Card>

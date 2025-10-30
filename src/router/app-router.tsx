@@ -15,11 +15,6 @@ import { AuthLayout, DashboardLayout, MainLayout } from "@/components/layout";
 import ProtectedRoute from "./protected-route";
 import { PermissionGuard } from "@/components/auth/permission-guard";
 
-// Roles
-import RolesListPage from "@/modules/roles/pages/roles-list-page";
-import RoleCreatePage from "@/modules/roles/pages/role-create-page";
-import RoleUpdatePage from "@/modules/roles/pages/role-update-page";
-
 // Invitations
 import InvitationListPage from "@/modules/invitation/pages/invitation-list-page";
 import InvitationCreatePage from "@/modules/invitation/pages/create-invitation-page";
@@ -79,23 +74,6 @@ export const AppRouter = () => {
             </PermissionGuard>
           } />
           
-          {/* Roles Routes */}
-          <Route path="/roles" element={
-            <PermissionGuard requiredPermission="canViewRoles">
-              <RolesListPage />
-            </PermissionGuard>
-          } />
-          <Route path="/roles/new" element={
-            <PermissionGuard requiredPermission="canCreateRoles">
-              <RoleCreatePage />
-            </PermissionGuard>
-          } />
-          <Route path="/roles/:id/edit" element={
-            <PermissionGuard requiredPermission="canEditRoles">
-              <RoleUpdatePage />
-            </PermissionGuard>
-          } />
-
           {/* RAPIDA: ROUTES */}
         </Route>
 

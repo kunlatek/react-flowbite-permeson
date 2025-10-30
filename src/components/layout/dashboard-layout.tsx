@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/use-auth";
 import { useMyWorkspaces } from "@/modules/workspace/hooks/use-my-workspaces";
 import { useTheme } from "@/hooks/use-theme";
@@ -31,6 +31,7 @@ import {
 
 export const DashboardLayout = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const { workspaces, selectedWorkspaceId, loading: workspacesLoading, switchWorkspace } = useMyWorkspaces();
   const { isDarkMode, toggleTheme } = useTheme();
   const { permissions, isOwner } = useUserPermissions();
@@ -87,12 +88,6 @@ export const DashboardLayout = () => {
                   </div>
                 </Sidebar.Item>
                 
-                {/* Profile - sempre visível */}
-                <Sidebar.Item href="/profile" icon={HiUser}>
-                  <div className="truncate w-[150px]">
-                    {!sidebarCollapsed && t("dashboard.sidebar.profile")}
-                  </div>
-                </Sidebar.Item>
                 
                 {/* Project Modules Sidebar Items */}
 
@@ -123,12 +118,6 @@ export const DashboardLayout = () => {
                   </Sidebar.Item>
                 )}
                 
-                {/* Settings - sempre visível */}
-                <Sidebar.Item href="/settings" icon={HiCog}>
-                  <div className="truncate w-[150px]">
-                    {!sidebarCollapsed && t("dashboard.sidebar.settings")}
-                  </div>
-                </Sidebar.Item>
               </Sidebar.ItemGroup>
             </Sidebar.Items>
           </div>
@@ -261,6 +250,13 @@ export const DashboardLayout = () => {
                         {isDarkMode ? t("dashboard.topbar.theme_current_dark") : t("dashboard.topbar.theme_current_light")}
                       </div>
                     </div>
+                  </Dropdown.Item>
+
+                  <Dropdown.Item icon={HiUser} onClick={() => navigate('/profile')} className="[&>svg]:text-gray-600 [&>svg]:dark:text-gray-300">
+                    {t("dashboard.sidebar.profile")}
+                  </Dropdown.Item>
+                  <Dropdown.Item icon={HiCog} onClick={() => navigate('/settings')} className="[&>svg]:text-gray-600 [&>svg]:dark:text-gray-300">
+                    {t("dashboard.sidebar.settings")}
                   </Dropdown.Item>
 
                   <Dropdown.Divider />

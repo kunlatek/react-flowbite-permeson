@@ -69,7 +69,7 @@ export const useWorkspace = () => {
     }
   };
 
-  const addMember = async (userId: string, roleId?: string) => {
+  const addMember = async (userId: string) => {
     try {
       setLoading(true);
 
@@ -85,7 +85,7 @@ export const useWorkspace = () => {
         return false;
       }
 
-      await addTeamMember(userId, roleId);
+      await addTeamMember(userId);
       await gethWorkspace(); // Recarregar a lista com novos dados
       toast.success("Colaborador adicionado com sucesso!");
       return true;

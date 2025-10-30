@@ -4,21 +4,18 @@ import { ITeamMember } from "../interfaces";
 
 import { useUserSearch } from "./use-user-search";
 import { useWorkspace } from "./use-workspace";
-import { useRolesList } from "@/modules/roles/hooks/use-roles-list";
 import { useUserPermissions } from "@/hooks/use-user-permissions";
 
 export const useAddMember = () => {
     const navigate = useNavigate();
       const [searchTerm, setSearchTerm] = useState("");
       const [selectedUser, setSelectedUser] = useState<ITeamMember | null>(null);
-      const [selectedRoleId, setSelectedRoleId] = useState<string>("");
       const [adding, setAdding] = useState(false);
       const [success, setSuccess] = useState(false);
       
       const { searchResults, searching, searchUsers } = useUserSearch();
       const { workspace, addMember } = useWorkspace();
       const { permissions } = useUserPermissions();
-      const { roles, rolesLoading } = useRolesList(permissions);
         
       useEffect(() => {
         if (searchTerm && searchTerm.length >= 2) {
@@ -37,13 +34,12 @@ export const useAddMember = () => {
         if (!selectedUser) return;
         
         setAdding(true);
-        const success = await addMember(selectedUser.userId, selectedRoleId || undefined);
+        const success = await addMember(selectedUser.userId);
         if (success) {
           setSuccess(true);
           // Reset form
           setSearchTerm("");
           setSelectedUser(null);
-          setSelectedRoleId("");
           // Auto redirect after 2 seconds
           setTimeout(() => {
             navigate("/workspace");
@@ -70,13 +66,9 @@ export const useAddMember = () => {
         searchResults,
         selectedUser,
         handleUserSelect,
-        roles,
-        selectedRoleId,
-        setSelectedRoleId,
         adding,
         handleAddMember,
         success,
         currentTeamMembers,
-        rolesLoading,
       };
 }

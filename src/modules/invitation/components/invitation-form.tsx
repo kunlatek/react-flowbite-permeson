@@ -1,11 +1,7 @@
-import { KuInput, KuButton, KuAutocomplete } from "@/components/ku-components";
-import type { ISelectOption } from "@/models/form";
+import { KuInput, KuButton } from "@/components/ku-components";
 import { useTranslation } from "react-i18next";
 
-interface InvitationFormData {
-  email: string;
-  roleId: string;
-}
+interface InvitationFormData { email: string }
 
 interface InvitationFormProps {
   invitation: Partial<InvitationFormData>;
@@ -28,7 +24,6 @@ export default function InvitationForm({
     <form onSubmit={onSubmit}>
       <div className="space-y-4">
         <KuInput
-          type="input"
           dataType="email"
           name="email"
           label="Email"
@@ -37,30 +32,6 @@ export default function InvitationForm({
             onInvitationChange({ ...invitation, email: e.target.value })
           }
           isRequired
-        />
-        <KuAutocomplete
-          type="autocomplete"
-          dataType="text"
-          name="roleId"
-          value={invitation.roleId ? [{ label: invitation.roleId, value: invitation.roleId }] : []}
-          label={t("roles.title")}
-          optionsApi={{
-            endpoint: "/api/roles",
-            labelField: ["role.name"],
-            valueField: "id",
-            paramsToFilter: [],
-            paramType: "query",
-          }}
-          onChange={(name, value) => 
-            onInvitationChange({ ...invitation, roleId: (value as ISelectOption)?.value?.toString() ?? "" })
-          }
-          isRequired={true}
-          isMultiple={false}
-          isUnique={true}
-          isDisabled={loading}
-          isAutofocus={false}
-          conditions={[]}
-          formState={{ roleId: invitation.roleId || "" }}
         />
       </div>
       <div className="flex justify-end space-x-4 mt-8">

@@ -4,15 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { createInvitation } from "../api/create-invitation";
 
-interface InvitationFormData {
-    email: string;
-    roleId: string;
-}
+interface InvitationFormData { email: string }
 
 export const useCreateInvitation = () => {
     const [invitation, setInvitation] = useState<Partial<InvitationFormData>>({
         email: "",
-        roleId: "",
     });
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -20,15 +16,14 @@ export const useCreateInvitation = () => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!invitation.email || !invitation.roleId) {
-            toast.error("Email e Papel são obrigatórios.");
+        if (!invitation.email) {
+            toast.error("Email é obrigatório.");
             return;
         }
         setLoading(true);
         try {
             await createInvitation({
-                email: invitation.email,
-                roleId: invitation.roleId,
+                email: invitation.email
             });
             toast.success("Convite criado com sucesso!");
             navigate("/invitations");

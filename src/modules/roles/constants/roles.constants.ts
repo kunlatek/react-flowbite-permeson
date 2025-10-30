@@ -2,6 +2,7 @@
 export const AVAILABLE_MODULES = [
     'roles',
     'workspaces',
+    'invitations',
     'all',
     /* RAPIDA: AVAILABLE_MODULES */
 ] as const;

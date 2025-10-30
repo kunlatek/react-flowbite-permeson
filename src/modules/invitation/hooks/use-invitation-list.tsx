@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { Badge } from "flowbite-react";
-import type { IColumn, IAction, IHeaderAction } from "@/components/ku-components/flowbite/ku-data-table";
+import type { IColumn, IAction, IHeaderAction } from "@/interfaces/ku-components/ku-data-table.interface";
 import type { IInvitation } from "../interfaces/invitation.interface";
 import { fetchInvitations } from "../api/fetch-invitations";
 import { sendInvitation } from "../api/send-invitation";
@@ -32,12 +32,23 @@ export const useInvitationList = () => {
       {
         label: "Editar",
         color: "secondary",
-        handler: (row) => navigate(`/invitations/${row._id}/edit`),
+        handler: (row) => {
+          if (row.accepted) {
+            toast.error("Convite já aceito!");
+            return;
+          }
+          navigate(`/invitations/${row._id}/edit`);
+        },
       },
       {
         label: "Reenviar",
         color: "secondary",
         handler: async (row) => {
+          if (row.accepted) {
+            toast.error("Convite já aceito!");
+            return;
+          }
+          
           try {
             await sendInvitation(row._id);
             toast.success("Convite reenviado com sucesso!");

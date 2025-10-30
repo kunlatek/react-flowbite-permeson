@@ -11,7 +11,7 @@ import ResetPasswordPage from "@/modules/reset-password/pages/reset-password-pag
 import SettingsPage from "@/modules/settings/pages/settings-page";
 import WorkspacePage from "@/modules/workspace/pages/workspace-page";
 import AddMemberPage from "@/modules/workspace/pages/add-member-page";
-import { AuthLayout, OpenDashboardLayout, MainLayout } from "@/components/layout";
+import { AuthLayout, DashboardLayout, MainLayout } from "@/components/layout";
 import ProtectedRoute from "./protected-route";
 import { PermissionGuard } from "@/components/auth/permission-guard";
 
@@ -47,7 +47,7 @@ export const AppRouter = () => {
       {/* Protected Routes */}
       <Route element={<ProtectedRoute />}>
         {/* Dashboard with its own Layout */}
-        <Route element={<OpenDashboardLayout />}>
+        <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/workspace" element={

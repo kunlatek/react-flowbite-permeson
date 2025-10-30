@@ -28,7 +28,6 @@ export default function InvitationForm({
     <form onSubmit={onSubmit}>
       <div className="space-y-4">
         <KuInput
-          type="input"
           dataType="email"
           name="email"
           label="Email"
@@ -48,7 +47,7 @@ export default function InvitationForm({
             endpoint: "/api/roles",
             labelField: ["role.name"],
             valueField: "id",
-            paramsToFilter: [],
+            paramsToFilter: ["name"],
             paramType: "query",
           }}
           onChange={(name, value) => 

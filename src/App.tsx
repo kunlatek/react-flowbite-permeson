@@ -1,10 +1,10 @@
-import { OpenAppRouter } from "./router";
+import { AppRouter } from "./router";
 import { KuToast } from "./components/ku-components";
 
 function App() {
   return (
     <>
-      <OpenAppRouter />
+      <AppRouter />
       <KuToast />
     </>
   );

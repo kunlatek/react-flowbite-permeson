@@ -25,7 +25,7 @@ export const KuArray = <T extends { _id: string }>(props: IKuArrayProps<T>) => {
         <legend className="text-lg font-medium text-gray-900 dark:text-white">
           {title}
         </legend>
-        <Button size="xs" onClick={handleAddItem}>
+        <Button size="xs" onClick={handleAddItem} className="text-gray-900 dark:text-white">
           Adicionar Item
         </Button>
       </div>

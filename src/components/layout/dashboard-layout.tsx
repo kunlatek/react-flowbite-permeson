@@ -244,10 +244,14 @@ export const DashboardLayout = () => {
                   </Dropdown.Item>
 
                   <Dropdown.Item icon={HiUser} onClick={() => navigate('/profile')} className="[&>svg]:text-gray-600 [&>svg]:dark:text-gray-300">
-                    {t("dashboard.sidebar.profile")}
+                    <span className="text-gray-900 dark:text-white">
+                      {t("dashboard.sidebar.profile")}
+                    </span>
                   </Dropdown.Item>
                   <Dropdown.Item icon={HiCog} onClick={() => navigate('/settings')} className="[&>svg]:text-gray-600 [&>svg]:dark:text-gray-300">
-                    {t("dashboard.sidebar.settings")}
+                    <span className="text-gray-900 dark:text-white">
+                      {t("dashboard.sidebar.settings")}
+                    </span>
                   </Dropdown.Item>
 
                   <Dropdown.Divider />

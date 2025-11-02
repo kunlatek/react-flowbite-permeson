@@ -5,4 +5,5 @@ export * from './ku-toast';
 export * from './ku-data-table';
 export * from './ku-pagination';
 export * from './ku-tab';
+export * from './ku-spinner';
 export * from './form';

@@ -238,16 +238,16 @@ export const OpenDashboardLayout = () => {
                     </div>
                   </Dropdown.Item>
 
-                  {isOwner && (
-                    <Dropdown.Item icon={HiUser} onClick={() => navigate('/profile')} className="[&>svg]:text-gray-600 [&>svg]:dark:text-gray-300">
+                  <Dropdown.Item icon={HiUser} onClick={() => navigate('/profile')} className="[&>svg]:text-gray-600 [&>svg]:dark:text-gray-300">
+                    <span className="text-gray-900 dark:text-white">
                       {t("dashboard.sidebar.profile")}
-                    </Dropdown.Item>
-                  )}
-                  {isOwner && (
-                    <Dropdown.Item icon={HiCog} onClick={() => navigate('/settings')} className="[&>svg]:text-gray-600 [&>svg]:dark:text-gray-300">
+                    </span>
+                  </Dropdown.Item>
+                  <Dropdown.Item icon={HiCog} onClick={() => navigate('/settings')} className="[&>svg]:text-gray-600 [&>svg]:dark:text-gray-300">
+                    <span className="text-gray-900 dark:text-white">
                       {t("dashboard.sidebar.settings")}
-                    </Dropdown.Item>
-                  )}
+                    </span>
+                  </Dropdown.Item>
 
                   <Dropdown.Divider />
                   <Dropdown.Item icon={HiLogout} onClick={handleLogout} className="text-red-600 dark:text-red-400 [&>svg]:text-red-600 [&>svg]:dark:text-red-400">

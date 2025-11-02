@@ -70,6 +70,12 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
 
   const renderCellContent = (row: T, column: IColumn<T>): React.ReactNode => {
     const value = resolveNestedValue(row, String(column.key));
+
+    // Check if the value is an array and an image
+    if (Array.isArray(value) && value.length > 0 && value[0]?.url) {
+      return <img src={value[0].url} alt={value[0].name} />;
+    }
+    
     if (column.formatValue) {
       return column.formatValue(value, row);
     }

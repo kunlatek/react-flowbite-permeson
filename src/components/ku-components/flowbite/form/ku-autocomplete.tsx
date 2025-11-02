@@ -295,13 +295,45 @@ export const KuAutocomplete = (props: IKuAutocompleteProps) => {
     loadSelectedItemsData();
   }, [value, isMultiple, optionsApi]);
 
+  // Load selected item data for single mode
   useEffect(() => {
-    if (!isMultiple && value && typeof value === "object" && "label" in value) {
-      setSearchTerm(value.label);
-    } else if (!isMultiple && !value) {
-      setSearchTerm("");
-    }
-  }, [value, isMultiple]);
+    const loadSelectedItemData = async () => {
+      if (!isMultiple && value) {
+        // If value already has label, use it
+        if (typeof value === "object" && "label" in value && value.label) {
+          setSearchTerm(value.label);
+        } else {
+          // Otherwise, fetch the full data from API
+          try {
+            const itemId = typeof value === "object" && "value" in value 
+              ? value.value 
+              : value;
+            
+            const endpoint = optionsApi.endpoint.startsWith("/api")
+              ? optionsApi.endpoint.slice(4)
+              : optionsApi.endpoint;
+            
+            const response = await api.get(`${endpoint}/${itemId}`);
+            const apiItem = response.data.data || response.data;
+            
+            const label = optionsApi.labelField
+              .map((field) => String(resolveNestedValue(apiItem, field) || ""))
+              .join(" ");
+            
+            setSearchTerm(label);
+          } catch (error) {
+            console.error(`Error loading item:`, error);
+            // Fallback: use the ID as label
+            setSearchTerm(String(value));
+          }
+        }
+      } else if (!isMultiple && !value) {
+        setSearchTerm("");
+      }
+    };
+    
+    loadSelectedItemData();
+  }, [value, isMultiple, optionsApi]);
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {

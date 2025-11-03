@@ -125,8 +125,8 @@ export const useCreateRole = () => {
   };
 
   const moduleOptions = AVAILABLE_MODULES.map(module => ({
-    value: module,
-    label: t(`roles.modules.${module}`)
+    value: module.key,
+    label: module.label
   }));
 
   const actionOptions = AVAILABLE_ACTIONS.map(action => ({

@@ -1,8 +1,8 @@
 // Available modules and actions for the permissions
 export const AVAILABLE_MODULES = [
-    'roles',
-    'workspaces',
-    'all',
+    { key: 'roles', label: 'Papéis' },
+    { key: 'workspaces', label: 'Colaboradores' },
+    { key: 'all', label: 'Todos' },
     /* RAPIDA: AVAILABLE_MODULES */
 ] as const;
 

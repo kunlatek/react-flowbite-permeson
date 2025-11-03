@@ -11,11 +11,7 @@ export default function ForgotPasswordPage() {
   return (
     <div className="w-full max-w-md bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 md:p-8">
       <div className="flex flex-col items-center">
-        <img
-          src="/src/assets/images/logo.png"
-          alt="Logo"
-          className="h-16 mb-6"
-        />
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">{t("projectName")}</h1>
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
           {t("forgotPassword.title")}
         </h2>

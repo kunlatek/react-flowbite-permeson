@@ -66,14 +66,9 @@ export const OpenDashboardLayout = () => {
           <div>
             <div className="mb-[33px] flex items-center">
               <a href="/" className="flex items-center">
-                <img
-                  src="/src/assets/images/logo.png"
-                  alt="Logo"
-                  className="h-8 w-8 mr-3 dark:invert dark:brightness-0 dark:contrast-100"
-                />
                 {!sidebarCollapsed && (
                   <span className="self-center whitespace-nowrap text-xl font-semibold text-gray-900 dark:text-white">
-                    Kunlatek
+                    {t("projectName")}
                   </span>
                 )}
               </a>

@@ -73,7 +73,7 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
 
     // Check if the value is an array and an image
     if (Array.isArray(value) && value.length > 0 && value[0]?.url) {
-      return <img src={value[0].url} alt={value[0].name} />;
+      return <img src={value[0].url} alt={value[0].name} width={100} />;
     }
     
     if (column.formatValue) {

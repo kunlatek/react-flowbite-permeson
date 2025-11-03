@@ -9,11 +9,7 @@ export default function LoginWithPreRegisterPage() {
   return (
     <div className="w-full max-w-md bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 md:p-8">
       <div className="flex flex-col items-center">
-        <img 
-          src="/src/assets/images/logo.png" 
-          alt="Logo" 
-          className="h-16 mb-6 dark:invert dark:brightness-0 dark:contrast-100"
-        />
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">{t("projectName")}</h1>
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
           {t("login.title")}
         </h2>

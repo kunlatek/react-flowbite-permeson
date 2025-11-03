@@ -1,6 +1,7 @@
 import { KuInput, KuButton, KuAutocomplete } from "@/components/ku-components";
 import type { ISelectOption } from "@/models/form";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
 
 interface InvitationFormData {
   email: string;
@@ -23,6 +24,7 @@ export default function InvitationForm({
   loading,
 }: InvitationFormProps) {
   const { t } = useTranslation();
+  const [roleLabel, setRoleLabel] = useState<string>("");
 
   return (
     <form onSubmit={onSubmit}>
@@ -41,7 +43,7 @@ export default function InvitationForm({
           type="autocomplete"
           dataType="text"
           name="roleId"
-          value={invitation.roleId ? [{ label: invitation.roleId, value: invitation.roleId }] : []}
+          value={invitation.roleId ? { label: roleLabel, value: invitation.roleId } : null}
           label={t("roles.title")}
           optionsApi={{
             endpoint: "/api/roles",
@@ -50,9 +52,10 @@ export default function InvitationForm({
             paramsToFilter: ["name"],
             paramType: "query",
           }}
-          onChange={(name, value) => 
+          onChange={(name, value) => {
+            setRoleLabel((value as ISelectOption)?.label?.toString() ?? "");
             onInvitationChange({ ...invitation, roleId: (value as ISelectOption)?.value?.toString() ?? "" })
-          }
+          }}
           isRequired={true}
           isMultiple={false}
           isUnique={true}

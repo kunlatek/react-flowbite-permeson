@@ -1,4 +1,5 @@
 {
+  "projectName": "**PROJECT_NAME**",
   "nav": {
     "home": "Inicio",
     "create_account": "Crear cuenta",
@@ -477,5 +478,9 @@
     "emptyMessage": "Ningún archivo seleccionado",
     "emptySubMessage": "Haga clic en 'Agregar Archivos' para subir archivos",
     "filesUploaded": "{{current}}/{{max}} archivos subidos"
+  },
+  "kuArray": {
+    "add_item": "Agregar Item",
+    "no_items_added": "No items added"
   }
 }

@@ -1,9 +1,10 @@
 import { Button } from "flowbite-react";
 import { IKuArrayProps } from "@/interfaces/ku-components";
+import { useTranslation } from "react-i18next";
   
 export const KuArray = <T extends { _id: string }>(props: IKuArrayProps<T>) => {
   const { title, items, onItemsChange, defaultNewItem, renderItem } = props;
-
+  const { t } = useTranslation();
   const handleAddItem = () => {
     onItemsChange([...items, defaultNewItem]);
   };
@@ -26,13 +27,13 @@ export const KuArray = <T extends { _id: string }>(props: IKuArrayProps<T>) => {
           {title}
         </legend>
         <Button size="xs" onClick={handleAddItem} className="text-gray-900 dark:text-white">
-          Adicionar Item
+          {t("add_item")}
         </Button>
       </div>
 
       {items.length === 0 ? (
         <p className="text-gray-500 dark:text-gray-400 text-sm">
-          Nenhum item adicionado.
+          {t("no_items_added")}
         </p>
       ) : (
         <div className="space-y-4">

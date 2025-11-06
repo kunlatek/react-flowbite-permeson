@@ -481,6 +481,7 @@
   },
   "kuArray": {  
     "add_item": "Agregar Item",
-    "no_items_added": "No items added"
+    "no_items_added": "No items added",
+    "remove_item": "Eliminar item"
   }
 }

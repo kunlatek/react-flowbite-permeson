@@ -27,13 +27,13 @@ export const KuArray = <T extends { _id: string }>(props: IKuArrayProps<T>) => {
           {title}
         </legend>
         <Button size="xs" onClick={handleAddItem} className="text-gray-900 dark:text-white">
-          {t("add_item")}
+          {t("kuArray.add_item")}
         </Button>
       </div>
 
       {items.length === 0 ? (
         <p className="text-gray-500 dark:text-gray-400 text-sm">
-          {t("no_items_added")}
+          {t("kuArray.no_items_added")}
         </p>
       ) : (
         <div className="space-y-4">

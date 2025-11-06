@@ -6,3 +6,4 @@ export * from './ku-fieldset.interface';
 export * from './ku-file.interface';
 export * from './ku-input.interface';
 export * from './ku-select.interface';
+export * from './ku-wysiwyg.interface';

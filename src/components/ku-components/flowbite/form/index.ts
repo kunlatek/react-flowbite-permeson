@@ -6,3 +6,4 @@ export * from "./ku-fieldset";
 export * from "./ku-array";
 export * from "./ku-array-form";
 export * from "./ku-autocomplete";
+export * from "./ku-wysiwyg";

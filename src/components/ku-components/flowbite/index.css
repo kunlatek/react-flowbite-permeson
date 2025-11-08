@@ -1,0 +1,30 @@
+.ql-snow .ql-stroke {
+    fill: none;
+    stroke: #444;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+}
+
+.ql-snow .ql-fill,
+.ql-snow .ql-stroke.ql-fill {
+    fill: #444;
+}
+
+.ql-toolbar.ql-snow .ql-picker-label {
+    border: 1px solid transparent;
+    color: #444;
+}
+
+.dark .ql-snow .ql-stroke {
+    stroke: white;
+}
+
+.dark .ql-snow .ql-fill,
+.dark .ql-snow .ql-stroke.ql-fill {
+    fill: white;
+}
+
+.dark .ql-toolbar.ql-snow .ql-picker-label {
+    color: white;
+}

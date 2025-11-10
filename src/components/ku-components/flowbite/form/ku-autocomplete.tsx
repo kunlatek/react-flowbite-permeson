@@ -5,6 +5,7 @@ import type { ISelectOption } from "@/models/form";
 import api from "@/services/api";
 
 import { IKuAutocompleteProps, ApiItem } from "@/interfaces/ku-components";
+import axios from "axios";
 
 export const KuAutocomplete = (props: IKuAutocompleteProps) => {
   const { name, label, value, onChange, optionsApi, placeholder = "Pesquisar e selecionar", isRequired = false, isDisabled = false, isMultiple = false, error = "", tooltip = "", conditions, formState } = props;
@@ -29,22 +30,26 @@ export const KuAutocomplete = (props: IKuAutocompleteProps) => {
 
   const fetchOptions = useCallback(
     async (query = "") => {
-      if (!optionsApi.endpoint || query.length < 3) return;
+      if (!optionsApi.endpoint || (optionsApi.paramType === "query" && query.length < 3)) return;
       setLoading(true);
       try {
         const params = new URLSearchParams();
-        if (query && optionsApi.paramsToFilter.length > 0) {
-          const filters = optionsApi.paramsToFilter?.map((param) => ({[param]: query}));
+        if (query && (optionsApi.paramsToFilter ?? []).length > 0) {
+          const filters = optionsApi.paramsToFilter?.map((param) => ({ [param]: query }));
           if (filters && filters.length > 0) {
             params.append("filters", JSON.stringify(filters));
           }
         }
-
+        
+        let pathParams = optionsApi.paramType === "path" ? query : ``;
         const endpoint = optionsApi.endpoint.startsWith("/api")
           ? optionsApi.endpoint.slice(4)
           : optionsApi.endpoint;
 
-        const response = await api.get(endpoint, { params });
+        const response = await (optionsApi.isNotKunlatekResponse ? 
+          axios.get(`${endpoint}/${pathParams}`.replace(/\/{2,}/g, "/"), { params }) : 
+          api.get(`${endpoint}/${pathParams}`.replace(/\/{2,}/g, "/"), { params }));
+
         const items = response.data.data || response.data;
 
         if (Array.isArray(items)) {
@@ -63,20 +68,30 @@ export const KuAutocomplete = (props: IKuAutocompleteProps) => {
           );
 
           // Filter out already selected options
-          const selectedValues = isMultiple && Array.isArray(value) 
+          const selectedValues = isMultiple && Array.isArray(value)
             ? value.map(item => {
-                if (typeof item === "object" && item && "value" in item) {
-                  return item.value;
-                }
-                return item;
-              })
+              if (typeof item === "object" && item && "value" in item) {
+                return item.value;
+              }
+              return item;
+            })
             : [];
 
-          const filteredOptions = formattedOptions.filter(option => 
+          const filteredOptions = formattedOptions.filter(option =>
             !selectedValues.includes(option.value)
           );
 
           setOptions(filteredOptions);
+        }
+
+        if(optionsApi.isNotKunlatekResponse) {
+          const reponse = response.data.data || response.data;
+          const items = Array.isArray(reponse) ? reponse : [reponse];
+          const formattedOptions: ISelectOption[] = items.map((item: any) => ({
+            label: optionsApi.formFieldsFilledByApiResponse?.map((field) => item[field.propertiesFromApiToFillFormField[0]]).join(" | ") ?? '',
+            value: item
+          }));
+          setOptions(formattedOptions);
         }
       } catch (err) {
         console.error("Erro ao buscar opções:", err);
@@ -239,20 +254,20 @@ export const KuAutocomplete = (props: IKuAutocompleteProps) => {
               if (typeof item === "object" && item && "label" in item && item.label) {
                 return item;
               }
-              
+
               // Otherwise, fetch the full data from API
               try {
-                const itemId = typeof item === "object" && item && "value" in item 
-                  ? item.value 
+                const itemId = typeof item === "object" && item && "value" in item
+                  ? item.value
                   : item;
-                
+
                 const endpoint = optionsApi.endpoint.startsWith("/api")
                   ? optionsApi.endpoint.slice(4)
                   : optionsApi.endpoint;
-                
+
                 const response = await api.get(`${endpoint}/${itemId}`);
                 const apiItem = response.data.data || response.data;
-                
+
                 return {
                   label: optionsApi.labelField
                     .map((field) => String(resolveNestedValue(apiItem, field) || ""))
@@ -277,11 +292,11 @@ export const KuAutocomplete = (props: IKuAutocompleteProps) => {
           console.error("Error loading selected items:", error);
           // Fallback: create basic options from the value array
           setSelectedItems(value.map(item => ({
-            label: typeof item === "object" && item && "label" in item 
-              ? String(item.label) 
+            label: typeof item === "object" && item && "label" in item
+              ? String(item.label)
               : String(item),
-            value: typeof item === "object" && item && "value" in item 
-              ? item.value 
+            value: typeof item === "object" && item && "value" in item
+              ? item.value
               : item,
           })));
         } finally {
@@ -291,7 +306,7 @@ export const KuAutocomplete = (props: IKuAutocompleteProps) => {
         setSelectedItems([]);
       }
     };
-    
+
     loadSelectedItemsData();
   }, [value, isMultiple, optionsApi]);
 
@@ -305,21 +320,21 @@ export const KuAutocomplete = (props: IKuAutocompleteProps) => {
         } else {
           // Otherwise, fetch the full data from API
           try {
-            const itemId = typeof value === "object" && "value" in value 
-              ? value.value 
+            const itemId = typeof value === "object" && "value" in value
+              ? value.value
               : value;
-            
+
             const endpoint = optionsApi.endpoint.startsWith("/api")
               ? optionsApi.endpoint.slice(4)
               : optionsApi.endpoint;
-            
+
             const response = await api.get(`${endpoint}/${itemId}`);
             const apiItem = response.data.data || response.data;
-            
+
             const label = optionsApi.labelField
               .map((field) => String(resolveNestedValue(apiItem, field) || ""))
               .join(" ");
-            
+
             setSearchTerm(label);
           } catch (error) {
             console.error(`Error loading item:`, error);
@@ -331,7 +346,7 @@ export const KuAutocomplete = (props: IKuAutocompleteProps) => {
         setSearchTerm("");
       }
     };
-    
+
     loadSelectedItemData();
   }, [value, isMultiple, optionsApi]);
 
@@ -366,7 +381,7 @@ export const KuAutocomplete = (props: IKuAutocompleteProps) => {
       onChange(name, option);
       setSearchTerm(option.label);
     }
-    
+
     // Clear the options list after selection to prevent showing already selected items
     setOptions([]);
     setShowDropdown(false);
@@ -410,9 +425,8 @@ export const KuAutocomplete = (props: IKuAutocompleteProps) => {
               if (!isDisabled) setShowDropdown(!showDropdown);
             }
           }}
-          className={`flex min-h-[42px] items-center justify-between w-full p-2.5 text-left bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyan-500 dark:focus:border-cyan-500 ${
-            isDisabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
-          }`}
+          className={`flex min-h-[42px] items-center justify-between w-full p-2.5 text-left bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-cyan-500 focus:border-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-cyan-500 dark:focus:border-cyan-500 ${isDisabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
+            }`}
         >
           <div className="flex flex-wrap gap-1 items-center flex-grow">
             {isMultiple && loadingSelected && (
@@ -451,7 +465,7 @@ export const KuAutocomplete = (props: IKuAutocompleteProps) => {
               onFocus={() => setShowDropdown(true)}
               placeholder={
                 (!isMultiple && value) ||
-                (isMultiple && (selectedItems.length > 0 || loadingSelected))
+                  (isMultiple && (selectedItems.length > 0 || loadingSelected))
                   ? ""
                   : placeholder
               }
@@ -464,9 +478,8 @@ export const KuAutocomplete = (props: IKuAutocompleteProps) => {
           ) : (
             <HiChevronDown
               onClick={() => !isDisabled && setShowDropdown(!showDropdown)}
-              className={`w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform ${
-                showDropdown ? "rotate-180" : ""
-              }`}
+              className={`w-4 h-4 text-gray-500 dark:text-gray-400 transition-transform ${showDropdown ? "rotate-180" : ""
+                }`}
             />
           )}
         </div>

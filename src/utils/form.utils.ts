@@ -38,3 +38,23 @@ export const showField = (form: any, conditions: IFormCondition[]) => {
 
     return result;
 };
+
+export interface IApiResponseField {
+    formFieldName: string;
+    propertiesFromApiToFillFormField: string[];
+    arrayParents?: string[];
+}
+
+export const fillFormByApiResponse = (form: any, apiResponse: any, formFieldsFilledByApiResponse: IApiResponseField[]) => {
+    for (const field of formFieldsFilledByApiResponse) {
+        form[field.formFieldName] = field.propertiesFromApiToFillFormField[0] ? apiResponse[field.propertiesFromApiToFillFormField[0]] : apiResponse;
+        if (field.arrayParents) {
+            for (const parent of field.arrayParents) {
+                form[parent] = form[parent].map((item: any) => {
+                    return { ...item, ...form[field.formFieldName] };
+                });
+            }
+        }
+    }
+    return form;
+};

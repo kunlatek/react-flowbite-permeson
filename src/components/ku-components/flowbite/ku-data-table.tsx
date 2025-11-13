@@ -60,12 +60,47 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
   const totalPages = Math.ceil(totalItems / pageSize);
 
   const resolveNestedValue = (obj: T, path: string): unknown => {
-    return path.split(".").reduce((acc: unknown, key: string) => {
-      if (acc && typeof acc === "object" && key in acc) {
-        return (acc as Record<string, unknown>)[key];
+    const keys = path.split(".");
+
+    const extractValue = (value: unknown, index: number): unknown => {
+      if (value === null || value === undefined) {
+        return undefined;
       }
-      return undefined;
-    }, obj);
+
+      if (Array.isArray(value)) {
+        const items = value
+          .map((item) => extractValue(item, index))
+          .filter(
+            (item) =>
+              item !== undefined &&
+              item !== null &&
+              item !== "" &&
+              !(Array.isArray(item) && item.length === 0)
+          );
+
+        if (items.length === 0) {
+          return undefined;
+        }
+
+        const hasObjectItem = items.some((item) => typeof item === "object");
+
+        if (hasObjectItem) {
+          return items;
+        }
+
+        return items.join(", ");
+      }
+
+      if (typeof value !== "object" || index >= keys.length) {
+        return value;
+      }
+
+      const key = keys[index];
+      const nextValue = (value as Record<string, unknown>)[key];
+      return extractValue(nextValue, index + 1);
+    };
+
+    return extractValue(obj, 0);
   };
 
   const renderCellContent = (row: T, column: IColumn<T>): React.ReactNode => {

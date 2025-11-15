@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import { Label, TextInput, HelperText, Spinner, Badge } from "flowbite-react";
+import { Label, TextInput, HelperText, Badge } from "flowbite-react";
 import { HiX, HiChevronDown } from "react-icons/hi";
 import type { ISelectOption } from "@/models/form";
 import api from "@/services/api";
+import { KuSpinner } from "../ku-spinner";
 
 import { IKuAutocompleteProps, ApiItem } from "@/interfaces/ku-components";
 import axios from "axios";
@@ -431,7 +432,7 @@ export const KuAutocomplete = (props: IKuAutocompleteProps) => {
           <div className="flex flex-wrap gap-1 items-center flex-grow">
             {isMultiple && loadingSelected && (
               <div className="flex items-center text-sm text-gray-500">
-                <Spinner size="sm" className="mr-2" />
+                <KuSpinner />
                 Carregando itens selecionados...
               </div>
             )}
@@ -474,7 +475,7 @@ export const KuAutocomplete = (props: IKuAutocompleteProps) => {
             />
           </div>
           {loading ? (
-            <Spinner size="sm" />
+            <KuSpinner />
           ) : (
             <HiChevronDown
               onClick={() => !isDisabled && setShowDropdown(!showDropdown)}

@@ -12,7 +12,6 @@ import {
   Avatar,
   Select,
   Button,
-  Spinner,
 } from "flowbite-react";
 import {
   HiMenuAlt1,
@@ -28,6 +27,7 @@ import {
   HiShieldCheck,
   HiMail
 } from "react-icons/hi";
+import { KuSpinner } from "@/components/ku-components";
 
 export const OpenDashboardLayout = () => {
   const { user, logout } = useAuth();
@@ -138,7 +138,7 @@ export const OpenDashboardLayout = () => {
                 {/* Workspace Selector */}
                 {workspacesLoading ? (
                   <div className="w-48 flex items-center justify-center">
-                    <Spinner size="sm" />
+                    <KuSpinner />
                   </div>
                 ) : (
                   <Select

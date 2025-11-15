@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { Table, Spinner } from "flowbite-react";
+import { Table } from "flowbite-react";
 import { KuPagination } from "@/components/ku-components/flowbite";
 import { KuButton } from "@/components/ku-components/flowbite/form";
 import axios from "axios";
 import { IColumn, IKuDataTableProps } from "@/interfaces/ku-components";
+import { KuSpinner } from "./ku-spinner";
 
 export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<T>) => {
   const [data, setData] = useState<T[]>([]);
@@ -142,7 +143,7 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
 
       {loading && (
         <div className="flex justify-center p-4">
-          <Spinner />
+          <KuSpinner />
         </div>
       )}
       {error && <div className="p-4 text-red-600">{error}</div>}

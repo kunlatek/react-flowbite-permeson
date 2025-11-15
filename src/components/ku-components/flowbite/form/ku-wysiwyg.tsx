@@ -62,7 +62,7 @@ export const KuWysiwyg = (props: IKuWysiwygProps) => {
           value={value || ''}
           onChange={(html: string) => onChange(name, html)}
           readOnly={isDisabled}
-          placeholder={placeholder || 'Digite seu conteúdo...'}
+          placeholder={''}
           modules={quillModules}
           theme="snow"
           className="h-full [&_.ql-container]:min-h-[200px] [&_.ql-editor]:text-gray-900 dark:[&_.ql-editor]:text-white [&_.ql-editor]:min-h-[200px] [&_.ql-toolbar]:border-0 [&_.ql-container]:border-0 [&_.ql-toolbar]:border-b [&_.ql-toolbar]:border-gray-200 dark:[&_.ql-toolbar]:border-gray-600 [&_.ql-toolbar]:rounded-t-lg [&_.ql-container]:rounded-b-lg"

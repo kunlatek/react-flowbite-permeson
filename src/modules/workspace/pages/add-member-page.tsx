@@ -1,7 +1,8 @@
-import { Card, Button, TextInput, Spinner, Alert, Label, Select } from "flowbite-react";
+import { Card, Button, TextInput, Alert, Label, Select } from "flowbite-react";
 import { HiUserAdd, HiArrowLeft, HiShieldCheck } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
 import { useAddMember } from "../hooks/use-add-member";
+import { KuSpinner } from "@/components/ku-components";
 
 export default function AddMemberPage() {
   
@@ -66,7 +67,7 @@ export default function AddMemberPage() {
                   <div className="max-h-60 overflow-y-auto border rounded-lg">
                     {addMember.searching ? (
                       <div className="p-4 text-center text-gray-500">
-                        <Spinner size="sm" className="mr-2" />
+                        <KuSpinner />
                         {t("workspace.searching")}
                       </div>
                     ) : addMember.searchResults.length > 0 ? (

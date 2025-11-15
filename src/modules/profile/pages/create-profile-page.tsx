@@ -1,8 +1,9 @@
-import { Alert, Spinner } from 'flowbite-react';
+import { Alert } from 'flowbite-react';
 import { useCreateProfile } from '../hooks';
 import { PersonProfileForm, CompanyProfileForm } from '../components';
 import { useTranslation } from 'react-i18next';
 import { PersonProfile, CompanyProfile } from '../models';
+import { KuSpinner } from '@/components/ku-components';
 
 export default function CreateProfilePage() {
   const createProfile = useCreateProfile();
@@ -16,7 +17,7 @@ export default function CreateProfilePage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
         <div className="text-center">
-          <Spinner size="xl" />
+          <KuSpinner />
           <p className="mt-4 text-gray-600 dark:text-gray-400">
             {t("profile.setup.loading")}
           </p>

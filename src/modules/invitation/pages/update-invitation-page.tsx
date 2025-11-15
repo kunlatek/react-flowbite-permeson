@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import InvitationForm from "@/modules/invitation/components/invitation-form";
-import { Card, Spinner } from "flowbite-react";
+import { Card } from "flowbite-react";
 import { useUpdateInvitation } from "../hooks/use-update-invitation";
 import { useTranslation } from "react-i18next";
+import { KuSpinner } from "@/components/ku-components";
 
 export const UpdateInvitationPage = () => {
   const { t } = useTranslation();
@@ -12,7 +13,7 @@ export const UpdateInvitationPage = () => {
   if (updateInvitation.loading) {
     return (
       <div className="flex justify-center py-10">
-        <Spinner size="xl" />
+        <KuSpinner />
       </div>
     );
   }

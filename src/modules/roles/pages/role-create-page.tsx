@@ -1,9 +1,10 @@
-import { Card, Button, Spinner, Tabs, Badge, Label, Checkbox } from "flowbite-react";
+import { Card, Button, Tabs, Badge, Label, Checkbox } from "flowbite-react";
 import { HiArrowLeft, HiTrash, HiPlus } from "react-icons/hi";
 import { KuInput, KuButton } from "@/components/ku-components";
 import { useCreateRole } from "../hooks/use-create-role";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { KuSpinner } from "@/components/ku-components";
 
 export default function RoleCreatePage() {
   const { t } = useTranslation();
@@ -187,7 +188,7 @@ export default function RoleCreatePage() {
               label={roleCreate.loading ? t("roles.creating") : t("roles.create")}
               customClass="flex items-center justify-center"
             >
-              {roleCreate.loading && <Spinner size="sm" className="mr-2" />}
+              {roleCreate.loading && <KuSpinner />}
             </KuButton>
             <Button
               type="button"

@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Card, Button, Spinner, Tabs, Badge, Label, Checkbox } from "flowbite-react";
+import { Card, Button, Tabs, Badge, Label, Checkbox } from "flowbite-react";
 import { HiArrowLeft, HiTrash, HiPlus } from "react-icons/hi";
 import { KuInput, KuButton } from "@/components/ku-components";
 import { useUpdateRole } from "../hooks/use-update-role";
+import { KuSpinner } from "@/components/ku-components";
 
 export default function RoleUpdatePage() {
   const { t } = useTranslation();
@@ -15,7 +16,7 @@ export default function RoleUpdatePage() {
       <div className="flex-1 p-4 sm:p-6 lg:p-8">
         <div className="mx-auto max-w-4xl">
           <div className="flex items-center justify-center py-12">
-            <Spinner size="xl" />
+            <KuSpinner />
             <span className="ml-3 text-lg text-gray-600 dark:text-gray-400">
               {t("roles.updating")}...
             </span>
@@ -202,7 +203,7 @@ export default function RoleUpdatePage() {
               label={updateRole.loading ? t("roles.updating") : t("roles.update")}
               customClass="flex items-center justify-center"
             >
-              {updateRole.loading && <Spinner size="sm" className="mr-2" />}
+              {updateRole.loading && <KuSpinner />}
             </KuButton>
             <Button
               type="button"

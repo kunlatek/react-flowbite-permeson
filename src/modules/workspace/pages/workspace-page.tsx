@@ -1,8 +1,9 @@
-import { Card, Button, Spinner, Alert, Modal } from "flowbite-react";
+import { Card, Button, Alert, Modal } from "flowbite-react";
 import { HiUserAdd, HiRefresh, HiTrash } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
 import { useWorkspace } from "../hooks/use-workspace";
 import { useUserPermissions } from "@/hooks/use-user-permissions";
+import { KuSpinner } from "@/components/ku-components";
 
 export default function WorkspacePage() {
   const { t } = useTranslation();
@@ -15,7 +16,7 @@ export default function WorkspacePage() {
       <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto">
         <div className="mx-auto max-w-7xl">
           <div className="flex justify-center items-center h-64">
-            <Spinner size="xl" />
+            <KuSpinner />
           </div>
         </div>
       </div>

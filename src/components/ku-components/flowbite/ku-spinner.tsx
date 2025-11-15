@@ -1,12 +1,7 @@
-import { Spinner } from "flowbite-react";
-import { IKuSpinnerProps } from "@/interfaces/ku-components";
-
-export const KuSpinner = (props: IKuSpinnerProps) => {
-
-    const { size = "lg" } = props;
+export const KuSpinner = () => {
     return (
-        <div className="flex justify-center py-10">
-            <Spinner size={size} />
-        </div>
+      <div className="flex justify-center items-center my-4">
+          <div className="loader" />
+      </div>
     );
-};
+  };

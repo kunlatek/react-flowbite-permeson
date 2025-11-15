@@ -1,9 +1,10 @@
 import { useTranslation } from 'react-i18next';
-import { Card, Spinner } from 'flowbite-react';
+import { Card } from 'flowbite-react';
 import { KuInput, KuSelect, KuButton } from '@/components/ku-components';
 import { CompanyProfile } from '../models/company-profile';
 import { useCompanyProfileForm } from '../hooks';
 import {PartnersForm, ContactsForm, AddressesForm, BankDataForm, CompanyImageForm, RelatedFilesForm} from '.';
+import { KuSpinner } from '@/components/ku-components';
 
 interface CompanyProfileTabProps {
   profile: CompanyProfile | null;
@@ -64,8 +65,6 @@ export const CompanyProfileForm = ({ profile, loading, onUpdate }: CompanyProfil
           />
           <KuSelect
             name="legalNature"
-            type="select"
-            dataType="text"
             label={t("profile.company.legal_nature")}
             value={companyProfileForm.formData.legalNature || ''}
             onChange={(name, value) => companyProfileForm.handleInputChange(name, value)}
@@ -136,7 +135,7 @@ export const CompanyProfileForm = ({ profile, loading, onUpdate }: CompanyProfil
           customClass="flex items-center"
         >
           {loading ? (
-            <Spinner size="sm" className="mr-2" />
+            <KuSpinner />
           ) : null}
         </KuButton>
       </div>

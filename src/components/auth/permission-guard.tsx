@@ -1,7 +1,7 @@
 import { ReactNode, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useUserPermissions } from "@/hooks/use-user-permissions";
-import { Spinner } from "flowbite-react";
+import { KuSpinner } from "@/components/ku-components";
 
 interface PermissionGuardProps {
   children: ReactNode;
@@ -44,7 +44,7 @@ export const PermissionGuard = ({
       <div className="flex-1 p-4 sm:p-6 lg:p-8">
         <div className="mx-auto max-w-7xl">
           <div className="flex justify-center items-center h-64">
-            <Spinner size="xl" />
+            <KuSpinner />
           </div>
         </div>
       </div>

@@ -1,9 +1,10 @@
 import { useTranslation } from 'react-i18next';
-import { Card, Spinner } from 'flowbite-react';
+import { Card } from 'flowbite-react';
 import { KuInput, KuSelect, KuButton } from '@/components/ku-components';
 import type { PersonProfile } from '@/modules/profile/models/person-profile';
 import { usePersonProfileForm } from '../hooks';
 import { ProfessionsForm, EducationsForm, CoursesForm, RelatedFilesForm, AddressesForm, BankDataForm, EmailsForm, PhonesForm } from '.';
+import { KuSpinner } from '@/components/ku-components';
 
 interface PersonProfileTabProps {
   profile: PersonProfile | null;
@@ -49,8 +50,6 @@ export const PersonProfileForm = ({ profile, loading, onUpdate }: PersonProfileT
           />
           <KuSelect
             name="gender"
-            type="select"
-            dataType="text"
             label={t("profile.person.gender")}
             value={personProfileForm.formData.gender || ''}
             onChange={(name, value) => personProfileForm.handleInputChange(name, value)}
@@ -69,8 +68,6 @@ export const PersonProfileForm = ({ profile, loading, onUpdate }: PersonProfileT
           />
           <KuSelect
             name="maritalStatus"
-            type="select"
-            dataType="text"
             label={t("profile.person.marital_status")}
             value={personProfileForm.formData.maritalStatus || ''}
             onChange={(name, value) => personProfileForm.handleInputChange(name, value)}
@@ -182,7 +179,7 @@ export const PersonProfileForm = ({ profile, loading, onUpdate }: PersonProfileT
           customClass="flex items-center"
         >
           {loading ? (
-            <Spinner size="sm" className="mr-2" />
+            <KuSpinner />
           ) : null}
         </KuButton>
       </div>

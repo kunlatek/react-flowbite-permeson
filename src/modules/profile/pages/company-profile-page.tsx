@@ -1,7 +1,8 @@
 import { useTranslation } from 'react-i18next';
-import { Alert, Spinner } from 'flowbite-react';
+import { Alert } from 'flowbite-react';
 import { useCompanyProfile } from '../hooks';
 import { CompanyProfileForm } from '../components';
+import { KuSpinner } from '@/components/ku-components';
 
 export default function CompanyProfilePage() {
   const { t } = useTranslation();
@@ -11,7 +12,7 @@ export default function CompanyProfilePage() {
   if (companyProfile.loading) {
     return (
       <div className="flex h-full items-center justify-center">
-        <Spinner size="xl" />
+        <KuSpinner />
       </div>
     );
   }

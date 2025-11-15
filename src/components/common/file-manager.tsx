@@ -1,7 +1,8 @@
 import React, { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Card, Spinner } from "flowbite-react";
+import { Button, Card } from "flowbite-react";
 import { HiTrash, HiPlus, HiX } from "react-icons/hi";
+import { KuSpinner } from "@/components/ku-components";
 
 export interface IFileItem {
   name: string;
@@ -222,7 +223,7 @@ export const FileManager = ({
               >
                 {isUploading ? (
                   <>
-                    <Spinner size="sm" className="mr-2" />
+                    <KuSpinner />
                     {t("fileManager.uploading")}
                   </>
                 ) : (

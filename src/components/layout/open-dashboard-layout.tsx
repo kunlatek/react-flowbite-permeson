@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet, useNavigate, Link } from "react-router-dom";
+import { Outlet, useNavigate, Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/use-auth";
 import { useMyWorkspaces } from "@/modules/workspace/hooks/use-my-workspaces";
 import { useTheme } from "@/hooks/use-theme";
@@ -37,6 +37,7 @@ export const OpenDashboardLayout = () => {
   const { permissions, isOwner } = useUserPermissions();
   const { t, i18n } = useTranslation();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const location = useLocation();
 
   const toggleSidebar = () => {
     setSidebarCollapsed(!sidebarCollapsed);

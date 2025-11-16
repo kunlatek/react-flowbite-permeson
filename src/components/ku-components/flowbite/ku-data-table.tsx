@@ -4,7 +4,7 @@ import { KuPagination } from "@/components/ku-components/flowbite";
 import { KuButton } from "@/components/ku-components/flowbite/form";
 import axios from "axios";
 import { IColumn, IKuDataTableProps } from "@/interfaces/ku-components";
-import { KuSpinner } from "./ku-spinner";
+import { KuSpinner } from "@/components/ku-components";
 
 export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<T>) => {
   const [data, setData] = useState<T[]>([]);
@@ -17,7 +17,7 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
   );
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
 
-  const { title, columns, dataSource, actions = [], getActions, headerActions = [], pageSize = 10, refreshTrigger } = props;
+  const { id, testId, title, columns, dataSource, actions = [], getActions, headerActions = [], pageSize = 10, refreshTrigger } = props;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -123,7 +123,7 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
 
   return (
     <>
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-between items-center mb-4" id={id} data-testid={testId}>
         <h2 className="text-xl font-bold dark:text-white">{title}</h2>
         <div className="flex gap-2">
           {headerActions.map((action, index) => (

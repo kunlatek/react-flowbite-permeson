@@ -19,6 +19,8 @@ export interface ISortableItemProps {
 type OnChangeFunction = (name: string, value: any) => void;
 
 export interface IKuArrayFormProps {
+    id?: string;
+    testId?: string;
     name: string;
     label: string;
     value: any[];

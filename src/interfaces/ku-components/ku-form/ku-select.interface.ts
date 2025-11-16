@@ -6,6 +6,8 @@ export interface ISelectOption {
 }
 
 export interface IKuSelectProps {
+  id?: string;
+  testId?: string;
   name: string;
   label: string;
   value: string | number;

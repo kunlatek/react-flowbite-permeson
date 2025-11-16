@@ -24,6 +24,8 @@ export interface ITab {
 }
 
 export interface IKuTabProps {
+    id?: string;
+    testId?: string;
     tabs: ITab[];
     activeTabId: string;
     onTabChange: (tabId: string) => void;

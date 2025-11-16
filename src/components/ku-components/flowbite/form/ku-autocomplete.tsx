@@ -3,13 +3,13 @@ import { Label, TextInput, HelperText, Badge } from "flowbite-react";
 import { HiX, HiChevronDown } from "react-icons/hi";
 import type { ISelectOption } from "@/models/form";
 import api from "@/services/api";
-import { KuSpinner } from "../ku-spinner";
+import { KuSpinner } from "@/components/ku-components";
 
 import { IKuAutocompleteProps, ApiItem } from "@/interfaces/ku-components";
 import axios from "axios";
 
 export const KuAutocomplete = (props: IKuAutocompleteProps) => {
-  const { name, label, value, onChange, optionsApi, placeholder = "Pesquisar e selecionar", isRequired = false, isDisabled = false, isMultiple = false, error = "", tooltip = "", conditions, formState } = props;
+  const { id, testId, name, label, value, onChange, optionsApi, placeholder = "Pesquisar e selecionar", isRequired = false, isDisabled = false, isMultiple = false, error = "", tooltip = "", conditions, formState } = props;
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -403,7 +403,7 @@ export const KuAutocomplete = (props: IKuAutocompleteProps) => {
   }
 
   return (
-    <div className="w-full" ref={mainElementRef}>
+    <div className="w-full" ref={mainElementRef} id={id} data-testid={testId}>
       <div className="mb-2 block">
         <Label
           htmlFor={name}

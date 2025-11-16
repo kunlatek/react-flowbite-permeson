@@ -1,4 +1,6 @@
 export interface IKuArrayProps<T> {
+    id?: string;
+    testId?: string;
     title: string;
     items: T[];
     onItemsChange: (items: T[]) => void;

@@ -76,7 +76,7 @@ export default function WorkspacePage() {
         </div>
 
         {/* Team Members List */}
-        <Card>
+        <KuCard>
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
               {t("workspace.team_members")}
@@ -173,7 +173,7 @@ export default function WorkspacePage() {
               )}
             </div>
           )}
-        </Card>
+        </KuCard>
 
 
         {/* Remove Member Confirmation Modal */}

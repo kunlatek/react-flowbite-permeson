@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Card } from 'flowbite-react';
-import { KuInput, KuSelect } from '@/components/ku-components';
+import { KuInput, KuSelect, KuCard } from '@/components/ku-components';
 import { BankData } from '../models/bank-data';
 
 interface BankDatasFormProps {
@@ -19,7 +18,7 @@ export const BankDataForm = ({
   const secondaryBank = bankDatas?.[1];
 
   return (
-    <Card>
+    <KuCard>
       <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
         {t("profile.company.bank_info")}
       </h3>
@@ -53,8 +52,6 @@ export const BankDataForm = ({
             />
             <KuSelect
               name="bankDataOne.bankAccountType"
-              type="select"
-              dataType="text"
               label={t("profile.company.bank_account_type")}
               value={primaryBank?.accountType || ''}
               onChange={(name, value) => onBankDataChange(0, 'accountType', String(value))}
@@ -95,8 +92,6 @@ export const BankDataForm = ({
             />
             <KuSelect
               name="bankDataTwo.bankAccountType"
-              type="select"
-              dataType="text"
               label={t("profile.company.bank_account_type")}
               value={secondaryBank?.accountType || ''}
               onChange={(name, value) => onBankDataChange(1, 'accountType', String(value))}
@@ -108,6 +103,6 @@ export const BankDataForm = ({
           </div>
         </div>
       </div>
-    </Card>
+    </KuCard>
   );
 }

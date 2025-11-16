@@ -1,7 +1,5 @@
-
-import { Card } from 'flowbite-react';
 import { HiUser, HiOfficeBuilding } from 'react-icons/hi';
-import { KuButton } from '@/components/ku-components/flowbite/form';
+import { KuButton, KuCard } from '@/components/ku-components';
 import { useProfileTypeSelection } from '../hooks/use-profile-type-selection';
 import { useTranslation } from 'react-i18next';
 
@@ -27,13 +25,13 @@ export default function ProfileTypeSelectionPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card 
-            className={`cursor-pointer transition-all duration-200 hover:shadow-lg ${
-              profileTypeSelection.selectedType === 'person' 
-                ? 'ring-2 ring-cyan-500 bg-cyan-50 dark:bg-cyan-900/20' 
-                : 'hover:shadow-md'
-            }`}
-            onClick={() => profileTypeSelection.handleTypeSelection('person')}
+          <KuCard 
+            // className={`cursor-pointer transition-all duration-200 hover:shadow-lg ${
+            //   profileTypeSelection.selectedType === 'person' 
+            //     ? 'ring-2 ring-cyan-500 bg-cyan-50 dark:bg-cyan-900/20' 
+            //     : 'hover:shadow-md'
+            // }`}
+            // onClick={() => profileTypeSelection.handleTypeSelection('person')}
           >
             <div className="p-6 text-center">
               <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full mb-4 ${
@@ -59,15 +57,15 @@ export default function ProfileTypeSelectionPage() {
                 <li>• {t("profile.type_selection.person.feature3")}</li>
               </ul>
             </div>
-          </Card>
+          </KuCard>
 
-          <Card 
-            className={`cursor-pointer transition-all duration-200 hover:shadow-lg ${
-              profileTypeSelection.selectedType === 'company' 
-                ? 'ring-2 ring-cyan-500 bg-cyan-50 dark:bg-cyan-900/20' 
-                : 'hover:shadow-md'
-            }`}
-            onClick={() => profileTypeSelection.handleTypeSelection('company')}
+          <KuCard 
+            // className={`cursor-pointer transition-all duration-200 hover:shadow-lg ${
+            //   profileTypeSelection.selectedType === 'company' 
+            //     ? 'ring-2 ring-cyan-500 bg-cyan-50 dark:bg-cyan-900/20' 
+            //     : 'hover:shadow-md'
+            // }`}
+            // onClick={() => profileTypeSelection.handleTypeSelection('company')}
           >
             <div className="p-6 text-center">
               <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full mb-4 ${
@@ -93,7 +91,7 @@ export default function ProfileTypeSelectionPage() {
                 <li>• {t("profile.type_selection.company.feature3")}</li>
               </ul>
             </div>
-          </Card>
+          </KuCard>
         </div>
 
         <div className="flex justify-center">

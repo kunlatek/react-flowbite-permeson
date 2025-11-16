@@ -10,7 +10,7 @@ export const CreateInvitationPage = () => {
   const navigate = useNavigate();
 
   return (
-    <Card className="card">
+    <KuCard className="card">
       <>
         <h1 className="title">{t("invitations.create_invitation")}</h1>
         <InvitationForm
@@ -21,7 +21,7 @@ export const CreateInvitationPage = () => {
           loading={createInvitation.loading}
         />
       </>
-    </Card>
+    </KuCard>
   );
 };
 

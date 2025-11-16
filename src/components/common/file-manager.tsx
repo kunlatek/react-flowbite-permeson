@@ -128,7 +128,7 @@ export const FileManager = ({
     const fileName = 'name' in file ? file.name : (file as IFileItem).name;
 
     return (
-      <Card key={`${isSelected ? 'selected' : 'existing'}-${index}`} className="relative">
+      <KuCard key={`${isSelected ? 'selected' : 'existing'}-${index}`} className="relative">
         <div className={`${isImage ? 'aspect-square' : 'h-20'} relative`}>
           {isImage && fileUrl ? (
             <img
@@ -162,7 +162,7 @@ export const FileManager = ({
             {fileName}
           </p>
         </div>
-      </Card>
+      </KuCard>
     );
   };
 

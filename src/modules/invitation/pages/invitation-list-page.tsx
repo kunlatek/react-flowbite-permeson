@@ -8,7 +8,7 @@ export const InvitationListPage = () => {
   const invitationList = useInvitationList();
 
   return (
-    <Card className="card">
+    <KuCard className="card">
       <KuDataTable
         title={t("invitations.title")}
         columns={invitationList.columns}
@@ -19,7 +19,7 @@ export const InvitationListPage = () => {
         actions={invitationList.actions}
         headerActions={invitationList.headerActions}
       />
-    </Card>
+    </KuCard>
   );
 };
 

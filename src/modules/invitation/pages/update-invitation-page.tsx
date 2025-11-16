@@ -19,7 +19,7 @@ export const UpdateInvitationPage = () => {
   }
 
   return (
-    <Card className="card">
+    <KuCard className="card">
       <h1 className="title">{t("invitations.edit_invitation")}</h1>
       <InvitationForm
         invitation={updateInvitation.invitation}
@@ -28,7 +28,7 @@ export const UpdateInvitationPage = () => {
         onCancel={() => navigate("/invitations")}
         loading={updateInvitation.loading}
       />
-    </Card>
+    </KuCard>
   );
 };
 

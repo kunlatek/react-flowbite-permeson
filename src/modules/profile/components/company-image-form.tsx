@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Card } from 'flowbite-react';
-import { KuInput, KuButton } from '@/components/ku-components';
+import { KuInput, KuButton, KuCard } from '@/components/ku-components';
 
 interface CompanyImagesFormProps {
   companyImages: string[];
@@ -18,7 +17,7 @@ export const CompanyImageForm = ({
   const { t } = useTranslation();
 
   return (
-    <Card>
+    <KuCard>
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
           {t("profile.company.images")}
@@ -61,6 +60,6 @@ export const CompanyImageForm = ({
           </div>
         </div>
       ))}
-    </Card>
+    </KuCard>
   );
 }

@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Card } from 'flowbite-react';
-import { KuInput, KuSelect, KuButton } from '@/components/ku-components';
+import { KuInput, KuSelect, KuButton, KuCard } from '@/components/ku-components';
 import { CompanyProfile } from '../models/company-profile';
 import { useCompanyProfileForm } from '../hooks';
 import {PartnersForm, ContactsForm, AddressesForm, BankDataForm, CompanyImageForm, RelatedFilesForm} from '.';
@@ -28,7 +27,7 @@ export const CompanyProfileForm = ({ profile, loading, onUpdate }: CompanyProfil
 
   return (
     <form onSubmit={companyProfileForm.handleSubmit} className="space-y-6">
-      <Card>
+      <KuCard>
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
           {t("profile.company.company_info")}
         </h3>
@@ -85,7 +84,7 @@ export const CompanyProfileForm = ({ profile, loading, onUpdate }: CompanyProfil
             />
           </div>
         </div>
-      </Card>
+      </KuCard>
 
       <ContactsForm
         contacts={companyProfileForm.formData.contacts || []}

@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Card } from 'flowbite-react';
-import { KuInput, KuButton } from '@/components/ku-components';
+import { KuInput, KuButton, KuCard } from '@/components/ku-components';
 import { Course } from '../models/course';
 
 interface CoursesFormProps {
@@ -19,7 +18,7 @@ export const CoursesForm = ({
   const { t } = useTranslation();
 
   return (
-    <Card>
+    <KuCard>
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
           {t("profile.person.courses")}
@@ -90,6 +89,6 @@ export const CoursesForm = ({
           </div>
         </div>
       ))}
-    </Card>
+    </KuCard>
   );
 }

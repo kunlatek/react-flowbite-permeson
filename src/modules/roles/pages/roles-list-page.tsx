@@ -12,7 +12,7 @@ export default function RolesListPage() {
   const rolesList = useRolesList(permissions);
 
   return (
-    <Card className="card">
+    <KuCard className="card">
       <KuDataTable<IRoleTable>
         title={t("roles.title")}
         columns={rolesList.columns}
@@ -31,6 +31,6 @@ export default function RolesListPage() {
         onClose={rolesList.handleDeleteCancel}
         onConfirm={rolesList.handleDeleteConfirm}
       />
-    </Card>
+    </KuCard>
   );
 }

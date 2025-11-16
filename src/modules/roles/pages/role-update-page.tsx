@@ -26,7 +26,7 @@ export default function RoleUpdatePage() {
   }
 
   return (
-    <Card className="card">
+    <KuCard className="card">
       {/* Header */}
       <div className="mb-6">
         <Button
@@ -45,7 +45,7 @@ export default function RoleUpdatePage() {
       </div>
 
       {/* Form */}
-      <Card>
+      <KuCard>
         <form onSubmit={updateRole.handleSubmit} noValidate>
           {/* Tabs for all information */}
           <Tabs
@@ -214,7 +214,7 @@ export default function RoleUpdatePage() {
             </Button>
           </div>
         </form>
-      </Card>
-    </Card>
+      </KuCard>
+    </KuCard>
   );
 }

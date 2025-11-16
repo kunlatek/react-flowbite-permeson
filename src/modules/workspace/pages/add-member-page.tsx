@@ -20,7 +20,7 @@ export default function AddMemberPage() {
           </Button>
         </div>
 
-        <Card>
+        <KuCard>
           <div className="space-y-6">
             {/* Header */}
             <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
@@ -127,7 +127,7 @@ export default function AddMemberPage() {
               )}
             </div>
           </div>
-        </Card>
+        </KuCard>
 
         {/* Action Buttons */}
         <div className="mt-6 flex justify-end gap-3">

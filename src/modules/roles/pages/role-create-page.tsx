@@ -12,7 +12,7 @@ export default function RoleCreatePage() {
   const roleCreate = useCreateRole();
 
   return (
-    <Card className="card">
+    <KuCard className="card">
       {/* Header */}
       <div className="mb-6">
         <Button
@@ -31,7 +31,7 @@ export default function RoleCreatePage() {
       </div>
 
       {/* Form */}
-      <Card>
+      <KuCard>
         <form onSubmit={roleCreate.handleSubmit} noValidate>
           {/* Tabs for all information */}
           <Tabs
@@ -200,7 +200,7 @@ export default function RoleCreatePage() {
             </Button>
           </div>
         </form>
-      </Card>
-    </Card>
+      </KuCard>
+    </KuCard>
   );
 }

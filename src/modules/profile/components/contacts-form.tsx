@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Card } from 'flowbite-react';
-import { KuInput, KuSelect, KuButton } from '@/components/ku-components';
+import { KuInput, KuSelect, KuButton, KuCard } from '@/components/ku-components';
 import { Contact } from '../models/contact';
 
 interface ContactsFormProps {
@@ -19,7 +18,7 @@ export const ContactsForm = ({
   const { t } = useTranslation();
 
   return (
-    <Card>
+    <KuCard>
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
           {t("profile.company.contact_info")}
@@ -54,8 +53,6 @@ export const ContactsForm = ({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <KuSelect
               name={`contactType-${index}`}
-              type="select"
-              dataType="text"
               label={t("profile.company.contact_type")}
               value={contact.type || ''}
               onChange={(name, value) => onContactChange(index, 'type', String(value))}
@@ -82,6 +79,6 @@ export const ContactsForm = ({
           </div>
         </div>
       ))}
-    </Card>
+    </KuCard>
   );
 }

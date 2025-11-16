@@ -1,6 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { Card } from 'flowbite-react';
-import { KuInput, KuSelect, KuButton } from '@/components/ku-components';
+import { KuInput, KuSelect, KuCard } from '@/components/ku-components';
 import { Address } from '../models/address';
 
 interface AddressesFormProps {
@@ -17,7 +16,7 @@ export const AddressesForm = ({
   const primaryAddress = addresses?.[0];
 
   return (
-    <Card>
+    <KuCard>
       <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
         {t("profile.company.primary_address")}
       </h3>
@@ -31,8 +30,6 @@ export const AddressesForm = ({
         />
         <KuSelect
           name="addressOneType"
-          type="select"
-          dataType="text"
           label={t("profile.company.address_type")}
           value={primaryAddress?.type || ''}
           onChange={(name, value) => onAddressChange('type', String(value))}
@@ -77,6 +74,6 @@ export const AddressesForm = ({
           onChange={(e) => onAddressChange('state', e.target.value)}
         />
       </div>
-    </Card>
+    </KuCard>
   );
 }

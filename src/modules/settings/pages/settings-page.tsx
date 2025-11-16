@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Card, Alert } from "flowbite-react";
-import { KuModal } from "@/components/ku-components";
-import { KuButton } from "@/components/ku-components";
+import { Alert } from "flowbite-react";
+import { KuButton, KuCard, KuModal } from "@/components/ku-components";
 import DeleteAccountForm from "../components/delete-account-form";
 
 export default function SettingsPage() {
@@ -19,7 +18,7 @@ export default function SettingsPage() {
           </p>
         </div>
 
-        <Card>
+        <KuCard>
           <div className="p-6">
             <div className="mb-6">
               <h2 className="text-xl font-bold text-red-600 dark:text-red-500 mb-2">
@@ -48,7 +47,7 @@ export default function SettingsPage() {
               customClass="px-6 py-3"
             />
           </div>
-        </Card>
+        </KuCard>
 
         <KuModal
           show={showDeleteModal}

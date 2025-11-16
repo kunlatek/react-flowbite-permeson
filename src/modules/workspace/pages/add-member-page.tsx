@@ -1,8 +1,8 @@
-import { Card, Button, TextInput, Alert, Label, Select } from "flowbite-react";
+import { Button, TextInput, Alert, Label, Select } from "flowbite-react";
 import { HiUserAdd, HiArrowLeft, HiShieldCheck } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
 import { useAddMember } from "../hooks/use-add-member";
-import { KuSpinner } from "@/components/ku-components";
+import { KuSpinner, KuCard } from "@/components/ku-components";
 
 export default function AddMemberPage() {
   
@@ -20,7 +20,7 @@ export default function AddMemberPage() {
           </Button>
         </div>
 
-        <Card>
+        <KuCard>
           <div className="space-y-6">
             {/* Header */}
             <div className="border-b border-gray-200 dark:border-gray-700 pb-4">
@@ -127,7 +127,7 @@ export default function AddMemberPage() {
               )}
             </div>
           </div>
-        </Card>
+        </KuCard>
 
         {/* Action Buttons */}
         <div className="mt-6 flex justify-end gap-3">

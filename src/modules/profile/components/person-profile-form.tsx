@@ -1,10 +1,8 @@
 import { useTranslation } from 'react-i18next';
-import { Card } from 'flowbite-react';
-import { KuInput, KuSelect, KuButton } from '@/components/ku-components';
+import { KuInput, KuSelect, KuButton, KuCard, KuSpinner } from '@/components/ku-components';
 import type { PersonProfile } from '@/modules/profile/models/person-profile';
 import { usePersonProfileForm } from '../hooks';
 import { ProfessionsForm, EducationsForm, CoursesForm, RelatedFilesForm, AddressesForm, BankDataForm, EmailsForm, PhonesForm } from '.';
-import { KuSpinner } from '@/components/ku-components';
 
 interface PersonProfileTabProps {
   profile: PersonProfile | null;
@@ -28,7 +26,7 @@ export const PersonProfileForm = ({ profile, loading, onUpdate }: PersonProfileT
 
   return (
     <form onSubmit={personProfileForm.handleSubmit} className="space-y-6">
-      <Card>
+      <KuCard>
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
           {t("profile.person.personal_info")}
         </h3>
@@ -86,7 +84,7 @@ export const PersonProfileForm = ({ profile, loading, onUpdate }: PersonProfileT
             onChange={(e) => personProfileForm.handleInputChange('motherName', e.target.value)}
           />
         </div>
-      </Card>
+      </KuCard>
 
       <PhonesForm
         phones={personProfileForm.formData.phoneNumbers || []}
@@ -102,7 +100,7 @@ export const PersonProfileForm = ({ profile, loading, onUpdate }: PersonProfileT
         onEmailChange={personProfileForm.handleEmailChange}
       />
 
-      <Card>
+      <KuCard>
         <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
           {t("profile.person.social_media")}
         </h3>
@@ -129,7 +127,7 @@ export const PersonProfileForm = ({ profile, loading, onUpdate }: PersonProfileT
             onChange={(e) => personProfileForm.handleInputChange('facebook', e.target.value)}
           />
         </div>
-      </Card>
+      </KuCard>
 
         <AddressesForm
           addresses={personProfileForm.formData.addresses || []}

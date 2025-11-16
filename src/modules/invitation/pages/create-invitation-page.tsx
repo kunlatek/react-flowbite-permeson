@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import InvitationForm from "@/modules/invitation/components/invitation-form";
 import { useCreateInvitation } from "../hooks/use-create-invitation";
-import { Card } from "flowbite-react";
 import { useTranslation } from "react-i18next";
+import { KuCard } from "@/components/ku-components";
 
 export const CreateInvitationPage = () => {
   const { t } = useTranslation();
@@ -10,7 +10,7 @@ export const CreateInvitationPage = () => {
   const navigate = useNavigate();
 
   return (
-    <Card className="card">
+    <KuCard>
       <>
         <h1 className="title">{t("invitations.create_invitation")}</h1>
         <InvitationForm
@@ -21,7 +21,7 @@ export const CreateInvitationPage = () => {
           loading={createInvitation.loading}
         />
       </>
-    </Card>
+    </KuCard>
   );
 };
 

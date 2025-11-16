@@ -1,9 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import InvitationForm from "@/modules/invitation/components/invitation-form";
-import { Card } from "flowbite-react";
 import { useUpdateInvitation } from "../hooks/use-update-invitation";
 import { useTranslation } from "react-i18next";
-import { KuSpinner } from "@/components/ku-components";
+import { KuSpinner, KuCard } from "@/components/ku-components";
 
 export const UpdateInvitationPage = () => {
   const { t } = useTranslation();
@@ -19,7 +18,7 @@ export const UpdateInvitationPage = () => {
   }
 
   return (
-    <Card className="card">
+    <KuCard>
       <h1 className="title">{t("invitations.edit_invitation")}</h1>
       <InvitationForm
         invitation={updateInvitation.invitation}
@@ -28,7 +27,7 @@ export const UpdateInvitationPage = () => {
         onCancel={() => navigate("/invitations")}
         loading={updateInvitation.loading}
       />
-    </Card>
+    </KuCard>
   );
 };
 

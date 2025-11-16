@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Card } from "flowbite-react";
+import { Button } from "flowbite-react";
 import { HiTrash, HiPlus, HiX } from "react-icons/hi";
-import { KuSpinner } from "@/components/ku-components";
+import { KuSpinner, KuCard } from "@/components/ku-components";
 
 export interface IFileItem {
   name: string;
@@ -128,7 +128,7 @@ export const FileManager = ({
     const fileName = 'name' in file ? file.name : (file as IFileItem).name;
 
     return (
-      <Card key={`${isSelected ? 'selected' : 'existing'}-${index}`} className="relative">
+      <KuCard key={`${isSelected ? 'selected' : 'existing'}-${index}`}>
         <div className={`${isImage ? 'aspect-square' : 'h-20'} relative`}>
           {isImage && fileUrl ? (
             <img
@@ -162,7 +162,7 @@ export const FileManager = ({
             {fileName}
           </p>
         </div>
-      </Card>
+      </KuCard>
     );
   };
 

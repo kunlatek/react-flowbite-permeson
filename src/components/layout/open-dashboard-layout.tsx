@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/use-auth";
 import { useMyWorkspaces } from "@/modules/workspace/hooks/use-my-workspaces";
 import { useTheme } from "@/hooks/use-theme";
@@ -37,7 +37,10 @@ export const OpenDashboardLayout = () => {
   const { permissions, isOwner } = useUserPermissions();
   const { t, i18n } = useTranslation();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-
+  const location = useLocation();
+  const isActive = (path: string) => {
+    return location.pathname === path || location.pathname.startsWith(path + "/");
+  };
   const toggleSidebar = () => {
     setSidebarCollapsed(!sidebarCollapsed);
   };
@@ -76,7 +79,7 @@ export const OpenDashboardLayout = () => {
             <Sidebar.Items>
               <Sidebar.ItemGroup>
                 {/* Dashboard - sempre visível */}
-                <Sidebar.Item href="/dashboard" icon={HiHome}>
+                <Sidebar.Item as={Link} to="/dashboard" icon={HiHome} isActive={isActive("/dashboard")}>
                   <div className="truncate w-[150px]">
                     {!sidebarCollapsed && t("dashboard.sidebar.dashboard")}
                   </div>
@@ -87,7 +90,7 @@ export const OpenDashboardLayout = () => {
 
                 {/* Roles - sempre visível para owner, senão depende de permissão */}
                 {permissions.canViewRoles && (
-                  <Sidebar.Item href="/roles" icon={HiShieldCheck}>
+                  <Sidebar.Item as={Link} to="/roles" icon={HiShieldCheck} isActive={isActive("/roles")}>
                     <div className="truncate w-[150px]">
                       {!sidebarCollapsed && t("dashboard.sidebar.roles")}
                     </div>

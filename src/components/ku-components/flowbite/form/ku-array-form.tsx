@@ -113,7 +113,7 @@ function SortableItem(props: ISortableItemProps) {
 
 export const KuArrayForm = (props: IKuArrayFormProps) => {
 
-  const { name, label, value = [], onChange, itemType, placeholder = "Digite um item", isRequired = false, isDisabled = false, error = "", tooltip = "", fields = [] } = props;
+  const { id, testId, name, label, value = [], onChange, itemType, placeholder = "Digite um item", isRequired = false, isDisabled = false, error = "", tooltip = "", fields = [] } = props;
   const hasError = !!error;
   
   const sensors = useSensors(
@@ -169,7 +169,7 @@ export const KuArrayForm = (props: IKuArrayFormProps) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full" id={id} data-testid={testId}>
       <div className="mb-2 block">
         <Label
           htmlFor={name}

@@ -2,7 +2,7 @@ import { useMemo, useCallback } from "react";
 import type { IKuTabProps, IFormCondition } from "@/interfaces/ku-components";
 
 export const KuTab = (props: IKuTabProps) => {
-  const { tabs, activeTabId, onTabChange, formState, conditions } = props;
+  const { id, testId, tabs, activeTabId, onTabChange, formState, conditions } = props;
   const evaluateConditions = useCallback(
     (state: Record<string, unknown>, conds?: IFormCondition[]): boolean => {
       if (!conds || conds.length === 0) return true;
@@ -140,7 +140,7 @@ export const KuTab = (props: IKuTabProps) => {
   }
 
   return (
-    <div className="border-b border-gray-200 dark:border-gray-700">
+    <div className="border-b border-gray-200 dark:border-gray-700" id={id} data-testid={testId}>
       <ul className="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
         {visibleTabs.map((tab) => {
           const isActive = tab.id === activeTabId;

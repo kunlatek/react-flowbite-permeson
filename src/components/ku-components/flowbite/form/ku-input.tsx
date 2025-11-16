@@ -5,7 +5,7 @@ import { IKuInputProps } from "@/interfaces/ku-components";
 
 export const KuInput = (props: IKuInputProps) => {
 
-  const { name, label, value, onChange, dataType = "text", placeholder = "", isRequired = false, isDisabled = false, error = "", tooltip = "" } = props;
+  const { id, testId, name, label, value, onChange, dataType = "text", placeholder = "", isRequired = false, isDisabled = false, error = "", tooltip = "" } = props;
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -14,7 +14,7 @@ export const KuInput = (props: IKuInputProps) => {
   const hasError = !!error;
 
   return (
-    <div className="w-full">
+    <div className="w-full" id={id} data-testid={testId}>
       <div className="mb-2 block">
         <Label
           htmlFor={name}

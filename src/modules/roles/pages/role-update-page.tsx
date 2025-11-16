@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Card, Button, Tabs, Badge, Label, Checkbox } from "flowbite-react";
+import { Button, Tabs, Badge, Label, Checkbox } from "flowbite-react";
 import { HiArrowLeft, HiTrash, HiPlus } from "react-icons/hi";
-import { KuInput, KuButton } from "@/components/ku-components";
+import { KuInput, KuButton, KuSpinner, KuCard } from "@/components/ku-components";
 import { useUpdateRole } from "../hooks/use-update-role";
-import { KuSpinner } from "@/components/ku-components";
 
 export default function RoleUpdatePage() {
   const { t } = useTranslation();
@@ -27,7 +26,7 @@ export default function RoleUpdatePage() {
   }
 
   return (
-    <Card className="card">
+    <KuCard>
       {/* Header */}
       <div className="mb-6">
         <Button
@@ -46,7 +45,7 @@ export default function RoleUpdatePage() {
       </div>
 
       {/* Form */}
-      <Card>
+      <KuCard>
         <form onSubmit={updateRole.handleSubmit} noValidate>
           {/* Tabs for all information */}
           <Tabs
@@ -215,7 +214,7 @@ export default function RoleUpdatePage() {
             </Button>
           </div>
         </form>
-      </Card>
-    </Card>
+      </KuCard>
+    </KuCard>
   );
 }

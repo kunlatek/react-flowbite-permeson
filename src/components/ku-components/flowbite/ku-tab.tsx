@@ -151,6 +151,7 @@ export const KuTab = (props: IKuTabProps) => {
           return (
             <li key={tab.id} className="mr-2">
               <button
+                data-testid={`tab-${tab.id}`} id={`tab-${tab.id}`}
                 type="button"
                 className={`inline-block p-4 border-b-2 rounded-t-lg ${
                   isActive ? activeClasses : inactiveClasses

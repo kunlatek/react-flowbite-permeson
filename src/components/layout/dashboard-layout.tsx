@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/use-auth";
 import { useMyWorkspaces } from "@/modules/workspace/hooks/use-my-workspaces";
 import { useTheme } from "@/hooks/use-theme";
@@ -37,6 +37,7 @@ export const DashboardLayout = () => {
   const { permissions, isOwner } = useUserPermissions();
   const { t, i18n } = useTranslation();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const location = useLocation();
 
   const toggleSidebar = () => {
     setSidebarCollapsed(!sidebarCollapsed);
@@ -52,6 +53,10 @@ export const DashboardLayout = () => {
 
   const handleWorkspaceChange = async (workspaceId: string) => {
     await switchWorkspace(workspaceId);
+  };
+
+  const isActive = (path: string) => {
+    return location.pathname === path || location.pathname.startsWith(path + "/");
   };
 
   return (
@@ -77,7 +82,7 @@ export const DashboardLayout = () => {
             <Sidebar.Items>
               <Sidebar.ItemGroup>
                 {/* Dashboard - sempre visível */}
-                <Sidebar.Item href="/dashboard" icon={HiHome}>
+                <Sidebar.Item as={Link} to="/dashboard" icon={HiHome} isActive={isActive("/dashboard")}>
                   <div className="truncate w-[150px]">
                     {!sidebarCollapsed && t("dashboard.sidebar.dashboard")}
                   </div>
@@ -88,7 +93,7 @@ export const DashboardLayout = () => {
 
                 {/* Invitations - sempre visível para owner, senão depende de permissão */}
                 {permissions.canViewInvitations && (
-                  <Sidebar.Item href="/invitations" icon={HiMail}>
+                  <Sidebar.Item as={Link} to="/invitations" icon={HiMail} isActive={isActive("/invitations")}>
                     <div className="truncate w-[150px]">
                       {!sidebarCollapsed && t("dashboard.sidebar.invitations")}
                     </div>
@@ -97,7 +102,7 @@ export const DashboardLayout = () => {
                 
                 {/* Collaborators - sempre visível para owner, senão depende de permissão */}
                 {permissions.canViewWorkspaces && (
-                  <Sidebar.Item href="/workspace" icon={HiUserGroup}>
+                  <Sidebar.Item as={Link} to="/workspace" icon={HiUserGroup} isActive={isActive("/workspace")}>
                     <div className="truncate w-[150px]">
                       {!sidebarCollapsed && t("dashboard.sidebar.collaborators")}
                     </div>

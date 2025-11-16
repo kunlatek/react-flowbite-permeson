@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/hooks/use-auth";
 import { useMyWorkspaces } from "@/modules/workspace/hooks/use-my-workspaces";
 import { useTheme } from "@/hooks/use-theme";
@@ -77,7 +77,7 @@ export const DashboardLayout = () => {
             <Sidebar.Items>
               <Sidebar.ItemGroup>
                 {/* Dashboard - sempre visível */}
-                <Sidebar.Item href="/dashboard" icon={HiHome}>
+                <Sidebar.Item as={Link} to="/dashboard" icon={HiHome}>
                   <div className="truncate w-[150px]">
                     {!sidebarCollapsed && t("dashboard.sidebar.dashboard")}
                   </div>
@@ -88,7 +88,7 @@ export const DashboardLayout = () => {
 
                 {/* Invitations - sempre visível para owner, senão depende de permissão */}
                 {permissions.canViewInvitations && (
-                  <Sidebar.Item href="/invitations" icon={HiMail}>
+                  <Sidebar.Item as={Link} to="/invitations" icon={HiMail}>
                     <div className="truncate w-[150px]">
                       {!sidebarCollapsed && t("dashboard.sidebar.invitations")}
                     </div>
@@ -97,7 +97,7 @@ export const DashboardLayout = () => {
                 
                 {/* Collaborators - sempre visível para owner, senão depende de permissão */}
                 {permissions.canViewWorkspaces && (
-                  <Sidebar.Item href="/workspace" icon={HiUserGroup}>
+                  <Sidebar.Item as={Link} to="/workspace" icon={HiUserGroup}>
                     <div className="truncate w-[150px]">
                       {!sidebarCollapsed && t("dashboard.sidebar.collaborators")}
                     </div>

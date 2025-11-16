@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/hooks/use-auth";
 import { useMyWorkspaces } from "@/modules/workspace/hooks/use-my-workspaces";
 import { useTheme } from "@/hooks/use-theme";
@@ -76,7 +76,7 @@ export const OpenDashboardLayout = () => {
             <Sidebar.Items>
               <Sidebar.ItemGroup>
                 {/* Dashboard - sempre visível */}
-                <Sidebar.Item href="/dashboard" icon={HiHome}>
+                <Sidebar.Item as={Link} to="/dashboard" icon={HiHome}>
                   <div className="truncate w-[150px]">
                     {!sidebarCollapsed && t("dashboard.sidebar.dashboard")}
                   </div>
@@ -87,7 +87,7 @@ export const OpenDashboardLayout = () => {
 
                 {/* Collaborators - sempre visível para owner, senão depende de permissão */}
                 {permissions.canViewWorkspaces && (
-                  <Sidebar.Item href="/workspace" icon={HiUserGroup}>
+                  <Sidebar.Item as={Link} to="/workspace" icon={HiUserGroup}>
                     <div className="truncate w-[150px]">
                       {!sidebarCollapsed && t("dashboard.sidebar.collaborators")}
                     </div>

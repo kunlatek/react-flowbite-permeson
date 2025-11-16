@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/hooks/use-auth";
 import { useMyWorkspaces } from "@/modules/workspace/hooks/use-my-workspaces";
 import { useTheme } from "@/hooks/use-theme";
@@ -53,6 +53,10 @@ export const OpenDashboardLayout = () => {
   const handleWorkspaceChange = async (workspaceId: string) => {
     await switchWorkspace(workspaceId);
   };
+  
+  const isActive = (path: string) => {
+    return location.pathname === path || location.pathname.startsWith(path + "/");
+  };
 
   return (
     <div className="flex h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden">
@@ -76,7 +80,7 @@ export const OpenDashboardLayout = () => {
             <Sidebar.Items>
               <Sidebar.ItemGroup>
                 {/* Dashboard - sempre visível */}
-                <Sidebar.Item href="/dashboard" icon={HiHome}>
+                <Sidebar.Item as={Link} to="/dashboard" icon={HiHome} isActive={isActive("/dashboard")}>
                   <div className="truncate w-[150px]">
                     {!sidebarCollapsed && t("dashboard.sidebar.dashboard")}
                   </div>
@@ -87,7 +91,7 @@ export const OpenDashboardLayout = () => {
 
                 {/* Roles - sempre visível para owner, senão depende de permissão */}
                 {permissions.canViewRoles && (
-                  <Sidebar.Item href="/roles" icon={HiShieldCheck}>
+                  <Sidebar.Item as={Link} to="/roles" icon={HiShieldCheck} isActive={isActive("/roles")}>
                     <div className="truncate w-[150px]">
                       {!sidebarCollapsed && t("dashboard.sidebar.roles")}
                     </div>
@@ -96,7 +100,7 @@ export const OpenDashboardLayout = () => {
 
                 {/* Collaborators - sempre visível para owner, senão depende de permissão */}
                 {permissions.canViewWorkspaces && (
-                  <Sidebar.Item href="/workspace" icon={HiUserGroup}>
+                  <Sidebar.Item as={Link} to="/workspace" icon={HiUserGroup} isActive={isActive("/workspace")}>
                     <div className="truncate w-[150px]">
                       {!sidebarCollapsed && t("dashboard.sidebar.collaborators")}
                     </div>

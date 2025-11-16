@@ -1,4 +1,6 @@
 export interface IKuInputProps {
+    id?: string;
+    testId?: string;
     name: string;
     label: string;
     value: string | number;

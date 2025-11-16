@@ -20,6 +20,8 @@ export interface IHeaderAction {
 }
 
 export interface IKuDataTableProps<T> {
+    id?: string;
+    testId?: string;
     title: string;
     columns: IColumn<T>[];
     dataSource: (

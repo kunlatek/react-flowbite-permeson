@@ -36,6 +36,8 @@ export type ButtonVariant = VariantProps<typeof buttonVariants>["variant"];
 
 export type IKuButtonProps = IFormButton &
     VariantProps<typeof buttonVariants> & {
+        id?: string;
+        testId?: string;
         customClass?: string;
         onClick?: () => void;
         children?: React.ReactNode;

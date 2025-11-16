@@ -11,7 +11,7 @@ import { HiX, HiChevronDown } from "react-icons/hi";
 import type { IKuSelectProps, ISelectOption } from "@/interfaces/ku-components";
 
 export const KuSelect = (props: IKuSelectProps) => {
-  const { name, label, value, onChange, options, placeholder = "Selecione uma ou mais opções", isRequired = false, isDisabled = false, isMultiple = false, error = "", tooltip = "" } = props;
+  const { id, testId, name, label, value, onChange, options, placeholder = "Selecione uma ou mais opções", isRequired = false, isDisabled = false, isMultiple = false, error = "", tooltip = "" } = props;
   
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -94,7 +94,7 @@ export const KuSelect = (props: IKuSelectProps) => {
   };
 
   return (
-    <div className="w-full" ref={mainElementRef}>
+    <div className="w-full" ref={mainElementRef} id={id} data-testid={testId}>
       <div className="mb-2 block">
         <Label
           htmlFor={name}

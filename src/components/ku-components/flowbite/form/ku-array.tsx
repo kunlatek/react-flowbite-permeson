@@ -3,7 +3,7 @@ import { IKuArrayProps } from "@/interfaces/ku-components";
 import { useTranslation } from "react-i18next";
   
 export const KuArray = <T extends { _id: string }>(props: IKuArrayProps<T>) => {
-  const { title, items, onItemsChange, defaultNewItem, renderItem } = props;
+  const { id, testId, title, items, onItemsChange, defaultNewItem, renderItem } = props;
   const { t } = useTranslation();
   const handleAddItem = () => {
     onItemsChange([...items, defaultNewItem]);
@@ -21,7 +21,7 @@ export const KuArray = <T extends { _id: string }>(props: IKuArrayProps<T>) => {
   };
 
   return (
-    <fieldset className="w-full bg-white dark:bg-gray-800 rounded-lg p-4 mb-4 border border-gray-200 dark:border-gray-700">
+    <fieldset className="w-full bg-white dark:bg-gray-800 rounded-lg p-4 mb-4 border border-gray-200 dark:border-gray-700" id={id} data-testid={testId}>
       <div className="flex justify-between items-center mb-3">
         <legend className="text-lg font-medium text-gray-900 dark:text-white">
           {title}

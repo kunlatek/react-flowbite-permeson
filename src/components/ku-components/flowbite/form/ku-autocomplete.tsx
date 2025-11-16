@@ -9,7 +9,7 @@ import { IKuAutocompleteProps, ApiItem } from "@/interfaces/ku-components";
 import axios from "axios";
 
 export const KuAutocomplete = (props: IKuAutocompleteProps) => {
-  const { name, label, value, onChange, optionsApi, placeholder = "Pesquisar e selecionar", isRequired = false, isDisabled = false, isMultiple = false, error = "", tooltip = "", conditions, formState } = props;
+  const { id, testId, name, label, value, onChange, optionsApi, placeholder = "Pesquisar e selecionar", isRequired = false, isDisabled = false, isMultiple = false, error = "", tooltip = "", conditions, formState } = props;
 
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -403,7 +403,7 @@ export const KuAutocomplete = (props: IKuAutocompleteProps) => {
   }
 
   return (
-    <div className="w-full" ref={mainElementRef}>
+    <div className="w-full" ref={mainElementRef} id={id} data-testid={testId}>
       <div className="mb-2 block">
         <Label
           htmlFor={name}

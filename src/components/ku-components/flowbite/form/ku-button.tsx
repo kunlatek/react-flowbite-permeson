@@ -6,7 +6,7 @@ import { KuSpinner } from "@/components/ku-components";
 
 
 export const KuButton = (props: IKuButtonProps) => {
-  const { label, actionType = "submit", variant, size, isDisabled = false, customClass = "", children, href, loading = false, onClick } = props;
+  const { id, testId, label, actionType = "submit", variant, size, isDisabled = false, customClass = "", children, href, loading = false, onClick } = props;
 
   const getButtonType = (): "submit" | "reset" | "button" => {
     switch (actionType) {
@@ -32,7 +32,7 @@ export const KuButton = (props: IKuButtonProps) => {
 
   if (href) {
     return (
-      <Link to={href} className={buttonClasses}>
+      <Link to={href} className={buttonClasses} id={id} data-testid={testId}>
         {buttonContent}
       </Link>
     );
@@ -40,6 +40,8 @@ export const KuButton = (props: IKuButtonProps) => {
 
   return (
     <FlowbiteButton
+      id={id}
+      data-testid={testId}
       disabled={finalIsDisabled}
       className={buttonClasses}
       type={getButtonType()}

@@ -8,6 +8,8 @@ import '../index.css';
 
 export const KuWysiwyg = (props: IKuWysiwygProps) => {
   const {
+    id,
+    testId,
     name,
     label,
     value,
@@ -35,7 +37,7 @@ export const KuWysiwyg = (props: IKuWysiwygProps) => {
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full" id={id} data-testid={testId}>
       <div className="mb-2 block">
         <Label
           htmlFor={name}
@@ -59,10 +61,11 @@ export const KuWysiwyg = (props: IKuWysiwygProps) => {
         style={{ minHeight: `${height}px` }}
       >
         <ReactQuill
+          id={id ? `${id}__editor` : undefined}
           value={value || ''}
           onChange={(html: string) => onChange(name, html)}
           readOnly={isDisabled}
-          placeholder={''}
+          placeholder={placeholder || 'Digite seu conteúdo...'}
           modules={quillModules}
           theme="snow"
           className="h-full [&_.ql-container]:min-h-[200px] [&_.ql-editor]:text-gray-900 dark:[&_.ql-editor]:text-white [&_.ql-editor]:min-h-[200px] [&_.ql-toolbar]:border-0 [&_.ql-container]:border-0 [&_.ql-toolbar]:border-b [&_.ql-toolbar]:border-gray-200 dark:[&_.ql-toolbar]:border-gray-600 [&_.ql-toolbar]:rounded-t-lg [&_.ql-container]:rounded-b-lg"

@@ -1,7 +1,7 @@
 export interface IFormCondition {
     key: string;
     value: any;
-    comparisonOperator: '===' | '!===' | '>' | '<' | '>=' | '<=' | 'contains' | 'does not contain';
+    comparisonOperator: '===' | '!===' | '>' | '<' | '>=' | '<=' | 'in' | 'nin';
 }
 
 export const showField = (form: any, conditions: IFormCondition[]) => {
@@ -27,10 +27,10 @@ export const showField = (form: any, conditions: IFormCondition[]) => {
             case '<=':
                 result = form[condition.key] <= condition.value;
                 break;
-            case 'contains':
+            case 'in':
                 result = form[condition.key].includes(condition.value);
                 break;
-            case 'does not contain':
+            case 'nin':
                 result = !form[condition.key].includes(condition.value);
                 break;
         }

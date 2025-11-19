@@ -33,7 +33,7 @@ export default function ProfileTypeSelectionPage() {
             // }`}
             // onClick={() => profileTypeSelection.handleTypeSelection('person')}
           >
-            <div className="p-6 text-center">
+            <div className="p-6 text-center cursor-pointer" onClick={() => profileTypeSelection.handleTypeSelection('person')}>
               <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full mb-4 ${
                 profileTypeSelection.selectedType === 'person' 
                   ? 'bg-cyan-100 dark:bg-cyan-800' 
@@ -67,7 +67,7 @@ export default function ProfileTypeSelectionPage() {
             // }`}
             // onClick={() => profileTypeSelection.handleTypeSelection('company')}
           >
-            <div className="p-6 text-center">
+            <div className="p-6 text-center cursor-pointer" onClick={() => profileTypeSelection.handleTypeSelection('company')}>
               <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full mb-4 ${
                 profileTypeSelection.selectedType === 'company' 
                   ? 'bg-cyan-100 dark:bg-cyan-800' 

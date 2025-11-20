@@ -2,8 +2,6 @@ import { Button as FlowbiteButton } from "flowbite-react";
 import { cn } from "@/utils/cn";
 import { Link } from "react-router-dom";
 import { IKuButtonProps, buttonVariants } from "@/interfaces/ku-components";
-import { KuSpinner } from "@/components/ku-components";
-
 
 export const KuButton = (props: IKuButtonProps) => {
   const { id, testId, label, actionType = "submit", variant, size, isDisabled = false, customClass = "", children, href, loading = false, onClick } = props;
@@ -21,7 +19,6 @@ export const KuButton = (props: IKuButtonProps) => {
   const finalIsDisabled = isDisabled || loading;
   const buttonContent = (
     <>
-      {loading && <KuSpinner />}
       {children || label}
     </>
   );
@@ -46,6 +43,7 @@ export const KuButton = (props: IKuButtonProps) => {
       className={buttonClasses}
       type={getButtonType()}
       onClick={onClick}
+      size="sm"
     >
       {buttonContent}
     </FlowbiteButton>

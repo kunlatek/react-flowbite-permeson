@@ -180,6 +180,7 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
                       <Dropdown
                         arrowIcon={false}
                         inline
+                        placement="right-start"
                         label={
                           <Button
                             size="xs"
@@ -195,6 +196,7 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
                         {(getActions ? getActions(row) : actions).map((action, index) => (
                           <Dropdown.Item
                             key={action.label}
+                            id={`row-${row._id}-action-${index}`}
                             onClick={() => action.handler(row)}
                             className={
                               action.color === "danger"

@@ -150,7 +150,7 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
       {error && <div className="p-4 text-red-600">{error}</div>}
 
       {!loading && !error && (
-        <div className="overflow-x-auto relative">
+        <div className="overflow-x-auto relative" style={{ zIndex: 1 }}>
           <Table className="!static !relative">
             <Table.Head>
               {columns.map((col) => (

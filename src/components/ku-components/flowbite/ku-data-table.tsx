@@ -150,7 +150,7 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
       {error && <div className="p-4 text-red-600">{error}</div>}
 
       {!loading && !error && (
-        <div className="overflow-x-auto relative">
+        <div className="overflow-x-auto relative" style={{ zIndex: 1 }}>
           <Table className="!static !relative">
             <Table.Head>
               {columns.map((col) => (
@@ -177,37 +177,40 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
                   ))}
                   {(actions.length > 0 || getActions) && (
                     <Table.Cell>
-                      <Dropdown
-                        arrowIcon={false}
-                        inline
-                        label={
-                          <Button
-                            size="xs"
-                            color="gray"
-                            className="p-1.5"
-                            id={`row-${row._id}-actions-menu`}
-                            data-testid={`row-${row._id}-actions-menu`}
-                          >
-                            <HiDotsVertical className="h-4 w-4" />
-                          </Button>
-                        }
-                      >
-                        {(getActions ? getActions(row) : actions).map((action, index) => (
-                          <Dropdown.Item
-                            key={action.label}
-                            onClick={() => action.handler(row)}
-                            className={
-                              action.color === "danger"
-                                ? "text-red-600 dark:text-red-400"
-                                : action.color === "warning"
-                                ? "text-yellow-600 dark:text-yellow-400"
-                                : ""
-                            }
-                          >
-                            {action.label}
-                          </Dropdown.Item>
-                        ))}
-                      </Dropdown>
+                      <div className="relative" style={{ zIndex: 9999 }}>
+                        <Dropdown
+                          arrowIcon={false}
+                          inline
+                          label={
+                            <Button
+                              size="xs"
+                              color="gray"
+                              className="p-1.5"
+                              id={`row-${row._id}-actions-menu`}
+                              data-testid={`row-${row._id}-actions-menu`}
+                            >
+                              <HiDotsVertical className="h-4 w-4" />
+                            </Button>
+                          }
+                        >
+                          {(getActions ? getActions(row) : actions).map((action, index) => (
+                            <Dropdown.Item
+                              key={action.label}
+                              id={`row-${row._id}-action-${index}`}
+                              onClick={() => action.handler(row)}
+                              className={
+                                action.color === "danger"
+                                  ? "text-red-600 dark:text-red-400"
+                                  : action.color === "warning"
+                                  ? "text-yellow-600 dark:text-yellow-400"
+                                  : ""
+                              }
+                            >
+                              {action.label}
+                            </Dropdown.Item>
+                          ))}
+                        </Dropdown>
+                      </div>
                     </Table.Cell>
                   )}
                 </Table.Row>

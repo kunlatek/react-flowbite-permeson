@@ -160,3 +160,16 @@ body {
 .dark .ProseMirror code {
   background-color: #374151;
 }
+
+/* KuDataTable Dropdown z-index fix */
+[data-testid*="actions-menu"] + div,
+[data-testid*="actions-menu"] ~ div {
+  z-index: 9999 !important;
+}
+
+/* Flowbite Dropdown in table cells - ensure dropdown menu is above everything */
+table [data-testid*="actions-menu"] + div[role="menu"],
+table [data-testid*="actions-menu"] ~ div[role="menu"],
+div[data-testid*="flowbite-dropdown-content"] {
+  z-index: 9999 !important;
+}

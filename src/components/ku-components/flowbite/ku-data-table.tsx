@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { Table } from "flowbite-react";
+import { Table, Dropdown, Button } from "flowbite-react";
+import { HiDotsVertical } from "react-icons/hi";
 import { KuPagination } from "@/components/ku-components/flowbite";
 import { KuButton } from "@/components/ku-components/flowbite/form";
 import axios from "axios";
@@ -175,19 +176,38 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
                     </Table.Cell>
                   ))}
                   {(actions.length > 0 || getActions) && (
-                    <Table.Cell className="flex gap-2">
-                      {(getActions ? getActions(row) : actions).map((action, index) => (
-                        <KuButton
-                          key={action.label}
-                          id={`row-${row._id}-action-${index}`}
-                          type="button"
-                          actionType="apiRequest"
-                          size="xs"
-                          variant={action.color}
-                          onClick={() => action.handler(row)}
-                          label={action.label}
-                        />
-                      ))}
+                    <Table.Cell>
+                      <Dropdown
+                        arrowIcon={false}
+                        inline
+                        label={
+                          <Button
+                            size="xs"
+                            color="gray"
+                            className="p-1.5"
+                            id={`row-${row._id}-actions-menu`}
+                            data-testid={`row-${row._id}-actions-menu`}
+                          >
+                            <HiDotsVertical className="h-4 w-4" />
+                          </Button>
+                        }
+                      >
+                        {(getActions ? getActions(row) : actions).map((action, index) => (
+                          <Dropdown.Item
+                            key={action.label}
+                            onClick={() => action.handler(row)}
+                            className={
+                              action.color === "danger"
+                                ? "text-red-600 dark:text-red-400"
+                                : action.color === "warning"
+                                ? "text-yellow-600 dark:text-yellow-400"
+                                : ""
+                            }
+                          >
+                            {action.label}
+                          </Dropdown.Item>
+                        ))}
+                      </Dropdown>
                     </Table.Cell>
                   )}
                 </Table.Row>

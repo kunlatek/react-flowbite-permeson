@@ -1,9 +1,9 @@
-import { Card, Button, Alert, Modal } from "flowbite-react";
+import { Button, Alert, Modal } from "flowbite-react";
 import { HiUserAdd, HiRefresh, HiTrash } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
 import { useWorkspace } from "../hooks/use-workspace";
 import { useUserPermissions } from "@/hooks/use-user-permissions";
-import { KuSpinner } from "@/components/ku-components";
+import { KuSpinner, KuCard } from "@/components/ku-components";
 
 export default function WorkspacePage() {
   const { t } = useTranslation();

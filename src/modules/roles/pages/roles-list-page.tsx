@@ -4,7 +4,7 @@ import RoleDeleteConfirm from "@/modules/roles/components/role-delete-confirm";
 import type { IRoleTable } from "../interfaces";
 import { useRolesList } from "../hooks/use-roles-list";
 import { useUserPermissions } from "@/hooks/use-user-permissions";
-import { Card } from "flowbite-react";
+import { KuCard } from "@/components/ku-components";
 
 export default function RolesListPage() {
   const { t } = useTranslation();

@@ -105,7 +105,7 @@ export default function RoleCreatePage() {
                             >
                               <option value="">{t("roles.form.select_module")}</option>
                               {roleCreate.moduleOptions.map((option) => (
-                                <option key={option.value} value={option.value}>
+                                <option key={option.value as string} value={option.value as string}>
                                   {option.label}
                                 </option>
                               ))}

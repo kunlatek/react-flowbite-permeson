@@ -1,6 +1,6 @@
 import { KuDataTable } from "@/components/ku-components";
 import { useInvitationList } from "../hooks/use-invitation-list";
-import { Card } from "flowbite-react";
+import { KuCard } from "@/components/ku-components";
 import { useTranslation } from "react-i18next";
 
 export const InvitationListPage = () => {
@@ -8,7 +8,7 @@ export const InvitationListPage = () => {
   const invitationList = useInvitationList();
 
   return (
-    <KuCard className="card">
+    <KuCard>
       <KuDataTable
         title={t("invitations.title")}
         columns={invitationList.columns}

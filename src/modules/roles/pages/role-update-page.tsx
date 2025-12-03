@@ -26,7 +26,7 @@ export default function RoleUpdatePage() {
   }
 
   return (
-    <KuCard className="card">
+    <KuCard>
       {/* Header */}
       <div className="mb-6">
         <Button
@@ -120,7 +120,7 @@ export default function RoleUpdatePage() {
                             >
                               <option value="">{t("roles.form.select_module")}</option>
                               {updateRole.moduleOptions.map((option) => (
-                                <option key={option.value} value={option.value}>
+                                <option key={option.value as string} value={option.value as string}>
                                   {option.label}
                                 </option>
                               ))}

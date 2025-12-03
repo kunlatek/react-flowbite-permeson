@@ -1,10 +1,9 @@
 import { useTranslation } from "react-i18next";
-import { KuDataTable } from "@/components/ku-components";
+import { KuDataTable, KuCard } from "@/components/ku-components";
 import RoleDeleteConfirm from "@/modules/roles/components/role-delete-confirm";
 import type { IRoleTable } from "../interfaces";
 import { useRolesList } from "../hooks/use-roles-list";
 import { useUserPermissions } from "@/hooks/use-user-permissions";
-import { KuCard } from "@/components/ku-components";
 
 export default function RolesListPage() {
   const { t } = useTranslation();
@@ -12,7 +11,7 @@ export default function RolesListPage() {
   const rolesList = useRolesList(permissions);
 
   return (
-    <KuCard className="card">
+    <KuCard>
       <KuDataTable<IRoleTable>
         title={t("roles.title")}
         columns={rolesList.columns}

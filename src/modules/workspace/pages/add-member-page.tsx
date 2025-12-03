@@ -1,8 +1,8 @@
-import { Card, Button, TextInput, Alert } from "flowbite-react";
+import { Button, TextInput, Alert } from "flowbite-react";
 import { HiUserAdd, HiArrowLeft } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
 import { useAddMember } from "../hooks/use-add-member";
-import { KuSpinner } from "@/components/ku-components";
+import { KuSpinner, KuCard } from "@/components/ku-components";
 
 export default function AddMemberPage() {
   

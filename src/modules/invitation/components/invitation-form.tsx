@@ -28,7 +28,6 @@ export default function InvitationForm({
     <form onSubmit={onSubmit}>
       <div className="space-y-4">
         <KuInput
-          type="input"
           dataType="email"
           name="email"
           label="Email"

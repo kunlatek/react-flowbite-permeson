@@ -31,7 +31,7 @@ export const KuAutocomplete = (props: IKuAutocompleteProps) => {
 
   const fetchOptions = useCallback(
     async (query = "") => {
-      if (!optionsApi.endpoint || (optionsApi.paramType === "query" && query.length < 3)) return;
+      if (!optionsApi.endpoint) return;
       setLoading(true);
       try {
         const params = new URLSearchParams();

@@ -72,6 +72,27 @@ export const applyMask = (value: string, maskRegex: string): string => {
         cleanRegex = alternatives[0].replace(/^\^|\$$/g, '');
     }
 
+    const unescapeSeparator = (text: string): string => {
+        let result = '';
+        let i = 0;
+        while (i < text.length) {
+            if (text[i] === '\\' && i + 1 < text.length) {
+                const nextChar = text[i + 1];
+                if (nextChar === '(' || nextChar === ')' || nextChar === '.' || nextChar === '/' || nextChar === '-' || nextChar === ' ') {
+                    result += nextChar;
+                    i += 2;
+                } else {
+                    result += text[i];
+                    i++;
+                }
+            } else {
+                result += text[i];
+                i++;
+            }
+        }
+        return result;
+    };
+
     const parts: Array<{ type: 'digit' | 'separator'; value: string; minLength?: number; maxLength?: number }> = [];
     const digitPattern = /\\d\{(\d+)(?:,(\d+))?\}/g;
     let lastIndex = 0;
@@ -80,8 +101,7 @@ export const applyMask = (value: string, maskRegex: string): string => {
     while ((match = digitPattern.exec(cleanRegex)) !== null) {
         if (match.index > lastIndex) {
             const separatorText = cleanRegex.substring(lastIndex, match.index);
-            const unescapedSeparator = separatorText
-                .replace(/\\([()\.\/\-\s])/g, '$1');
+            const unescapedSeparator = unescapeSeparator(separatorText);
             if (unescapedSeparator) {
                 parts.push({ type: 'separator', value: unescapedSeparator });
             }
@@ -97,28 +117,31 @@ export const applyMask = (value: string, maskRegex: string): string => {
 
     let result = '';
     let digitIndex = 0;
+    let partIndex = 0;
 
-    for (const part of parts) {
+    while (partIndex < parts.length && digitIndex < digitsOnly.length) {
+        const part = parts[partIndex];
+        
         if (part.type === 'separator') {
             if (digitIndex < digitsOnly.length) {
                 result += part.value;
             }
+            partIndex++;
         } else if (part.type === 'digit' && part.minLength) {
             const maxDigits = part.maxLength || part.minLength;
             const availableDigits = digitsOnly.length - digitIndex;
             const digitsToTake = Math.min(maxDigits, availableDigits);
 
-            if (digitsToTake >= part.minLength) {
+            if (digitsToTake > 0) {
                 const partDigits = digitsOnly.slice(digitIndex, digitIndex + digitsToTake);
-                if (partDigits) {
-                    result += partDigits;
-                    digitIndex += partDigits.length;
-                } else {
-                    break;
-                }
+                result += partDigits;
+                digitIndex += partDigits.length;
+                partIndex++;
             } else {
                 break;
             }
+        } else {
+            partIndex++;
         }
     }
 

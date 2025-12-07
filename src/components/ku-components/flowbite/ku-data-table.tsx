@@ -203,7 +203,7 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
                                 ? "text-red-600 dark:text-red-400"
                                 : action.color === "warning"
                                 ? "text-yellow-600 dark:text-yellow-400"
-                                : ""
+                                : "dark:text-white"
                             }
                           >
                             {action.label}

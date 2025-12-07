@@ -1,7 +1,7 @@
 export interface IFormCondition {
     key: string;
     value: any;
-    comparisonOperator: '===' | '!===' | '>' | '<' | '>=' | '<=' | 'in' | 'nin';
+    comparisonOperator: '===' | '!==' | '>' | '<' | '>=' | '<=' | 'in' | 'nin';
 }
 
 export const showField = (form: any, conditions: IFormCondition[]) => {
@@ -12,7 +12,7 @@ export const showField = (form: any, conditions: IFormCondition[]) => {
             case '===':
                 result = form[condition.key] === condition.value;
                 break;
-            case '!===':
+            case '!==':
                 result = form[condition.key] !== condition.value;
                 break;
             case '>':

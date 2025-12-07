@@ -109,7 +109,7 @@ export const KuNavbar = () => {
             )}
           >
             <Dropdown.Header>
-              <span>{t("dashboard.topbar.theme")}</span>
+              <span className="text-gray-900 dark:text-white">{t("dashboard.topbar.theme")}</span>
             </Dropdown.Header>
             <Dropdown.Item 
               icon={isDarkMode ? HiSun : HiMoon} 

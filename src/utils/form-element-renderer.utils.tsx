@@ -297,7 +297,7 @@ export const createRenderElement = (
     } else if (element.type === 'fieldset') {
         return (
             <fieldset className="border p-4 rounded-md">
-                <legend className="text-xs dark:text-white">{element.title}</legend>
+                <legend className="text-xs text-gray-500 dark:text-white">{element.title}</legend>
                 {element.elements.map((el: any) =>
                     createRenderElement({
                         ...props,

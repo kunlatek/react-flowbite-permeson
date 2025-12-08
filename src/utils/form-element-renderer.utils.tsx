@@ -106,8 +106,8 @@ export const createRenderElement = (
 
     const errorContext = errors[element.name];
     const currentValue = context === 'item'
-        ? (itemValue?.[index]?.[element.name] || '')
-        : (formData[element.name] || '');
+        ? (itemValue?.[index]?.[element.name] ?? '')
+        : (formData[element.name] ?? '');
 
     const condition = element.conditions?.find((el: any) => el.type === 'form');
     if (condition && !showField(formData, condition.elements)) {
@@ -180,7 +180,7 @@ export const createRenderElement = (
                 handleInputChange(element.name, value);
             }
         }
-
+        
         if (!currentValue && currentValue !== 0 && element.options?.find((option: any) => option.isSelected)) {
             onChange(element.name, element.options?.find((option: any) => option.isSelected)?.value);
         }

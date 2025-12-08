@@ -64,11 +64,11 @@ export const DashboardLayout = () => {
       {/* Sidebar */}
       <Sidebar 
         aria-label="Dashboard sidebar"
-        className={`fixed left-0 top-0 z-40 h-screen transition-transform duration-300 ease-in-out ${
+        className={`fixed left-0 top-0 z-40 h-screen transition-transform duration-300 ease-in-out overflow-y-auto ${
           sidebarCollapsed ? '-translate-x-full' : 'translate-x-0'
         }`}
       >
-        <div className="flex h-full flex-col justify-between py-2 bg-white dark:bg-gray-800 p-4">
+        <div className="flex min-h-full flex-col justify-between py-2 bg-white dark:bg-gray-800 p-4">
           <div>
             <div className="mb-[33px] flex items-center">
               <a href="/" className="flex items-center">

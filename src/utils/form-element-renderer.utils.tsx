@@ -181,7 +181,7 @@ export const createRenderElement = (
             }
         }
 
-        if (!currentValue && element.options?.find((option: any) => option.isSelected)) {
+        if (!currentValue && currentValue !== 0 && element.options?.find((option: any) => option.isSelected)) {
             onChange(element.name, element.options?.find((option: any) => option.isSelected)?.value);
         }
 

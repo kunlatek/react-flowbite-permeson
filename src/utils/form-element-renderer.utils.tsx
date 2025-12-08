@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import axios from "axios";
 import {
     KuInput, KuButton, KuSelect, KuAutocomplete, KuArray,
@@ -105,9 +105,16 @@ export const createRenderElement = (
     } = props;
 
     const errorContext = errors[element.name];
-    const currentValue = context === 'item'
-        ? (itemValue?.[index]?.[element.name] ?? '')
-        : (formData[element.name] ?? '');
+    const getCurrentValue = () => {
+        const value = context === 'item'
+            ? itemValue?.[index]?.[element.name]
+            : formData[element.name];
+        if (element.type === 'select' && (element.dataType === 'integer' || element.dataType === 'number' || element.dataType === 'decimal' || element.dataType === 'numeric' || element.dataType === 'float' || element.dataType === 'double' || element.dataType === 'real')) {
+            return value ?? null;
+        }
+        return value ?? '';
+    };
+    const currentValue = getCurrentValue();
 
     const condition = element.conditions?.find((el: any) => el.type === 'form');
     if (condition && !showField(formData, condition.elements)) {
@@ -180,28 +187,51 @@ export const createRenderElement = (
                 handleInputChange(element.name, value);
             }
         }
-        
-        if (!currentValue && currentValue !== 0 && element.options?.find((option: any) => option.isSelected)) {
-            onChange(element.name, element.options?.find((option: any) => option.isSelected)?.value);
-        }
 
-        return (
-            <KuSelect
-                key={element.name}
-                id={`field-${element.name}${index || index === 0 ? `-${index}` : ''}`}
-                testId={`field-${element.name}${index || index === 0 ? `-${index}` : ''}`}
-                label={element.label}
-                name={element.name}
-                options={element.options || []}
-                value={currentValue}
-                onChange={onChange}
-                isMultiple={element.isMultiple || false}
-                isRequired={element.isRequired || false}
-                error={errorContext}
-                tooltip={element.tooltip || ''}
-                isDisabled={isPending || element.isDisabled}
-            />
-        );
+        const SelectWithDefault = () => {
+            const hasSetDefault = useRef(false);
+            const isInitialMount = useRef(true);
+
+            useEffect(() => {
+                if (isInitialMount.current) {
+                    isInitialMount.current = false;
+                    const value = context === 'item'
+                        ? itemValue?.[index]?.[element.name]
+                        : formData[element.name];
+                    const computedValue = (element.dataType === 'integer' || element.dataType === 'number' || element.dataType === 'decimal' || element.dataType === 'numeric' || element.dataType === 'float' || element.dataType === 'double' || element.dataType === 'real')
+                        ? (value ?? null)
+                        : (value ?? '');
+                    
+                    if (!computedValue && computedValue !== 0 && computedValue !== false) {
+                        const selectedOption = element.options?.find((option: any) => option.isSelected);
+                        if (selectedOption && !hasSetDefault.current) {
+                            hasSetDefault.current = true;
+                            onChange(element.name, selectedOption.value);
+                        }
+                    }
+                }
+            }, []);
+
+            return (
+                <KuSelect
+                    key={element.name}
+                    id={`field-${element.name}${index || index === 0 ? `-${index}` : ''}`}
+                    testId={`field-${element.name}${index || index === 0 ? `-${index}` : ''}`}
+                    label={element.label}
+                    name={element.name}
+                    options={element.options || []}
+                    value={currentValue}
+                    onChange={onChange}
+                    isMultiple={element.isMultiple || false}
+                    isRequired={element.isRequired || false}
+                    error={errorContext}
+                    tooltip={element.tooltip || ''}
+                    isDisabled={isPending || element.isDisabled}
+                />
+            );
+        };
+
+        return <SelectWithDefault />;
     } else if (element.type === 'autocomplete') {
         return (
             <KuAutocomplete

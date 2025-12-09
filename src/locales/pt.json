@@ -99,7 +99,10 @@
     "submit_loading": "Redefinindo...",
     "success_message": "Senha redefinida com sucesso! Você será redirecionado para o login.",
     "back_to_login": "Lembrou sua senha?",
-    "login_link": "Fazer login"
+    "login_link": "Fazer login",
+    "password_required": "Senha é obrigatória",
+    "password_min_length": "A senha deve ter pelo menos 8 caracteres",
+    "passwords_not_match": "As senhas não coincidem"
   },
   "dashboard": {
     "welcome_title": "Bem-vindo de volta!",

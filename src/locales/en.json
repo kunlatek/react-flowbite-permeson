@@ -99,7 +99,10 @@
     "submit_loading": "Resetting...",
     "success_message": "Password reset successfully! You will be redirected to login.",
     "back_to_login": "Remembered your password?",
-    "login_link": "Sign in"
+    "login_link": "Sign in",
+    "password_required": "Password is required",
+    "password_min_length": "Password must be at least 8 characters",
+    "passwords_not_match": "Passwords do not match"
   },
   "dashboard": {
     "welcome_title": "Welcome back!",
@@ -483,6 +486,6 @@
   "kuArray": {
     "add_item": "Add Item",
     "no_items_added": "No items added",
-    "remove_item": "Remove item"
+    "remove_item": "Remove Item"
   }
 }

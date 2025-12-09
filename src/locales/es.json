@@ -99,7 +99,10 @@
     "submit_loading": "Restableciendo...",
     "success_message": "¡Contraseña restablecida exitosamente! Será redirigido al inicio de sesión.",
     "back_to_login": "¿Recordó su contraseña?",
-    "login_link": "Iniciar sesión"
+    "login_link": "Iniciar sesión",
+    "password_required": "La contraseña es obligatoria",
+    "password_min_length": "La contraseña debe tener al menos 8 caracteres",
+    "passwords_not_match": "Las contraseñas no coinciden"
   },
   "dashboard": {
     "welcome_title": "¡Bienvenido de vuelta!",
@@ -479,9 +482,9 @@
     "emptySubMessage": "Haga clic en 'Agregar Archivos' para subir archivos",
     "filesUploaded": "{{current}}/{{max}} archivos subidos"
   },
-  "kuArray": {  
+  "kuArray": {
     "add_item": "Agregar Item",
     "no_items_added": "No items added",
-    "remove_item": "Eliminar item"
+    "remove_item": "Eliminar Item"
   }
 }

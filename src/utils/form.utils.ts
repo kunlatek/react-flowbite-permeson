@@ -2,41 +2,62 @@ export interface IFormCondition {
     key: string;
     value: any;
     comparisonOperator: '===' | '!==' | '>' | '<' | '>=' | '<=' | 'in' | 'nin';
+    logicalOperator?: '&&' | '||';
 }
 
 export const showField = (form: any, conditions: IFormCondition[]) => {
-    let result = true;
+    if (!conditions || conditions.length === 0) {
+        return true;
+    }
 
-    for (const condition of conditions) {
+    let conditionResult = false;
+    
+    for (let i = 0; i < conditions.length; i++) {
+        const condition = conditions[i];
+        let currentResult = false;
+
         switch (condition.comparisonOperator) {
             case '===':
-                result = form[condition.key] === condition.value;
+                currentResult = form[condition.key] === condition.value;
                 break;
             case '!==':
-                result = form[condition.key] !== condition.value;
+                currentResult = form[condition.key] !== condition.value;
                 break;
             case '>':
-                result = form[condition.key] > condition.value;
+                currentResult = form[condition.key] > condition.value;
                 break;
             case '<':
-                result = form[condition.key] < condition.value;
+                currentResult = form[condition.key] < condition.value;
                 break;
             case '>=':
-                result = form[condition.key] >= condition.value;
+                currentResult = form[condition.key] >= condition.value;
                 break;
             case '<=':
-                result = form[condition.key] <= condition.value;
+                currentResult = form[condition.key] <= condition.value;
                 break;
             case 'in':
-                result = form[condition.key].includes(condition.value);
+                currentResult = form[condition.key]?.includes(condition.value) ?? false;
                 break;
             case 'nin':
-                result = !form[condition.key].includes(condition.value);
+                currentResult = !(form[condition.key]?.includes(condition.value) ?? false);
                 break;
+        }
+
+        if (i === 0) {
+            conditionResult = currentResult;
+        } else {
+            const previousCondition = conditions[i - 1];
+            const logicalOperator = previousCondition.logicalOperator || '&&';
+            
+            if (logicalOperator === '||') {
+                conditionResult = conditionResult || currentResult;
+            } else {
+                conditionResult = conditionResult && currentResult;
+            }
         }
     }
 
-    return result;
+    return conditionResult;
 };
 
 export interface IApiResponseField {

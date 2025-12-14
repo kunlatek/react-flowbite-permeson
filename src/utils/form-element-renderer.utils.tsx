@@ -117,7 +117,10 @@ export const createRenderElement = (
     const currentValue = getCurrentValue();
 
     const condition = element.conditions?.find((el: any) => el.type === 'form');
-    if (condition && !showField(formData, condition.elements)) {
+    const dataForCondition = context === 'item' && itemValue && (index !== undefined && index !== null)
+        ? itemValue[index]
+        : formData;
+    if (condition && !showField(dataForCondition, condition.elements)) {
         return null;
     }
 

@@ -34,6 +34,17 @@ export const createHandleApiRequest = (
     return async (element: any, value: string, context: string, itemValue?: any, index?: number) => {
         if (!element.apiRequest || !value) return;
 
+        const dataForCondition = context === 'item' && itemValue && (index !== undefined && index !== null)
+            ? itemValue[index]
+            : formData;
+        
+        if (element.apiRequest.conditions?.form) {
+            const condition = element.apiRequest.conditions.form;
+            if (condition.elements && !showField(dataForCondition, condition.elements)) {
+                return;
+            }
+        }
+
         const timeoutKey = `${element.name}-${context}-${index || 'main'}`;
 
         if (apiRequestTimeouts.current[timeoutKey]) {
@@ -100,7 +111,6 @@ export const createRenderElement = (
         files,
         isPending = false,
         t,
-        apiRequestTimeouts,
         handleApiRequest
     } = props;
 
@@ -116,11 +126,11 @@ export const createRenderElement = (
     };
     const currentValue = getCurrentValue();
 
-    const condition = element.conditions?.find((el: any) => el.type === 'form');
+    const condition = element.conditions?.form;
     const dataForCondition = context === 'item' && itemValue && (index !== undefined && index !== null)
         ? itemValue[index]
         : formData;
-    if (condition && !showField(dataForCondition, condition.elements)) {
+    if (condition && condition.elements && !showField(dataForCondition, condition.elements)) {
         return null;
     }
 

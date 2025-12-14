@@ -18,11 +18,17 @@ export interface IConditionCode {
   code: string;
 }
 
+export interface IConditions {
+  form?: {
+    elements?: IConditionElement[];
+  };
+}
+
 export interface IFormElement {
   type: string;
   name?: string;
   todo?: string;
-  conditions?: IFormCondition[];
+  conditions?: IConditions;
 }
 
 export interface IFormInput extends IFormElement {

@@ -1,18 +1,17 @@
 import { useMemo, useCallback } from "react";
-import type { IKuTabProps, IFormCondition } from "@/interfaces/ku-components";
+import type { IKuTabProps, IConditionElement } from "@/interfaces/ku-components";
 
 export const KuTab = (props: IKuTabProps) => {
   const { id, testId, tabs, activeTabId, onTabChange, formState, conditions } = props;
   const evaluateConditions = useCallback(
-    (state: Record<string, unknown>, conds?: IFormCondition[]): boolean => {
-      if (!conds || conds.length === 0) return true;
+    (state: Record<string, unknown>, conds?: { form?: { elements?: IConditionElement[] } }): boolean => {
+      if (!conds || !conds.form || !conds.form.elements || conds.form.elements.length === 0) return true;
 
-      for (const condition of conds) {
-        if (condition.type === "form" && condition.elements) {
-          let overallResult = true;
-          let firstElement = true;
+      const elements = conds.form.elements;
+      let overallResult = true;
+      let firstElement = true;
 
-          for (const element of condition.elements) {
+      for (const element of elements) {
             const formValue = state[element.key];
             const elementValue = element.value;
             let currentResult = false;
@@ -106,20 +105,18 @@ export const KuTab = (props: IKuTabProps) => {
               }
             }
 
-            if (firstElement) {
-              overallResult = currentResult;
-              firstElement = false;
-            } else {
-              if (element.logicalOperator === "||") {
-                overallResult = overallResult || currentResult;
-              } else {
-                overallResult = overallResult && currentResult;
-              }
-            }
+        if (firstElement) {
+          overallResult = currentResult;
+          firstElement = false;
+        } else {
+          if (element.logicalOperator === "||") {
+            overallResult = overallResult || currentResult;
+          } else {
+            overallResult = overallResult && currentResult;
           }
-          if (!overallResult) return false;
         }
       }
+      if (!overallResult) return false;
       return true;
     },
     []

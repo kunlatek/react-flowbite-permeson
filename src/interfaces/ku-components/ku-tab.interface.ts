@@ -17,10 +17,16 @@ export interface IFormCondition {
     code?: IConditionCode;
 }
 
+export interface IConditions {
+    form?: {
+        elements?: IConditionElement[];
+    };
+}
+
 export interface ITab {
     id: string;
     title: string;
-    conditions?: IFormCondition[];
+    conditions?: IConditions;
 }
 
 export interface IKuTabProps {
@@ -30,5 +36,5 @@ export interface IKuTabProps {
     activeTabId: string;
     onTabChange: (tabId: string) => void;
     formState: Record<string, unknown>;
-    conditions?: IFormCondition[];
+    conditions?: IConditions;
 }

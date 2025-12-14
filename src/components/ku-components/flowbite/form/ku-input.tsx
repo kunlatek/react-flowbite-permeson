@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Label, TextInput, HelperText } from "flowbite-react";
-import { HiEye, HiEyeOff } from "react-icons/hi";
+import { HiEye, HiEyeOff, HiCalendar } from "react-icons/hi";
 import { IKuInputProps } from "@/interfaces/ku-components";
 
 export const KuInput = (props: IKuInputProps) => {
@@ -10,7 +10,9 @@ export const KuInput = (props: IKuInputProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const isPassword = dataType === "password";
-  const inputType = isPassword && showPassword ? "text" : dataType;
+  const dateTypes = ["date", "Date", "datetime", "timestamp", "datetime2"];
+  const isDate = typeof dataType === "string" && dateTypes.includes(dataType);
+  const inputType = isPassword && showPassword ? "text" : (isDate ? "date" : dataType);
   const hasError = !!error;
 
   return (
@@ -37,6 +39,7 @@ export const KuInput = (props: IKuInputProps) => {
           required={isRequired}
           disabled={isDisabled}
           color={hasError ? "failure" : "gray"}
+          className={isDate ? "[&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:z-10" : ""}
         />
         {isPassword && (
           <button
@@ -47,6 +50,11 @@ export const KuInput = (props: IKuInputProps) => {
           >
             {showPassword ? <HiEyeOff size={20} /> : <HiEye size={20} />}
           </button>
+        )}
+        {isDate && (
+          <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none z-0">
+            <HiCalendar className="text-gray-500 dark:text-gray-300" size={20} />
+          </div>
         )}
       </div>
       {hasError && <HelperText color="failure">{error}</HelperText>}

@@ -61,7 +61,7 @@ export default function InvitationForm({
           isUnique={true}
           isDisabled={loading}
           isAutofocus={false}
-          conditions={[]}
+          conditions={{}}
           formState={{ roleId: invitation.roleId || "" }}
         />
       </div>

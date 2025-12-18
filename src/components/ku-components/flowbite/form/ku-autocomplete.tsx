@@ -106,121 +106,118 @@ export const KuAutocomplete = (props: IKuAutocompleteProps) => {
 
   const evaluateConditions = useCallback(
     (state: Record<string, unknown>): boolean => {
-      if (!conditions || conditions.length === 0) return true;
+      if (!conditions || !conditions.form || !conditions.form.elements || conditions.form.elements.length === 0) return true;
 
-      for (const condition of conditions) {
-        if (condition.type === "form" && condition.elements) {
-          let overallResult = true;
-          let firstElement = true;
+      const elements = conditions.form.elements;
+      let overallResult = true;
+      let firstElement = true;
 
-          for (const element of condition.elements) {
-            const formValue = state[element.key];
-            const elementValue = element.value;
-            let currentResult = false;
+      for (const element of elements) {
+        const formValue = state[element.key];
+        const elementValue = element.value;
+        let currentResult = false;
 
-            if (Array.isArray(formValue)) {
-              const check = (item: unknown) => {
-                if (
-                  typeof item === "object" &&
-                  item !== null &&
-                  "value" in item
-                ) {
-                  return (item as { value: unknown }).value === elementValue;
-                }
-                return item === elementValue;
-              };
-              switch (element.comparisonOperator) {
-                case "===":
-                case "in":
-                  currentResult = formValue.some(check);
-                  break;
-                case "!==":
-                case "nin":
-                  currentResult = !formValue.some(check);
-                  break;
-              }
-            } else {
-              if (
-                elementValue === undefined &&
-                !["in", "nin"].includes(element.comparisonOperator)
-              ) {
-                currentResult = false;
-              } else {
-                switch (element.comparisonOperator) {
-                  case "===":
-                    currentResult = formValue === elementValue;
-                    break;
-                  case "!==":
-                    currentResult = formValue !== elementValue;
-                    break;
-                  case ">":
-                    if (
-                      (typeof formValue === "number" &&
-                        typeof elementValue === "number") ||
-                      (typeof formValue === "string" &&
-                        typeof elementValue === "string")
-                    ) {
-                      currentResult = formValue > elementValue;
-                    }
-                    break;
-                  case ">=":
-                    if (
-                      (typeof formValue === "number" &&
-                        typeof elementValue === "number") ||
-                      (typeof formValue === "string" &&
-                        typeof elementValue === "string")
-                    ) {
-                      currentResult = formValue >= elementValue;
-                    }
-                    break;
-                  case "<":
-                    if (
-                      (typeof formValue === "number" &&
-                        typeof elementValue === "number") ||
-                      (typeof formValue === "string" &&
-                        typeof elementValue === "string")
-                    ) {
-                      currentResult = formValue < elementValue;
-                    }
-                    break;
-                  case "<=":
-                    if (
-                      (typeof formValue === "number" &&
-                        typeof elementValue === "number") ||
-                      (typeof formValue === "string" &&
-                        typeof elementValue === "string")
-                    ) {
-                      currentResult = formValue <= elementValue;
-                    }
-                    break;
-                  case "in":
-                    if (Array.isArray(elementValue)) {
-                      currentResult = elementValue.includes(formValue);
-                    }
-                    break;
-                  case "nin":
-                    if (Array.isArray(elementValue)) {
-                      currentResult = !elementValue.includes(formValue);
-                    }
-                    break;
-                }
-              }
+        if (Array.isArray(formValue)) {
+          const check = (item: unknown) => {
+            if (
+              typeof item === "object" &&
+              item !== null &&
+              "value" in item
+            ) {
+              return (item as { value: unknown }).value === elementValue;
             }
-
-            if (firstElement) {
-              overallResult = currentResult;
-              firstElement = false;
-            } else {
-              if (element.logicalOperator === "||") {
-                overallResult = overallResult || currentResult;
-              } else {
-                overallResult = overallResult && currentResult;
-              }
+            return item === elementValue;
+          };
+          switch (element.comparisonOperator) {
+            case "===":
+            case "in":
+              currentResult = formValue.some(check);
+              break;
+            case "!==":
+            case "nin":
+              currentResult = !formValue.some(check);
+              break;
+          }
+        } else {
+          if (
+            elementValue === undefined &&
+            !["in", "nin"].includes(element.comparisonOperator)
+          ) {
+            currentResult = false;
+          } else {
+            switch (element.comparisonOperator) {
+              case "===":
+                currentResult = formValue === elementValue;
+                break;
+              case "!==":
+                currentResult = formValue !== elementValue;
+                break;
+              case ">":
+                if (
+                  (typeof formValue === "number" &&
+                    typeof elementValue === "number") ||
+                  (typeof formValue === "string" &&
+                    typeof elementValue === "string")
+                ) {
+                  currentResult = formValue > elementValue;
+                }
+                break;
+              case ">=":
+                if (
+                  (typeof formValue === "number" &&
+                    typeof elementValue === "number") ||
+                  (typeof formValue === "string" &&
+                    typeof elementValue === "string")
+                ) {
+                  currentResult = formValue >= elementValue;
+                }
+                break;
+              case "<":
+                if (
+                  (typeof formValue === "number" &&
+                    typeof elementValue === "number") ||
+                  (typeof formValue === "string" &&
+                    typeof elementValue === "string")
+                ) {
+                  currentResult = formValue < elementValue;
+                }
+                break;
+              case "<=":
+                if (
+                  (typeof formValue === "number" &&
+                    typeof elementValue === "number") ||
+                  (typeof formValue === "string" &&
+                    typeof elementValue === "string")
+                ) {
+                  currentResult = formValue <= elementValue;
+                }
+                break;
+              case "in":
+                if (Array.isArray(elementValue)) {
+                  currentResult = elementValue.includes(formValue);
+                }
+                break;
+              case "nin":
+                if (Array.isArray(elementValue)) {
+                  currentResult = !elementValue.includes(formValue);
+                }
+                break;
             }
           }
-          if (!overallResult) return false;
+        }
+
+        if (firstElement) {
+          overallResult = currentResult;
+          firstElement = false;
+        } else {
+          if (element.logicalOperator === "||") {
+            overallResult = overallResult || currentResult;
+          } else {
+            overallResult = overallResult && currentResult;
+          }
         }
       }
+      if (!overallResult) return false;
       return true;
     },
     [conditions]

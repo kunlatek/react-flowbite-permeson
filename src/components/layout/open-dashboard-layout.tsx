@@ -82,7 +82,7 @@ export const OpenDashboardLayout = () => {
               <Sidebar.ItemGroup>
                 {/* Dashboard - sempre visível */}
                 <Sidebar.Item as={Link} to="/dashboard" icon={HiHome} isActive={isActive("/dashboard")}>
-                  <div className="truncate w-[150px]">
+                  <div className="truncate w-[280px]">
                     {!sidebarCollapsed && t("dashboard.sidebar.dashboard")}
                   </div>
                 </Sidebar.Item>
@@ -93,7 +93,7 @@ export const OpenDashboardLayout = () => {
                 {/* Collaborators - sempre visível para owner, senão depende de permissão */}
                 {permissions.canViewWorkspaces && (
                   <Sidebar.Item as={Link} to="/workspace" icon={HiUserGroup} isActive={isActive("/workspace")}>
-                    <div className="truncate w-[150px]">
+                    <div className="truncate w-[280px]">
                       {!sidebarCollapsed && t("dashboard.sidebar.collaborators")}
                     </div>
                   </Sidebar.Item>
@@ -118,7 +118,7 @@ export const OpenDashboardLayout = () => {
       </Sidebar>
 
       {/* Main Content */}
-      <div className={`flex-1 flex flex-col transition-all duration-300 ease-in-out ${sidebarCollapsed ? 'ml-0' : 'ml-64'
+      <div className={`flex-1 flex flex-col transition-all duration-300 ease-in-out ${sidebarCollapsed ? 'ml-0' : 'ml-96'
         }`}>
         {/* Topbar */}
         <Navbar fluid className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800 w-full flex-shrink-0">

@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Button } from "flowbite-react";
 import { HiTrash, HiPlus, HiX } from "react-icons/hi";
 import { KuSpinner, KuCard } from "@/components/ku-components";
+import { FileModal } from "./file-modal";
 
 export interface IFileItem {
   name: string;
@@ -42,6 +43,9 @@ export const FileManager = ({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentFileIndex, setCurrentFileIndex] = useState<number>(-1);
+  const [currentFileType, setCurrentFileType] = useState<'existing' | 'selected'>('existing');
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newFiles = Array.from(event.target.files || []);
@@ -112,6 +116,39 @@ export const FileManager = ({
     fileInputRef.current?.click();
   };
 
+  const openFileModal = (index: number, type: 'existing' | 'selected') => {
+    setCurrentFileIndex(index);
+    setCurrentFileType(type);
+    setIsModalOpen(true);
+  };
+
+  const closeFileModal = () => {
+    setIsModalOpen(false);
+    setCurrentFileIndex(-1);
+  };
+
+  const getTotalFiles = () => {
+    return currentFileType === 'existing' ? files.length : selectedFiles.length;
+  };
+
+  const goToPreviousFile = () => {
+    const total = getTotalFiles();
+    if (currentFileIndex > 0) {
+      setCurrentFileIndex(currentFileIndex - 1);
+    } else {
+      setCurrentFileIndex(total - 1);
+    }
+  };
+
+  const goToNextFile = () => {
+    const total = getTotalFiles();
+    if (currentFileIndex < total - 1) {
+      setCurrentFileIndex(currentFileIndex + 1);
+    } else {
+      setCurrentFileIndex(0);
+    }
+  };
+
   const isImageFile = (file: File | IFileItem) => {
     if ('type' in file) {
       return file.type.startsWith('image/');
@@ -129,7 +166,10 @@ export const FileManager = ({
 
     return (
       <KuCard key={`${isSelected ? 'selected' : 'existing'}-${index}`}>
-        <div className={`${isImage ? 'aspect-square' : 'h-20'} relative`}>
+        <div 
+          className={`${isImage ? 'aspect-square' : 'h-20'} relative cursor-pointer`}
+          onClick={() => openFileModal(index, isSelected ? 'selected' : 'existing')}
+        >
           {isImage && fileUrl ? (
             <img
               src={fileUrl}
@@ -150,15 +190,22 @@ export const FileManager = ({
             type="button"
             size="sm"
             color="failure"
-            className="absolute top-2 right-2 p-1"
-            onClick={() => isSelected ? handleRemoveSelectedFile(index) : handleRemoveFile(index)}
+            className="absolute top-2 right-2 p-1 z-10"
+            onClick={(e) => {
+              e.stopPropagation();
+              isSelected ? handleRemoveSelectedFile(index) : handleRemoveFile(index);
+            }}
             disabled={disabled || isUploading}
           >
             {isSelected ? <HiX className="h-3 w-3" /> : <HiTrash className="h-3 w-3" />}
           </Button>
         </div>
         <div className="p-2">
-          <p className="text-xs text-gray-600 dark:text-gray-400 truncate" title={fileName}>
+          <p 
+            className="text-xs text-gray-600 dark:text-gray-400 truncate cursor-pointer" 
+            title={fileName}
+            onClick={() => openFileModal(index, isSelected ? 'selected' : 'existing')}
+          >
             {fileName}
           </p>
         </div>
@@ -261,6 +308,18 @@ export const FileManager = ({
           {t("fileManager.filesUploaded", { current: files.length, max: maxFiles })}
         </div>
       )}
+
+      <FileModal
+        show={isModalOpen}
+        onClose={closeFileModal}
+        currentFileIndex={currentFileIndex}
+        currentFileType={currentFileType}
+        files={files}
+        selectedFiles={selectedFiles}
+        previewUrls={previewUrls}
+        onPrevious={goToPreviousFile}
+        onNext={goToNextFile}
+      />
     </div>
   );
 }

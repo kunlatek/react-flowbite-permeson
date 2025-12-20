@@ -480,7 +480,8 @@
     "cancel": "Cancelar",
     "emptyMessage": "Ningún archivo seleccionado",
     "emptySubMessage": "Haga clic en 'Agregar Archivos' para subir archivos",
-    "filesUploaded": "{{current}}/{{max}} archivos subidos"
+    "filesUploaded": "{{current}}/{{max}} archivos subidos",
+    "download": "Descargar"
   },
   "kuArray": {
     "add_item": "Agregar Item",

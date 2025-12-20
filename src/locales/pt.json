@@ -480,7 +480,8 @@
     "cancel": "Cancelar",
     "emptyMessage": "Nenhum arquivo selecionado",
     "emptySubMessage": "Clique em 'Adicionar Arquivos' para fazer upload",
-    "filesUploaded": "{{current}}/{{max}} arquivos enviados"
+    "filesUploaded": "{{current}}/{{max}} arquivos enviados",
+    "download": "Baixar"
   },
   "kuArray": {
     "add_item": "Adicionar Item",

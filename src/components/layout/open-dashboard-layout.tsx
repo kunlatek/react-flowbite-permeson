@@ -62,7 +62,7 @@ export const OpenDashboardLayout = () => {
       {/* Sidebar */}
       <Sidebar
         aria-label="Dashboard sidebar"
-        className={`fixed left-0 top-0 z-40 h-screen transition-transform duration-300 ease-in-out overflow-y-auto ${sidebarCollapsed ? '-translate-x-full' : 'translate-x-0'
+        className={`fixed left-0 top-0 z-40 w-96 h-screen transition-transform duration-300 ease-in-out overflow-y-auto ${sidebarCollapsed ? '-translate-x-full' : 'translate-x-0'
           }`}
       >
         <div className="flex min-h-full flex-col justify-between py-2 bg-white dark:bg-gray-800 p-4">
@@ -80,7 +80,7 @@ export const OpenDashboardLayout = () => {
               <Sidebar.ItemGroup>
                 {/* Dashboard - sempre visível */}
                 <Sidebar.Item as={Link} to="/dashboard" icon={HiHome} isActive={isActive("/dashboard")}>
-                  <div className="truncate w-[150px]">
+                  <div className="truncate w-[280px]">
                     {!sidebarCollapsed && t("dashboard.sidebar.dashboard")}
                   </div>
                 </Sidebar.Item>
@@ -91,7 +91,7 @@ export const OpenDashboardLayout = () => {
                 {/* Roles - sempre visível para owner, senão depende de permissão */}
                 {permissions.canViewRoles && (
                   <Sidebar.Item as={Link} to="/roles" icon={HiShieldCheck} isActive={isActive("/roles")}>
-                    <div className="truncate w-[150px]">
+                    <div className="truncate w-[280px]">
                       {!sidebarCollapsed && t("dashboard.sidebar.roles")}
                     </div>
                   </Sidebar.Item>
@@ -100,7 +100,7 @@ export const OpenDashboardLayout = () => {
                 {/* Collaborators - sempre visível para owner, senão depende de permissão */}
                 {permissions.canViewWorkspaces && (
                   <Sidebar.Item href="/workspace" icon={HiUserGroup}>
-                    <div className="truncate w-[150px]">
+                    <div className="truncate w-[280px]">
                       {!sidebarCollapsed && t("dashboard.sidebar.collaborators")}
                     </div>
                   </Sidebar.Item>
@@ -125,7 +125,7 @@ export const OpenDashboardLayout = () => {
       </Sidebar>
 
       {/* Main Content */}
-      <div className={`flex-1 flex flex-col transition-all duration-300 ease-in-out ${sidebarCollapsed ? 'ml-0' : 'ml-64'
+      <div className={`flex-1 flex flex-col transition-all duration-300 ease-in-out ${sidebarCollapsed ? 'ml-0' : 'ml-96'
         }`}>
         {/* Topbar */}
         <Navbar fluid className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800 w-full flex-shrink-0">

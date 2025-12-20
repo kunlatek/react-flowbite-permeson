@@ -64,7 +64,7 @@ export const DashboardLayout = () => {
       {/* Sidebar */}
       <Sidebar 
         aria-label="Dashboard sidebar"
-        className={`fixed left-0 top-0 z-40 h-screen transition-transform duration-300 ease-in-out overflow-y-auto ${
+        className={`fixed left-0 top-0 z-40 w-96 h-screen transition-transform duration-300 ease-in-out overflow-y-auto ${
           sidebarCollapsed ? '-translate-x-full' : 'translate-x-0'
         }`}
       >
@@ -83,7 +83,7 @@ export const DashboardLayout = () => {
               <Sidebar.ItemGroup>
                 {/* Dashboard - sempre visível */}
                 <Sidebar.Item as={Link} to="/dashboard" icon={HiHome} isActive={isActive("/dashboard")}>
-                  <div className="truncate w-[150px]">
+                  <div className="truncate w-[280px]">
                     {!sidebarCollapsed && t("dashboard.sidebar.dashboard")}
                   </div>
                 </Sidebar.Item>
@@ -94,7 +94,7 @@ export const DashboardLayout = () => {
                 {/* Invitations - sempre visível para owner, senão depende de permissão */}
                 {permissions.canViewInvitations && (
                   <Sidebar.Item as={Link} to="/invitations" icon={HiMail} isActive={isActive("/invitations")}>
-                    <div className="truncate w-[150px]">
+                    <div className="truncate w-[280px]">
                       {!sidebarCollapsed && t("dashboard.sidebar.invitations")}
                     </div>
                   </Sidebar.Item>
@@ -103,7 +103,7 @@ export const DashboardLayout = () => {
                 {/* Roles - sempre visível para owner, senão depende de permissão */}
                 {permissions.canViewRoles && (
                   <Sidebar.Item as={Link} to="/roles" icon={HiShieldCheck} isActive={isActive("/roles")}>
-                    <div className="truncate w-[150px]">
+                    <div className="truncate w-[280px]">
                       {!sidebarCollapsed && t("dashboard.sidebar.roles")}
                     </div>
                   </Sidebar.Item>
@@ -112,7 +112,7 @@ export const DashboardLayout = () => {
                 {/* Collaborators - sempre visível para owner, senão depende de permissão */}
                 {permissions.canViewWorkspaces && (
                   <Sidebar.Item as={Link} to="/workspace" icon={HiUserGroup} isActive={isActive("/workspace")}>
-                    <div className="truncate w-[150px]">
+                    <div className="truncate w-[280px]">
                       {!sidebarCollapsed && t("dashboard.sidebar.collaborators")}
                     </div>
                   </Sidebar.Item>
@@ -138,7 +138,7 @@ export const DashboardLayout = () => {
 
       {/* Main Content */}
       <div className={`flex-1 flex flex-col transition-all duration-300 ease-in-out ${
-        sidebarCollapsed ? 'ml-0' : 'ml-64'
+        sidebarCollapsed ? 'ml-0' : 'ml-96'
       }`}>
         {/* Topbar */}
         <Navbar fluid className="border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800 w-full flex-shrink-0">

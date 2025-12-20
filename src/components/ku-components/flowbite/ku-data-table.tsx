@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Table, Dropdown, Button } from "flowbite-react";
-import { HiDotsVertical } from "react-icons/hi";
+import { HiDotsVertical, HiSearch } from "react-icons/hi";
 import { KuPagination } from "@/components/ku-components/flowbite";
 import { KuButton } from "@/components/ku-components/flowbite/form";
 import axios from "axios";
@@ -17,6 +17,7 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
     "createdAt"
   );
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const { id, testId, title, columns, dataSource, actions = [], getActions, headerActions = [], pageSize = 10, refreshTrigger } = props;
 
@@ -32,6 +33,17 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
           params.append("sortBy", String(sortColumn));
           params.append("sortDir", sortDirection);
         }
+        if (searchTerm.trim()) {
+          const filters = columns
+            .map((col) => {
+              const field = String(col.key);
+              return { [field]: searchTerm.trim() };
+            })
+            .filter((filter) => Object.keys(filter)[0] !== "_id");
+          if (filters.length > 0) {
+            params.append("filters", JSON.stringify(filters));
+          }
+        }
         const result = await dataSource(params);
         setData(result.data);
         setTotalItems(result.total);
@@ -46,9 +58,13 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
       }
     };
     
-    fetchData();
+    const timeoutId = setTimeout(() => {
+      fetchData();
+    }, 300);
+    
+    return () => clearTimeout(timeoutId);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPage, pageSize, sortColumn, sortDirection, refreshTrigger]);
+  }, [currentPage, pageSize, sortColumn, sortDirection, refreshTrigger, searchTerm]);
 
   const handleSort = (columnKey: keyof T | string) => {
     if (sortColumn === columnKey) {
@@ -57,6 +73,11 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
       setSortColumn(columnKey);
       setSortDirection("asc");
     }
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1);
   };
 
   const totalPages = Math.ceil(totalItems / pageSize);
@@ -151,6 +172,20 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
 
       {!loading && !error && (
         <div className="overflow-x-auto relative">
+          <div className="mb-4">
+            <div className="relative w-full">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <HiSearch className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+              </div>
+              <input
+                type="text"
+                placeholder="Pesquisar..."
+                value={searchTerm}
+                onChange={handleSearchChange}
+                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 text-sm focus:ring-gray-100 focus:border-gray-100 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-100 dark:focus:border-gray-100"
+              />
+            </div>
+          </div>
           <Table className="!static !relative">
             <Table.Head>
               {columns.map((col) => (

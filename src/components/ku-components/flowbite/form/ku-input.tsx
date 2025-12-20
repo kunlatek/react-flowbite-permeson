@@ -29,6 +29,13 @@ export const KuInput = (props: IKuInputProps) => {
         </Label>
       </div>
       <div className="relative">
+        <input
+          type="text"
+          autoComplete="off"
+          style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0, pointerEvents: 'none' }}
+          tabIndex={-1}
+          readOnly
+        />
         <TextInput
           id={name}
           name={name}
@@ -39,6 +46,8 @@ export const KuInput = (props: IKuInputProps) => {
           required={isRequired}
           disabled={isDisabled}
           color={hasError ? "failure" : "gray"}
+          autoComplete="nope"
+          data-form-type="other"
           className={isDate ? "[&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-0 [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:z-10" : ""}
         />
         {isPassword && (

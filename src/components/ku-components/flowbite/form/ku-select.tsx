@@ -165,6 +165,7 @@ export const KuSelect = (props: IKuSelectProps) => {
                   onChange={(e) => setSearchTerm(e.target.value)}
                   placeholder="Pesquisar..."
                   className="w-full text-sm"
+                  autoComplete="off"
                 />
               </div>
               <ul className="max-h-60 py-1 overflow-auto text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">

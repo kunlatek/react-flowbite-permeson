@@ -469,6 +469,7 @@ export const KuAutocomplete = (props: IKuAutocompleteProps) => {
               }
               className="flex-grow border-none bg-transparent focus:ring-0 p-0 text-sm"
               disabled={isDisabled}
+              autoComplete="off"
             />
           </div>
           {loading ? (

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Table, Dropdown, Button } from "flowbite-react";
 import { HiDotsVertical, HiSearch } from "react-icons/hi";
+import { useTranslation } from "react-i18next";
 import { KuPagination } from "@/components/ku-components/flowbite";
 import { KuButton } from "@/components/ku-components/flowbite/form";
 import axios from "axios";
@@ -8,6 +9,7 @@ import { IColumn, IKuDataTableProps } from "@/interfaces/ku-components";
 import { KuSpinner } from "@/components/ku-components";
 
 export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<T>) => {
+  const { t } = useTranslation();
   const [data, setData] = useState<T[]>([]);
   const [totalItems, setTotalItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -17,6 +19,7 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
     "createdAt"
   );
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
+  const [searchInput, setSearchInput] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
 
   const { id, testId, title, columns, dataSource, actions = [], getActions, headerActions = [], pageSize = 10, refreshTrigger } = props;
@@ -58,11 +61,7 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
       }
     };
     
-    const timeoutId = setTimeout(() => {
-      fetchData();
-    }, 300);
-    
-    return () => clearTimeout(timeoutId);
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, pageSize, sortColumn, sortDirection, refreshTrigger, searchTerm]);
 
@@ -75,9 +74,19 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
     }
   };
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(e.target.value);
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value);
+  };
+
+  const handleSearch = () => {
+    setSearchTerm(searchInput);
     setCurrentPage(1);
+  };
+
+  const handleSearchKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleSearch();
+    }
   };
 
   const totalPages = Math.ceil(totalItems / pageSize);
@@ -173,17 +182,27 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
       {!loading && !error && (
         <div className="overflow-x-auto relative">
           <div className="mb-4">
-            <div className="relative w-full">
-              <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <HiSearch className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+            <div className="flex gap-2">
+              <div className="relative flex-1">
+                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                  <HiSearch className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                </div>
+                <input
+                  type="text"
+                  placeholder={t("common.search")}
+                  value={searchInput}
+                  onChange={handleSearchInputChange}
+                  onKeyPress={handleSearchKeyPress}
+                  className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 text-sm focus:ring-gray-100 focus:border-gray-100 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-100 dark:focus:border-gray-100"
+                />
               </div>
-              <input
-                type="text"
-                placeholder="Pesquisar..."
-                value={searchTerm}
-                onChange={handleSearchChange}
-                className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-900 text-sm focus:ring-gray-100 focus:border-gray-100 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-100 dark:focus:border-gray-100"
-              />
+              <Button
+                onClick={handleSearch}
+                color="gray"
+                className="px-4"
+              >
+                {t("common.search")}
+              </Button>
             </div>
           </div>
           <Table className="!static !relative">

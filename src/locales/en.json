@@ -466,6 +466,7 @@
     }
   },
   "common": {
+    "search": "Search",
     "cancel": "Cancel",
     "back": "Back",
     "loading": "Loading...",

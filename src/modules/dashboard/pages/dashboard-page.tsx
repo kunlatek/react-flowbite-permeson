@@ -1,7 +1,9 @@
 import { useTranslation } from "react-i18next";
+import { useTokenValidation } from "@/hooks/use-token-validation";
 
 export default function DashboardPage() {
   const { t } = useTranslation();
+  useTokenValidation();
 
   return (
     <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto">

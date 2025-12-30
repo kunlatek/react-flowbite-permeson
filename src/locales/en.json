@@ -471,7 +471,19 @@
     "back": "Back",
     "loading": "Loading...",
     "sending": "Sending...",
-    "send": "Send"
+    "send": "Send",
+    "validation": {
+      "required_fields": "The following fields are required: {{fields}}",
+      "required_fields_in_tab": "In the \"{{tab}}\" tab, the following fields are required: {{fields}}"
+    },
+    "success": {
+      "create_success": "Record created successfully!",
+      "update_success": "Data updated successfully!"
+    },
+    "error": {
+      "load_failed": "Could not load data for editing.",
+      "save_failed": "An error occurred while saving. Please check the fields."
+    }
   },
   "fileManager": {
     "label": "Files",

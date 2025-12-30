@@ -470,7 +470,19 @@
     "back": "Volver",
     "loading": "Cargando...",
     "sending": "Enviando...",
-    "send": "Enviar"
+    "send": "Enviar",
+    "validation": {
+      "required_fields": "Los siguientes campos son obligatorios: {{fields}}",
+      "required_fields_in_tab": "En la pestaña \"{{tab}}\", los siguientes campos son obligatorios: {{fields}}"
+    },
+    "success": {
+      "create_success": "¡Registro creado con éxito!",
+      "update_success": "¡Datos actualizados con éxito!"
+    },
+    "error": {
+      "load_failed": "No se pudieron cargar los datos para edición.",
+      "save_failed": "Ocurrió un error al guardar. Verifique los campos."
+    }
   },
   "fileManager": {
     "label": "Archivos",

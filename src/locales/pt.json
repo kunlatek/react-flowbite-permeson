@@ -471,6 +471,13 @@
     "loading": "Carregando...",
     "sending": "Enviando...",
     "send": "Enviar",
+    "back_to_list": "Voltar para lista",
+    "save": "Salvar",
+    "saving": "Salvando...",
+    "update": "Atualizar",
+    "updating": "Atualizando...",
+    "create_description": "Preencha os campos abaixo para criar um novo registro.",
+    "edit_description": "Edite as informações abaixo.",
     "validation": {
       "required_fields": "Os seguintes campos são obrigatórios: {{fields}}",
       "required_fields_in_tab": "Na aba \"{{tab}}\", os seguintes campos são obrigatórios: {{fields}}"

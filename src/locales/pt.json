@@ -510,6 +510,7 @@
   "kuArray": {
     "add_item": "Adicionar Item",
     "no_items_added": "Nenhum item adicionado",
-    "remove_item": "Remover Item"
+    "remove_item": "Remover Item",
+    "item": "Item"
   }
 }

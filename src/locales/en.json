@@ -472,6 +472,13 @@
     "loading": "Loading...",
     "sending": "Sending...",
     "send": "Send",
+    "back_to_list": "Back to list",
+    "save": "Save",
+    "saving": "Saving...",
+    "update": "Update",
+    "updating": "Updating...",
+    "create_description": "Fill in the fields below to create a new record.",
+    "edit_description": "Edit the information below.",
     "validation": {
       "required_fields": "The following fields are required: {{fields}}",
       "required_fields_in_tab": "In the \"{{tab}}\" tab, the following fields are required: {{fields}}"

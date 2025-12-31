@@ -1,16 +1,47 @@
+import { useState, useEffect } from "react";
 import { Button } from "flowbite-react";
 import { IKuArrayProps } from "@/interfaces/ku-components";
 import { useTranslation } from "react-i18next";
+import { HiChevronDown, HiChevronUp } from "react-icons/hi";
   
 export const KuArray = <T extends { _id: string }>(props: IKuArrayProps<T>) => {
   const { id, testId, title, items, onItemsChange, defaultNewItem, renderItem } = props;
   const { t } = useTranslation();
+  const [expandedItems, setExpandedItems] = useState<{ [key: number]: boolean }>({});
+
+  useEffect(() => {
+    const newExpandedItems: { [key: number]: boolean } = {};
+    items.forEach((_, index) => {
+      if (expandedItems[index] !== undefined) {
+        newExpandedItems[index] = expandedItems[index];
+      } else {
+        newExpandedItems[index] = false;
+      }
+    });
+    setExpandedItems(newExpandedItems);
+  }, [items.length]);
+
   const handleAddItem = () => {
-    onItemsChange([...items, defaultNewItem]);
+    const newItems = [...items, defaultNewItem];
+    const newIndex = newItems.length - 1;
+    onItemsChange(newItems);
+    setExpandedItems({ ...expandedItems, [newIndex]: false });
   };
 
   const handleRemoveItem = (indexToRemove: number) => {
     onItemsChange(items.filter((_, index) => index !== indexToRemove));
+    const newExpandedItems = { ...expandedItems };
+    delete newExpandedItems[indexToRemove];
+    const updatedExpandedItems: { [key: number]: boolean } = {};
+    Object.keys(newExpandedItems).forEach(key => {
+      const numKey = parseInt(key);
+      if (numKey > indexToRemove) {
+        updatedExpandedItems[numKey - 1] = newExpandedItems[numKey];
+      } else if (numKey < indexToRemove) {
+        updatedExpandedItems[numKey] = newExpandedItems[numKey];
+      }
+    });
+    setExpandedItems(updatedExpandedItems);
   };
 
   const handleItemChange = (indexToUpdate: number, updatedItem: T) => {
@@ -18,6 +49,10 @@ export const KuArray = <T extends { _id: string }>(props: IKuArrayProps<T>) => {
       index === indexToUpdate ? updatedItem : item
     );
     onItemsChange(newItems);
+  };
+
+  const toggleExpanded = (index: number) => {
+    setExpandedItems({ ...expandedItems, [index]: expandedItems[index] === undefined ? true : !expandedItems[index] });
   };
 
   return (
@@ -37,14 +72,38 @@ export const KuArray = <T extends { _id: string }>(props: IKuArrayProps<T>) => {
         </p>
       ) : (
         <div className="space-y-4">
-          {items.map((item, index) => (
-            <div
-              key={index}
-              className="p-3 border border-gray-200 dark:border-gray-700 rounded-lg"
-            >
-              {renderItem(item, index, handleItemChange, handleRemoveItem)}
-            </div>
-          ))}
+          {items.map((item, index) => {
+            const isExpanded = expandedItems[index] === undefined ? false : expandedItems[index];
+            const elementNumber = index + 1;
+            const label = `${t("kuArray.item")} ${elementNumber}`;
+            
+            return (
+              <div
+                key={index}
+                className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden"
+              >
+                <button
+                  type="button"
+                  onClick={() => toggleExpanded(index)}
+                  className="w-full flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                >
+                  <span className="font-medium text-gray-900 dark:text-white">
+                    {label}
+                  </span>
+                  {isExpanded ? (
+                    <HiChevronUp className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                  ) : (
+                    <HiChevronDown className="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                  )}
+                </button>
+                {isExpanded && (
+                  <div className="p-4">
+                    {renderItem(item, index, handleItemChange, handleRemoveItem)}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
     </fieldset>

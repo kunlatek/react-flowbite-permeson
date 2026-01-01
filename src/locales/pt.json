@@ -493,6 +493,10 @@
     "error": {
       "load_failed": "Não foi possível carregar os dados para edição.",
       "save_failed": "Ocorreu um erro ao salvar. Verifique os campos."
+    },
+    "pagination": {
+      "previous": "Anterior",
+      "next": "Próximo"
     }
   },
   "fileManager": {

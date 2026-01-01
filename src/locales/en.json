@@ -494,6 +494,10 @@
     "error": {
       "load_failed": "Could not load data for editing.",
       "save_failed": "An error occurred while saving. Please check the fields."
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next"
     }
   },
   "fileManager": {

@@ -169,7 +169,7 @@ export default function AddMemberPage() {
             color="primary"
             className="bg-blue-600 hover:bg-blue-700 text-white border-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:text-white"
             onClick={addMember.handleAddMember}
-            disabled={!addMember.selectedUser || addMember.adding}
+            disabled={!addMember.selectedUser || addMember.adding || !addMember.selectedRoleId}
             isProcessing={addMember.adding}
           >
             <HiUserAdd className="mr-2 h-4 w-4" />

@@ -64,6 +64,10 @@ const hasPermission = (permissions: IPermission[], module: string, action: strin
   return modulePermission.actionList.includes(action);
 };
 
+const hasPermissionFromRoles = (roles: IRole[], module: string, action: string): boolean => {
+  return roles.some(role => hasPermission(role.permissions, module, action));
+};
+
 export const useUserPermissions = (): { permissions: IUserPermissions; userRole: IRole | null; loading: boolean; isOwner: boolean } => {
   const workspace = useWorkspace();
   const [userPermissions, setUserPermissions] = useState<IUserPermissions>(getDefaultPermissions());
@@ -135,54 +139,56 @@ export const useUserPermissions = (): { permissions: IUserPermissions; userRole:
           return;
         }
 
-        // Buscar a role do usuário atual no workspace
-        const roleId = (workspace.workspace?.acl ?? []).find((acl: any) => acl.userId === currentUserId)?.roleId;
-        const userRole = availableRoles.find((role: IRole) => role._id === roleId);
+        // Buscar todas as roles do usuário atual no workspace (pode ter múltiplas roles)
+        const userAclEntries = (workspace.workspace?.acl ?? []).filter((acl: any) => acl.userId === currentUserId);
+        const roleIds = userAclEntries.map((acl: any) => acl.roleId).filter((id: string) => id);
+        const userRoles = availableRoles.filter((role: IRole) => roleIds.includes(role._id));
 
-        if (!userRole) {
+        if (!userRoles || userRoles.length === 0) {
           setUserPermissions(getDefaultPermissions());
           setUserRole(null);
           setLoading(false);
           return;
         }
 
-        setUserRole(userRole);
+        // Se houver apenas uma role, usar ela como userRole principal, senão usar a primeira
+        setUserRole(userRoles[0]);
 
-        // Calcular permissões baseadas na role
+        // Calcular permissões baseadas em todas as roles (mesclar com OR logic)
         const permissions: IUserPermissions = {
           // Roles
-          canViewRoles: hasPermission(userRole.permissions, 'roles', 'findAll'),
-          canCreateRoles: hasPermission(userRole.permissions, 'roles', 'create'),
-          canEditRoles: hasPermission(userRole.permissions, 'roles', 'update'),
-          canDeleteRoles: hasPermission(userRole.permissions, 'roles', 'delete'),
+          canViewRoles: hasPermissionFromRoles(userRoles, 'roles', 'findAll'),
+          canCreateRoles: hasPermissionFromRoles(userRoles, 'roles', 'create'),
+          canEditRoles: hasPermissionFromRoles(userRoles, 'roles', 'update'),
+          canDeleteRoles: hasPermissionFromRoles(userRoles, 'roles', 'delete'),
           
           // Users
-          canViewUsers: hasPermission(userRole.permissions, 'users', 'findAll'),
-          canCreateUsers: hasPermission(userRole.permissions, 'users', 'create'),
-          canEditUsers: hasPermission(userRole.permissions, 'users', 'update'),
-          canDeleteUsers: hasPermission(userRole.permissions, 'users', 'delete'),
+          canViewUsers: hasPermissionFromRoles(userRoles, 'users', 'findAll'),
+          canCreateUsers: hasPermissionFromRoles(userRoles, 'users', 'create'),
+          canEditUsers: hasPermissionFromRoles(userRoles, 'users', 'update'),
+          canDeleteUsers: hasPermissionFromRoles(userRoles, 'users', 'delete'),
           
           // Workspaces
-          canViewWorkspaces: hasPermission(userRole.permissions, 'workspaces', 'findAll'),
-          canCreateWorkspaces: hasPermission(userRole.permissions, 'workspaces', 'create'),
-          canEditWorkspaces: hasPermission(userRole.permissions, 'workspaces', 'update'),
-          canDeleteWorkspaces: hasPermission(userRole.permissions, 'workspaces', 'delete'),
+          canViewWorkspaces: hasPermissionFromRoles(userRoles, 'workspaces', 'findAll'),
+          canCreateWorkspaces: hasPermissionFromRoles(userRoles, 'workspaces', 'create'),
+          canEditWorkspaces: hasPermissionFromRoles(userRoles, 'workspaces', 'update'),
+          canDeleteWorkspaces: hasPermissionFromRoles(userRoles, 'workspaces', 'delete'),
           
           // Invitations
-          canViewInvitations: hasPermission(userRole.permissions, 'invitations', 'findAll'),
-          canCreateInvitations: hasPermission(userRole.permissions, 'invitations', 'create'),
-          canEditInvitations: hasPermission(userRole.permissions, 'invitations', 'update'),
-          canDeleteInvitations: hasPermission(userRole.permissions, 'invitations', 'delete'),
+          canViewInvitations: hasPermissionFromRoles(userRoles, 'invitations', 'findAll'),
+          canCreateInvitations: hasPermissionFromRoles(userRoles, 'invitations', 'create'),
+          canEditInvitations: hasPermissionFromRoles(userRoles, 'invitations', 'update'),
+          canDeleteInvitations: hasPermissionFromRoles(userRoles, 'invitations', 'delete'),
           
           // Profiles
-          canViewProfiles: hasPermission(userRole.permissions, 'profiles', 'findAll'),
-          canCreateProfiles: hasPermission(userRole.permissions, 'profiles', 'create'),
-          canEditProfiles: hasPermission(userRole.permissions, 'profiles', 'update'),
-          canDeleteProfiles: hasPermission(userRole.permissions, 'profiles', 'delete'),
+          canViewProfiles: hasPermissionFromRoles(userRoles, 'profiles', 'findAll'),
+          canCreateProfiles: hasPermissionFromRoles(userRoles, 'profiles', 'create'),
+          canEditProfiles: hasPermissionFromRoles(userRoles, 'profiles', 'update'),
+          canDeleteProfiles: hasPermissionFromRoles(userRoles, 'profiles', 'delete'),
           
           // Settings (sempre visível)
           canViewSettings: true,
-          canEditSettings: hasPermission(userRole.permissions, 'settings', 'update'),
+          canEditSettings: hasPermissionFromRoles(userRoles, 'settings', 'update'),
 
           /* RAPIDA: PERMISSIONS */
         };

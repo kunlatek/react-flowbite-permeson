@@ -11,7 +11,7 @@ export const useAddMember = () => {
     const navigate = useNavigate();
       const [searchTerm, setSearchTerm] = useState("");
       const [selectedUser, setSelectedUser] = useState<ITeamMember | null>(null);
-      const [selectedRoleId, setSelectedRoleId] = useState<string>("");
+      const [selectedRoleIds, setSelectedRoleIds] = useState<(string | number)[]>([]);
       const [adding, setAdding] = useState(false);
       const [success, setSuccess] = useState(false);
       
@@ -37,14 +37,21 @@ export const useAddMember = () => {
         if (!selectedUser) return;
         
         setAdding(true);
-        const success = await addMember(selectedUser.userId, selectedRoleId || undefined);
-        if (success) {
+        let allSuccess = true;
+        
+        for (const roleId of (selectedRoleIds ?? [])) {
+          const success = await addMember(selectedUser.userId, String(roleId));
+          if (!success) {
+            allSuccess = false;
+            break;
+          }
+        }
+        
+        if (allSuccess) {
           setSuccess(true);
-          // Reset form
           setSearchTerm("");
           setSelectedUser(null);
-          setSelectedRoleId("");
-          // Auto redirect after 2 seconds
+          setSelectedRoleIds([]);
           setTimeout(() => {
             navigate("/workspace");
           }, 300);
@@ -71,8 +78,8 @@ export const useAddMember = () => {
         selectedUser,
         handleUserSelect,
         roles,
-        selectedRoleId,
-        setSelectedRoleId,
+        selectedRoleIds,
+        setSelectedRoleIds,
         adding,
         handleAddMember,
         success,

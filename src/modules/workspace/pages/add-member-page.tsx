@@ -1,8 +1,8 @@
-import { Button, TextInput, Alert, Label, Select } from "flowbite-react";
+import { Button, TextInput, Alert, Label } from "flowbite-react";
 import { HiUserAdd, HiArrowLeft, HiShieldCheck } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
 import { useAddMember } from "../hooks/use-add-member";
-import { KuSpinner, KuCard } from "@/components/ku-components";
+import { KuSpinner, KuCard, KuSelect } from "@/components/ku-components";
 
 export default function AddMemberPage() {
   
@@ -133,20 +133,23 @@ export default function AddMemberPage() {
                     <HiShieldCheck className="inline h-4 w-4 mr-1" />
                     {t("workspace.select_role_label")}
                   </Label>
-                  <Select
-                    value={addMember.selectedRoleId}
-                    onChange={(e) => addMember.setSelectedRoleId(e.target.value)}
-                    disabled={addMember.adding || addMember.rolesLoading}
-                  >
-                    <option value="">
-                      {addMember.rolesLoading ? t("workspace.loading_roles") : t("workspace.select_role_placeholder")}
-                    </option>
-                    {addMember.roles.map((role) => (
-                      <option key={role._id || role.id} value={role._id || role.id}>
-                        {role.name}
-                      </option>
-                    ))}
-                  </Select>
+                  <KuSelect
+                    name="roles"
+                    label=""
+                    value={addMember.selectedRoleIds as any}
+                    onChange={(name, value) => {
+                      if (Array.isArray(value)) {
+                        addMember.setSelectedRoleIds(value);
+                      }
+                    }}
+                    options={addMember.roles.map((role) => ({
+                      label: role.name,
+                      value: role._id || role.id,
+                    }))}
+                    placeholder={addMember.rolesLoading ? t("workspace.loading_roles") : t("workspace.select_role_placeholder")}
+                    isMultiple={true}
+                    isDisabled={addMember.adding || addMember.rolesLoading}
+                  />
                   <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                     {t("workspace.select_role_help")}
                   </p>
@@ -169,7 +172,7 @@ export default function AddMemberPage() {
             color="primary"
             className="bg-blue-600 hover:bg-blue-700 text-white border-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:text-white"
             onClick={addMember.handleAddMember}
-            disabled={!addMember.selectedUser || addMember.adding || !addMember.selectedRoleId}
+            disabled={!addMember.selectedUser || addMember.adding}
             isProcessing={addMember.adding}
           >
             <HiUserAdd className="mr-2 h-4 w-4" />

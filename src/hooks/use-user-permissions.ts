@@ -34,7 +34,7 @@ export interface IUserPermissions {
 }
 
 const getDefaultPermissions = (): IUserPermissions => ({
-  defaultPermissions: false,
+  defaultPermissions: true,
 
   canViewRoles: false,
   canCreateRoles: false,

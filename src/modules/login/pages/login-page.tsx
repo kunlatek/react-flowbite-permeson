@@ -1,62 +1,74 @@
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import {KuInput, KuButton} from "@/components/ku-components";
+import { KuInput, KuButton } from "@/components/form";
 import { useLogin } from "../hooks/use-login";
 
 export default function LoginPage() {
-  const login = useLogin();
-  const { t } = useTranslation();
+    const { t } = useTranslation();
+    const { email, setEmail, password, setPassword, handleSubmit, loading } = useLogin();
 
-  return (
-    <div className="w-full max-w-md bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 md:p-8">
-      <div className="flex flex-col items-center">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">{t("projectName")}</h1>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-          {t("login.title")}
-        </h2>
+    return (
+        <div className="flex items-center justify-center min-h-screen bg-gray-50 dark:bg-gray-900">
+            <div className="w-full max-w-md bg-white dark:bg-gray-800 shadow-md rounded-lg p-6 md:p-8">
+                <div className="flex flex-col items-center">
+                    <img
+                        src="/src/assets/images/logo.png"
+                        alt="Logo"
+                        className="h-16 mb-6"
+                    />
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                        {t("login.title", "Acesse sua conta")}
+                    </h2>
+                    
+                    <form onSubmit={handleSubmit} className="w-full space-y-4">
+                        <KuInput
+                            name="email"
+                            label={t("login.email_label", "Email")}
+                            type="input"
+                            dataType="email"
+                            value={email}
+                            onChange={(e: any) => setEmail(e.target.value)}
+                            isRequired
+                        />
+                        <KuInput
+                            name="password"
+                            label={t("login.password_label", "Senha")}
+                            type="input"
+                            dataType="password"
+                            value={password}
+                            onChange={(e: any) => setPassword(e.target.value)}
+                            isRequired
+                        />
+                        <KuButton
+                            label={loading ? t("login.loading", "Entrando...") : t("login.submit_button", "Entrar")}
+                            type="button"
+                            actionType="submit"
+                            isDisabled={loading}
+                            customClass="w-full"
+                        />
+                    </form>
 
-        <form onSubmit={login.handleSubmit} className="w-full space-y-4">
-          <KuInput
-            name="email"
-            dataType="email"
-            label={t("login.email_label")}
-            placeholder={t("login.email_placeholder")}
-            value={login.email}
-            onChange={(e) => login.setEmail(e.target.value)}
-            isRequired={true}
-            isDisabled={login.loading}
-          />
-
-          <KuInput
-            name="password"
-            dataType="password"
-            label={t("login.password_label")}
-            placeholder={t("login.password_placeholder")}
-            value={login.password}
-            onChange={(e) => login.setPassword(e.target.value)}
-            isRequired={true}
-            isDisabled={login.loading}
-          />
-
-          <div className="flex items-center justify-end mt-2 mb-2">
-            <a
-              href="/auth/forgot-password"
-              className="text-sm text-cyan-700 hover:underline dark:text-cyan-500"
-            >
-              {t("login.forgot_password")}
-            </a>
-          </div>
-
-
-          <KuButton
-            id="login-button"
-            type="button"
-            actionType="submit"
-            label={login.loading ? t("login.submit_loading") : t("login.submit_button")}
-            isDisabled={login.loading || !login.email || !login.password}
-            customClass="w-full"
-          />
-        </form>
-      </div>
-    </div>
-  );
+                    <div className="text-sm text-center mt-6">
+                        <p className="text-gray-500 dark:text-gray-400">
+                            {t("login.no_account", "Não tem uma conta?")}
+                            <Link
+                                to="/auth/pre-register"
+                                className="font-medium text-cyan-700 hover:underline dark:text-cyan-500 ml-1"
+                            >
+                                {t("login.register_link", "Registre-se")}
+                            </Link>
+                        </p>
+                        <p className="mt-2">
+                            <Link
+                                to="/auth/forgot-password"
+                                className="text-sm text-cyan-700 hover:underline dark:text-cyan-500"
+                            >
+                                {t("login.forgot_password", "Esqueceu a senha?")}
+                            </Link>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
 }

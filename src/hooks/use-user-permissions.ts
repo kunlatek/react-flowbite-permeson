@@ -6,6 +6,8 @@ import type { IRole } from "@/modules/roles/interfaces";
 import type { IPermission } from "@/modules/roles/interfaces/permission.interface";
 
 export interface IUserPermissions {
+  defaultPermissions: boolean;
+  
   canViewRoles: boolean;
   canCreateRoles: boolean;
   canEditRoles: boolean;
@@ -32,6 +34,8 @@ export interface IUserPermissions {
 }
 
 const getDefaultPermissions = (): IUserPermissions => ({
+  defaultPermissions: true,
+
   canViewRoles: false,
   canCreateRoles: false,
   canEditRoles: false,
@@ -88,6 +92,8 @@ export const useUserPermissions = (): { permissions: IUserPermissions; userRole:
         // Se é owner do workspace, tem todas as permissões
         if (workspace.workspace?.isOwner) {
           const ownerPermissions: IUserPermissions = {
+            defaultPermissions: false,
+
             canViewRoles: true,
             canCreateRoles: true,
             canEditRoles: true,
@@ -156,6 +162,8 @@ export const useUserPermissions = (): { permissions: IUserPermissions; userRole:
 
         // Calcular permissões baseadas em todas as roles (mesclar com OR logic)
         const permissions: IUserPermissions = {
+          defaultPermissions: false,
+          
           // Roles
           canViewRoles: hasPermissionFromRoles(userRoles, 'roles', 'findAll'),
           canCreateRoles: hasPermissionFromRoles(userRoles, 'roles', 'create'),

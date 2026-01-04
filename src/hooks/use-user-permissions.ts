@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useWorkspace } from "@/modules/workspace/hooks/use-workspace";
 
 export interface IUserPermissions {
+  defaultPermissions: boolean;
+
   canViewUsers: boolean;
   canCreateUsers: boolean;
   canEditUsers: boolean;
@@ -24,6 +26,8 @@ export interface IUserPermissions {
 }
 
 const getDefaultPermissions = (): IUserPermissions => ({
+  defaultPermissions: true,
+  
   canViewUsers: true,
   canCreateUsers: true,
   canEditUsers: true,

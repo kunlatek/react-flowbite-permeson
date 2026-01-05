@@ -145,7 +145,7 @@ export default function AddMemberPage() {
                     options={addMember.roles.map((role) => ({
                       label: role.name,
                       value: role._id || role.id,
-                    }))}
+                    })) as any}
                     placeholder={addMember.rolesLoading ? t("workspace.loading_roles") : t("workspace.select_role_placeholder")}
                     isMultiple={true}
                     isDisabled={addMember.adding || addMember.rolesLoading}

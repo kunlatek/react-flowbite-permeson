@@ -139,7 +139,7 @@ export default function AddMemberPage() {
                     value={addMember.selectedRoleIds as any}
                     onChange={(name, value) => {
                       if (Array.isArray(value)) {
-                        addMember.setSelectedRoleIds(value);
+                        addMember.setSelectedRoleIds(value as any);
                       }
                     }}
                     options={addMember.roles.map((role) => ({

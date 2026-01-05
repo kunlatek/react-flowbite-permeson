@@ -139,13 +139,13 @@ export default function AddMemberPage() {
                     value={addMember.selectedRoleIds as any}
                     onChange={(name, value) => {
                       if (Array.isArray(value)) {
-                        addMember.setSelectedRoleIds(value);
+                        addMember.setSelectedRoleIds(value as any);
                       }
                     }}
                     options={addMember.roles.map((role) => ({
                       label: role.name,
                       value: role._id || role.id,
-                    }))}
+                    })) as any}
                     placeholder={addMember.rolesLoading ? t("workspace.loading_roles") : t("workspace.select_role_placeholder")}
                     isMultiple={true}
                     isDisabled={addMember.adding || addMember.rolesLoading}

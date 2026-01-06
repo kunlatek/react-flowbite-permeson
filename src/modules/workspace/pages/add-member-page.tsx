@@ -148,7 +148,7 @@ export default function AddMemberPage() {
                     })) as any}
                     placeholder={addMember.rolesLoading ? t("workspace.loading_roles") : t("workspace.select_role_placeholder")}
                     isMultiple={true}
-                    isDisabled={addMember.adding || addMember.rolesLoading}
+                    isDisabled={addMember.adding || addMember.rolesLoading || addMember.selectedRoleIds?.length === 0}
                   />
                   <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
                     {t("workspace.select_role_help")}

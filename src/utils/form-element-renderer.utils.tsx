@@ -345,8 +345,8 @@ export const createRenderElement = (
                     createRenderElement({
                         ...props,
                         element: el,
-                        context: 'formData',
-                        itemValue: formData,
+                        context: context,
+                        itemValue: itemValue || formData,
                         index
                     })
                 )}

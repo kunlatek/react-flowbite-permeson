@@ -467,6 +467,9 @@
   "common": {
     "search": "Pesquisar",
     "cancel": "Cancelar",
+    "filters": "Filtros",
+    "clear": "Limpar",
+    "apply": "Aplicar",
     "back": "Voltar",
     "loading": "Carregando...",
     "sending": "Enviando...",

@@ -468,6 +468,9 @@
   "common": {
     "search": "Search",
     "cancel": "Cancel",
+    "filters": "Filters",
+    "clear": "Clear",
+    "apply": "Apply",
     "back": "Back",
     "loading": "Loading...",
     "sending": "Sending...",

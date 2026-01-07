@@ -211,15 +211,22 @@ export const createRenderElement = (
                     const value = context === 'item'
                         ? itemValue?.[index]?.[element.name]
                         : formData[element.name];
-                    const computedValue = (element.dataType === 'integer' || element.dataType === 'number' || element.dataType === 'decimal' || element.dataType === 'numeric' || element.dataType === 'float' || element.dataType === 'double' || element.dataType === 'real')
-                        ? (value ?? null)
-                        : (value ?? '');
                     
-                    if (!computedValue && computedValue !== 0 && computedValue !== false) {
-                        const selectedOption = element.options?.find((option: any) => option.isSelected);
-                        if (selectedOption && !hasSetDefault.current) {
-                            hasSetDefault.current = true;
-                            onChange(element.name, selectedOption.value);
+                    const fieldExists = context === 'item'
+                        ? (itemValue?.[index]?.hasOwnProperty(element.name))
+                        : formData.hasOwnProperty(element.name);
+                    
+                    if (!fieldExists) {
+                        const computedValue = (element.dataType === 'integer' || element.dataType === 'number' || element.dataType === 'decimal' || element.dataType === 'numeric' || element.dataType === 'float' || element.dataType === 'double' || element.dataType === 'real')
+                            ? (value ?? null)
+                            : (value ?? '');
+                        
+                        if (!computedValue && computedValue !== 0 && computedValue !== false) {
+                            const selectedOption = element.options?.find((option: any) => option.isSelected);
+                            if (selectedOption && !hasSetDefault.current) {
+                                hasSetDefault.current = true;
+                                onChange(element.name, selectedOption.value);
+                            }
                         }
                     }
                 }

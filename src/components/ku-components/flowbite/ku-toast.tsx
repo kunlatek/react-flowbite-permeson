@@ -38,7 +38,7 @@ export const KuToast = () => {
 
   return (
     <div className="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 flex flex-col gap-2 max-w-md w-full px-4">
-      {toasts.map((toast) => {
+      {toasts.filter((toast) => toast.message !== "Unauthorized").map((toast) => {
         const config = toastConfig[toast.type];
         const Icon = config.icon;
 

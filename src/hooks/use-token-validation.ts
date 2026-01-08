@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "@/services/api";
+import { useAuth } from "@/contexts/auth-provider";
 
 export const useTokenValidation = () => {
   const navigate = useNavigate();
   const [isValidating, setIsValidating] = useState(true);
+  const { logout } = useAuth();
 
   useEffect(() => {
     const validateToken = async () => {
@@ -13,9 +15,7 @@ export const useTokenValidation = () => {
         setIsValidating(false);
       } catch (error: any) {
         if (error.response?.status === 401) {
-          localStorage.removeItem("token");
-          localStorage.removeItem("user");
-          navigate("/auth/login", { replace: true });
+          logout();
         } else {
           setIsValidating(false);
         }

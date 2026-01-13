@@ -514,7 +514,8 @@
     "emptySubMessage": "Click 'Add Files' to upload files",
     "filesUploaded": "{{current}}/{{max}} files uploaded",
     "download": "Download",
-    "pasteFromClipboard": "Paste from Clipboard"
+    "pasteFromClipboard": "Paste from Clipboard",
+    "pasting": "Pasting"
   },
   "kuArray": {
     "add_item": "Add Item",

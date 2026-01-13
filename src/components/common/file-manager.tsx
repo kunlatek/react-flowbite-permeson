@@ -258,6 +258,10 @@ export const FileManager = ({
         }
       }, 5000);
     }
+
+    setTimeout(() => {
+      setIsLoadingClipboard(false);
+    }, 1000);
   };
 
   const openFileModal = (index: number, type: 'existing' | 'selected') => {
@@ -373,10 +377,7 @@ export const FileManager = ({
           >
             {isLoadingClipboard ? (
               <>
-                <span className="mr-2">
-                  <KuSpinner size="sm" />
-                </span>
-                {t("fileManager.pasting") || "Colando..."}
+                {t("fileManager.pasting")}
               </>
             ) : (
               t("fileManager.pasteFromClipboard")

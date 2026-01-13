@@ -513,7 +513,8 @@
     "emptySubMessage": "Clique em 'Adicionar Arquivos' para fazer upload",
     "filesUploaded": "{{current}}/{{max}} arquivos enviados",
     "download": "Baixar",
-    "pasteFromClipboard": "Colar da Área de Transferência"
+    "pasteFromClipboard": "Colar da Área de Transferência",
+    "pasting": "Colando"
   },
   "kuArray": {
     "add_item": "Adicionar Item",

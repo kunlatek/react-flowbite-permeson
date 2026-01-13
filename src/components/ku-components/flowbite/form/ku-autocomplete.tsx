@@ -36,9 +36,9 @@ export const KuAutocomplete = (props: IKuAutocompleteProps) => {
       try {
         const params = new URLSearchParams();
         if (query && (optionsApi.paramsToFilter ?? []).length > 0) {
-          const filters = optionsApi.paramsToFilter?.map((param) => ({ [param]: query }));
+          const filters = optionsApi.paramsToFilter?.map((param) => ({ field: param, value: query }));
           if (filters && filters.length > 0) {
-            params.append("filters", JSON.stringify(filters));
+            params.append("filters", JSON.stringify({or:filters}));
           }
         }
         

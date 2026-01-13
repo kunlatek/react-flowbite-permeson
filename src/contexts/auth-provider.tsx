@@ -50,6 +50,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     checkAuth();
   }, []);
 
+  const clearFilters = () => {
+    const keysToRemove: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith('filters_')) {
+        keysToRemove.push(key);
+      }
+    }
+    keysToRemove.forEach(key => localStorage.removeItem(key));
+  };
+
   const setSession = (accessToken: string, userEmail?: string): AuthUser => {
     // Save token to localStorage
     localStorage.setItem('token', accessToken);
@@ -57,6 +68,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setIsAuthenticated(true);
     
     localStorage.removeItem('selectedWorkspaceId');
+    clearFilters();
     
     // Create user data with email from login or fallback to mock
     const userData: AuthUser = {
@@ -87,6 +99,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     localStorage.removeItem('selectedWorkspaceId');
+    clearFilters();
     setToken(null);
     setIsAuthenticated(false);
     setUser(null);

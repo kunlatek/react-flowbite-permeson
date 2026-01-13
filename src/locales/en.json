@@ -513,7 +513,8 @@
     "emptyMessage": "No files selected",
     "emptySubMessage": "Click 'Add Files' to upload files",
     "filesUploaded": "{{current}}/{{max}} files uploaded",
-    "download": "Download"
+    "download": "Download",
+    "pasteFromClipboard": "Paste from Clipboard"
   },
   "kuArray": {
     "add_item": "Add Item",

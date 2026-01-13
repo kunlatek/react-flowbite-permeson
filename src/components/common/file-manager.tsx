@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "flowbite-react";
 import { HiTrash, HiPlus, HiX } from "react-icons/hi";
@@ -46,6 +46,9 @@ export const FileManager = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentFileIndex, setCurrentFileIndex] = useState<number>(-1);
   const [currentFileType, setCurrentFileType] = useState<'existing' | 'selected'>('existing');
+  const [isLoadingClipboard, setIsLoadingClipboard] = useState(false);
+  const [isWaitingForPaste, setIsWaitingForPaste] = useState(false);
+  const pasteHandlerRef = useRef<((event: ClipboardEvent) => void) | null>(null);
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newFiles = Array.from(event.target.files || []);
@@ -114,6 +117,147 @@ export const FileManager = ({
 
   const openFileDialog = () => {
     fileInputRef.current?.click();
+  };
+
+  useEffect(() => {
+    if (!isWaitingForPaste) return;
+
+    const handlePaste = async (event: ClipboardEvent) => {
+      if (disabled || isUploading) return;
+
+      event.preventDefault();
+      setIsWaitingForPaste(false);
+
+      const items = event.clipboardData?.items;
+      if (!items) {
+        setIsLoadingClipboard(false);
+        return;
+      }
+
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        if (item.type.indexOf("image") !== -1) {
+          const file = item.getAsFile();
+          if (file) {
+            const filesToAdd = maxFiles 
+              ? [file].slice(0, maxFiles - files.length - selectedFiles.length)
+              : [file];
+            
+            if (filesToAdd.length > 0) {
+              const newSelectedFiles = [...selectedFiles, ...filesToAdd];
+              setSelectedFiles(newSelectedFiles);
+              
+              const newUrls = filesToAdd.map(f => {
+                if (showPreview && f.type.startsWith('image/')) {
+                  return URL.createObjectURL(f);
+                }
+                return '';
+              });
+              setPreviewUrls([...previewUrls, ...newUrls]);
+
+              if (onFilesSelect) {
+                onFilesSelect(newSelectedFiles);
+              }
+            }
+          }
+          setIsLoadingClipboard(false);
+          return;
+        }
+      }
+      setIsLoadingClipboard(false);
+    };
+
+    pasteHandlerRef.current = handlePaste;
+    document.addEventListener('paste', handlePaste);
+
+    return () => {
+      if (pasteHandlerRef.current) {
+        document.removeEventListener('paste', handlePaste);
+        pasteHandlerRef.current = null;
+      }
+    };
+  }, [isWaitingForPaste, disabled, isUploading, maxFiles, files.length, selectedFiles, previewUrls, showPreview, onFilesSelect]);
+
+  const handlePasteFromClipboard = async () => {
+    if (disabled || isUploading) return;
+    if (maxFiles && files.length + selectedFiles.length >= maxFiles) return;
+
+    setIsLoadingClipboard(true);
+    
+    try {
+      if (navigator.clipboard && navigator.clipboard.read) {
+        const clipboardItems = await navigator.clipboard.read();
+        
+        for (const clipboardItem of clipboardItems) {
+          for (const type of clipboardItem.types) {
+            if (type.startsWith('image/')) {
+              const blob = await clipboardItem.getType(type);
+              const extension = type.split('/')[1] === 'png' ? 'png' : type.split('/')[1] === 'jpeg' ? 'jpg' : 'png';
+              const file = new File([blob], `clipboard-image-${Date.now()}.${extension}`, { type });
+              
+              const filesToAdd = maxFiles 
+                ? [file].slice(0, maxFiles - files.length - selectedFiles.length)
+                : [file];
+              
+              if (filesToAdd.length > 0) {
+                const newSelectedFiles = [...selectedFiles, ...filesToAdd];
+                setSelectedFiles(newSelectedFiles);
+                
+                const newUrls = filesToAdd.map(f => {
+                  if (showPreview && f.type.startsWith('image/')) {
+                    return URL.createObjectURL(f);
+                  }
+                  return '';
+                });
+                setPreviewUrls([...previewUrls, ...newUrls]);
+
+                if (onFilesSelect) {
+                  onFilesSelect(newSelectedFiles);
+                }
+              }
+              
+              setIsLoadingClipboard(false);
+              return;
+            }
+          }
+        }
+      }
+      
+      setIsWaitingForPaste(true);
+      
+      const tempInput = document.createElement('textarea');
+      tempInput.style.position = 'fixed';
+      tempInput.style.left = '-9999px';
+      tempInput.style.top = '-9999px';
+      document.body.appendChild(tempInput);
+      tempInput.focus();
+      
+      setTimeout(() => {
+        document.body.removeChild(tempInput);
+        if (isWaitingForPaste) {
+          setIsWaitingForPaste(false);
+          setIsLoadingClipboard(false);
+        }
+      }, 5000);
+    } catch (error) {
+      console.error('Erro ao acessar área de transferência:', error);
+      setIsWaitingForPaste(true);
+      
+      const tempInput = document.createElement('textarea');
+      tempInput.style.position = 'fixed';
+      tempInput.style.left = '-9999px';
+      tempInput.style.top = '-9999px';
+      document.body.appendChild(tempInput);
+      tempInput.focus();
+      
+      setTimeout(() => {
+        document.body.removeChild(tempInput);
+        if (isWaitingForPaste) {
+          setIsWaitingForPaste(false);
+          setIsLoadingClipboard(false);
+        }
+      }, 5000);
+    }
   };
 
   const openFileModal = (index: number, type: 'existing' | 'selected') => {
@@ -219,16 +363,36 @@ export const FileManager = ({
         <label className="block text-sm font-medium text-gray-900 dark:text-white">
           {label || t("fileManager.label")}
         </label>
-        <Button
-          type="button"
-          size="md"
-          color="gray"
-          onClick={openFileDialog}
-          disabled={disabled || isUploading || (maxFiles ? files.length >= maxFiles : false)}
-        >
-          <HiPlus className="mr-2 h-4 w-4" />
-          {t("fileManager.addFiles")}
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            type="button"
+            size="md"
+            color="gray"
+            onClick={handlePasteFromClipboard}
+            disabled={disabled || isUploading || isLoadingClipboard || (maxFiles ? files.length + selectedFiles.length >= maxFiles : false)}
+          >
+            {isLoadingClipboard ? (
+              <>
+                <span className="mr-2">
+                  <KuSpinner size="sm" />
+                </span>
+                {t("fileManager.pasting") || "Colando..."}
+              </>
+            ) : (
+              t("fileManager.pasteFromClipboard")
+            )}
+          </Button>
+          <Button
+            type="button"
+            size="md"
+            color="gray"
+            onClick={openFileDialog}
+            disabled={disabled || isUploading || (maxFiles ? files.length + selectedFiles.length >= maxFiles : false)}
+          >
+            <HiPlus className="mr-2 h-4 w-4" />
+            {t("fileManager.addFiles")}
+          </Button>
+        </div>
       </div>
 
       <input

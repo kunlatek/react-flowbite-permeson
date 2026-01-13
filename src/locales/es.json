@@ -512,7 +512,8 @@
     "emptyMessage": "Ningún archivo seleccionado",
     "emptySubMessage": "Haga clic en 'Agregar Archivos' para subir archivos",
     "filesUploaded": "{{current}}/{{max}} archivos subidos",
-    "download": "Descargar"
+    "download": "Descargar",
+    "pasteFromClipboard": "Pegar desde el Portapapeles"
   },
   "kuArray": {
     "add_item": "Agregar Item",

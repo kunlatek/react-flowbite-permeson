@@ -3,7 +3,7 @@ import { ITeamMember } from "../interfaces";
 
 export const fetchUsers = async (username: string): Promise<ITeamMember[]> => {
   const response = await api.get("/profiles", {
-    params: { username }
+    params: { filters: JSON.stringify({ or: [{ field: 'userName', value: username }] }) }
   });
   
   const responseData = response.data;

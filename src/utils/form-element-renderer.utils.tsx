@@ -310,7 +310,8 @@ export const createRenderElement = (
                         element: el,
                         context: 'item',
                         itemValue: formData[element.name],
-                        index: itemIndex
+                        index: itemIndex,
+                        formData: formData[element.name][itemIndex]
                     })
                 )}
                 <KuButton

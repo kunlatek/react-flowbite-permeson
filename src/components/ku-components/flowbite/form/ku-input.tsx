@@ -16,7 +16,7 @@ export const KuInput = (props: IKuInputProps) => {
   const hasError = !!error;
 
   return (
-    <div className="w-full" id={id} data-testid={testId}>
+    <div className="w-full mb-2" id={id} data-testid={testId}>
       <div className="mb-2 block">
         <Label
           htmlFor={name}

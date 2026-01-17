@@ -338,6 +338,8 @@ export const createRenderElement = (
                 title={element.label}
                 items={formData[element.name] || []}
                 onItemsChange={(items: any[]) => handleInputChange(element.name, items)}
+                addItem={(item: any) => formData[element.name].push(item)}
+                removeItem={(index: number) => formData[element.name].splice(index, 1)}
                 defaultNewItem={element.elements.reduce((acc: any, el: any) => {
                     acc[el.name] = '';
                     return acc;

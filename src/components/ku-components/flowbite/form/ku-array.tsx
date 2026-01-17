@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { HiChevronDown, HiChevronUp } from "react-icons/hi";
   
 export const KuArray = <T extends { _id: string }>(props: IKuArrayProps<T>) => {
-  const { id, testId, title, items, onItemsChange, defaultNewItem, renderItem } = props;
+  const { id, testId, title, items, onItemsChange, defaultNewItem, renderItem, addItem, removeItem } = props;
   const { t } = useTranslation();
   const [expandedItems, setExpandedItems] = useState<{ [key: number]: boolean }>({});
 
@@ -25,11 +25,13 @@ export const KuArray = <T extends { _id: string }>(props: IKuArrayProps<T>) => {
     const newItems = [...items, defaultNewItem];
     const newIndex = newItems.length - 1;
     onItemsChange(newItems);
+    addItem(defaultNewItem);
     setExpandedItems({ ...expandedItems, [newIndex]: false });
   };
 
   const handleRemoveItem = (indexToRemove: number) => {
     onItemsChange(items.filter((_, index) => index !== indexToRemove));
+    removeItem(indexToRemove);
     const newExpandedItems = { ...expandedItems };
     delete newExpandedItems[indexToRemove];
     const updatedExpandedItems: { [key: number]: boolean } = {};

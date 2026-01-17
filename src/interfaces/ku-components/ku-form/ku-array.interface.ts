@@ -4,6 +4,8 @@ export interface IKuArrayProps<T> {
     title: string;
     items: T[];
     onItemsChange: (items: T[]) => void;
+    addItem: (item: T) => void;
+    removeItem: (index: number) => void;
     defaultNewItem: T;
     renderItem: (
         item: T,

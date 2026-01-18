@@ -76,6 +76,11 @@ body {
   margin-right: auto;
 }
 
+.card > div:first-child {
+  display: grid !important;
+  justify-content: normal !important;
+}
+
 .title {
   font-size: 24px;
   font-weight: 600;

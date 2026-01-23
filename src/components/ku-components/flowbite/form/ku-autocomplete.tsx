@@ -35,11 +35,24 @@ export const KuAutocomplete = (props: IKuAutocompleteProps) => {
       setLoading(true);
       try {
         const params = new URLSearchParams();
+        let paramsFilters: any = {};
+        
         if (query && (optionsApi.paramsToFilter ?? []).length > 0) {
           const filters = optionsApi.paramsToFilter?.map((param) => ({ [param]: {$regex: query, $options: "i"} }));
           if (filters && filters.length > 0) {
-            params.append("filters", JSON.stringify({$or:filters}));
+            paramsFilters = { $or: filters };
           }
+        }
+
+        if (optionsApi.filtersFromOtherFormFields && optionsApi.filtersFromOtherFormFields.length > 0) {
+          paramsFilters['$and'] = [];
+          optionsApi.filtersFromOtherFormFields.forEach((filter) => {
+            paramsFilters['$and'].push({ [filter.filterPropertyName]: (formState[filter.formFieldName] as ISelectOption)?.value });
+          });
+        }
+
+        if (Object.keys(paramsFilters).length > 0) {
+          params.append("filters", JSON.stringify(paramsFilters));
         }
         
         let pathParams = optionsApi.paramType === "path" ? query : ``;

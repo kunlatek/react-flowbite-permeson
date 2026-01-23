@@ -147,9 +147,21 @@ export const createRenderElement = (
                     if (context === 'item') {
                         const currentArrayValue = itemValue;
                         currentArrayValue[index][element.name] = html;
+
+                        if (element.elementsToClearOnValueChange) {
+                            element.elementsToClearOnValueChange.forEach((elementName: string) => {
+                                currentArrayValue[index][elementName] = null;
+                            });
+                        }
                         handleInputChange(element.parentArrayName, currentArrayValue);
                     } else {
                         handleInputChange(element.name, html);
+
+                        if (element.elementsToClearOnValueChange) {
+                            element.elementsToClearOnValueChange.forEach((elementName: string) => {
+                                handleInputChange(elementName, null);
+                            });
+                        }
                     }
                 }}
             />
@@ -195,10 +207,21 @@ export const createRenderElement = (
             if (context === 'item') {
                 const currentArrayValue = itemValue;
                 currentArrayValue[index][element.name] = value;
+                if (element.elementsToClearOnValueChange) {
+                    element.elementsToClearOnValueChange.forEach((elementName: string) => {
+                        currentArrayValue[index][elementName] = null;
+                    });
+                }
                 handleInputChange(element.parentArrayName, currentArrayValue);
             } else {
                 handleInputChange(element.name, value);
+                if (element.elementsToClearOnValueChange) {
+                    element.elementsToClearOnValueChange.forEach((elementName: string) => {
+                        handleInputChange(elementName, null);
+                    });
+                }
             }
+
         }
 
         const SelectWithDefault = () => {
@@ -269,9 +292,20 @@ export const createRenderElement = (
                             Array.isArray(value) ?
                                 value.map((item: any) => typeof item === 'object' ? item.value : item)
                                 : value?.value;
+
+                        if (element.elementsToClearOnValueChange) {
+                            element.elementsToClearOnValueChange.forEach((elementName: string) => {
+                                currentArrayValue[index][elementName] = null;
+                            });
+                        }
                         handleInputChange(element.parentArrayName, currentArrayValue);
                     } else {
                         handleInputChange(element.name, value);
+                        if (element.elementsToClearOnValueChange) {
+                            element.elementsToClearOnValueChange.forEach((elementName: string) => {
+                                handleInputChange(elementName, null);
+                            });
+                        }
                     }
                 }}
                 isMultiple={element.isMultiple || false}

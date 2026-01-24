@@ -56,13 +56,29 @@ export const KuAutocomplete = (props: IKuAutocompleteProps) => {
         }
         
         let pathParams = optionsApi.paramType === "path" ? query : ``;
-        const endpoint = optionsApi.endpoint.startsWith("/api")
-          ? optionsApi.endpoint.slice(4)
-          : optionsApi.endpoint;
+        const isEndpointAbsolute = optionsApi.endpoint.startsWith("http://") || optionsApi.endpoint.startsWith("https://");
+        
+        let endpoint = isEndpointAbsolute 
+          ? optionsApi.endpoint
+          : (optionsApi.endpoint.startsWith("/api")
+              ? optionsApi.endpoint.slice(4)
+              : optionsApi.endpoint);
 
-        const response = await (optionsApi.isNotKunlatekResponse ? 
-          axios.get(`${endpoint}/${pathParams}`.replace(/\/{2,}/g, "/"), { params }) : 
-          api.get(`${endpoint}/${pathParams}`.replace(/\/{2,}/g, "/"), { params }));
+        let fullUrl: string;
+        if (isEndpointAbsolute && pathParams) {
+          const separator = endpoint.endsWith("/") ? "" : "/";
+          fullUrl = `${endpoint}${separator}${pathParams}`.replace(/\/{2,}/g, "/");
+        } else if (pathParams) {
+          fullUrl = `${endpoint}/${pathParams}`.replace(/\/{2,}/g, "/");
+        } else {
+          fullUrl = endpoint;
+        }
+        
+        const isAbsoluteUrl = fullUrl.startsWith("http://") || fullUrl.startsWith("https://");
+        
+        const response = await (isAbsoluteUrl ? 
+          axios.get(fullUrl, { params }) : 
+          api.get(fullUrl, { params }));
 
         const items = response.data.data || response.data;
 

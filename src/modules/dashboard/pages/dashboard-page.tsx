@@ -1,9 +1,17 @@
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useTokenValidation } from "@/hooks/use-token-validation";
 
 export default function DashboardPage() {
   const { t } = useTranslation();
   useTokenValidation();
+
+  useEffect(() => {
+    const currentModule = localStorage.getItem('currentModule');
+    localStorage.removeItem(`filters_${currentModule}`);
+    localStorage.removeItem(`filters_${currentModule}_data`);
+    localStorage.setItem('currentModule', 'dashboard');
+  }, []);
 
   return (
     <div className="flex-1 p-4 sm:p-6 lg:p-8 overflow-auto">

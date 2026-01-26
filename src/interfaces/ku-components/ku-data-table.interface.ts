@@ -5,7 +5,7 @@ export interface IColumn<T> {
     header: string;
     sortable?: boolean;
     formatValue?: (value: unknown, row: T) => React.ReactNode;
-    type?: 'title' | 'subtitle' | 'description'
+    type?: 'title' | 'subtitle' | 'description' | 'images' | 'image'
 }
 
 export interface IAction<T> {

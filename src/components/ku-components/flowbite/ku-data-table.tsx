@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Table, Dropdown, Button } from "flowbite-react";
-import { HiDotsVertical, HiSearch } from "react-icons/hi";
+import { HiDotsVertical, HiSearch, HiChevronLeft, HiChevronRight } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
 import { KuCard, KuPagination } from "@/components/ku-components/flowbite";
 import { KuButton } from "@/components/ku-components/flowbite/form";
@@ -20,6 +20,7 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
   const [searchInput, setSearchInput] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [carouselIndices, setCarouselIndices] = useState<Record<string, number>>({});
   const isMobile = useIsMobileOrTablet();
 
   const { id, testId, title, columns, dataSource, actions = [], getActions, headerActions = [], pageSize = 10, refreshTrigger } = props;
@@ -135,10 +136,39 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
     return extractValue(obj, 0);
   };
 
+  const getImagesFromRow = (row: T): Array<{ url: string; name?: string }> => {
+    for (const column of columns) {
+      const value = resolveNestedValue(row, String(column.key));
+      if (Array.isArray(value) && value.length > 0 && value[0]?.url) {
+        return value as Array<{ url: string; name?: string }>;
+      }
+    }
+    return [];
+  };
+
+  const handleCarouselNext = (rowId: string, totalImages: number) => {
+    setCarouselIndices((prev) => {
+      const currentIndex = prev[rowId] || 0;
+      return {
+        ...prev,
+        [rowId]: (currentIndex + 1) % totalImages,
+      };
+    });
+  };
+
+  const handleCarouselPrev = (rowId: string, totalImages: number) => {
+    setCarouselIndices((prev) => {
+      const currentIndex = prev[rowId] || 0;
+      return {
+        ...prev,
+        [rowId]: currentIndex === 0 ? totalImages - 1 : currentIndex - 1,
+      };
+    });
+  };
+
   const renderCellContent = (row: T, column: IColumn<T>): React.ReactNode => {
     const value = resolveNestedValue(row, String(column.key));
 
-    // Check if the value is an array and an image
     if (Array.isArray(value) && value.length > 0 && value[0]?.url) {
       return <img src={value[0].url} alt={value[0].name} width={100} />;
     }
@@ -246,46 +276,88 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
           {
             isMobile ? (
               <div>
-                {data.map((row) => (
-                  <div className="w-full">
-                    <KuCard key={row._id} id={`row-${row._id}`} testId={`row-${row._id}`}>
-                      <div className="mb-4 flex items-baseline justify-between">
-                        <div className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                {data.map((row) => {
+                  const images = getImagesFromRow(row);
+                  const currentImageIndex = carouselIndices[row._id] || 0;
+                  const hasMultipleImages = images.length > 1;
+
+                  return (
+                    <div className="w-full" key={row._id}>
+                      <KuCard id={`row-${row._id}`} testId={`row-${row._id}`}>
+                        {images.length > 0 &&
+                          <div className="relative flex justify-center items-center h-[120px] w-full max-w-full bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden">
+                            <img
+                              src={images[currentImageIndex]?.url}
+                              alt={images[currentImageIndex]?.name || "Image"}
+                              className="max-h-full max-w-full object-contain"
+                            />
+                            {hasMultipleImages && (
+                              <>
+                                <button
+                                  onClick={() => handleCarouselPrev(row._id, images.length)}
+                                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-1.5 transition-colors z-10"
+                                  aria-label="Imagem anterior"
+                                >
+                                  <HiChevronLeft className="w-5 h-5" />
+                                </button>
+                                <button
+                                  onClick={() => handleCarouselNext(row._id, images.length)}
+                                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full p-1.5 transition-colors z-10"
+                                  aria-label="Próxima imagem"
+                                >
+                                  <HiChevronRight className="w-5 h-5" />
+                                </button>
+                                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5 z-10">
+                                  {images.map((_, index) => (
+                                    <button
+                                      key={index}
+                                      onClick={() => setCarouselIndices((prev) => ({ ...prev, [row._id]: index }))}
+                                      className={`h-2 rounded-full transition-all ${index === currentImageIndex
+                                          ? "w-6 bg-white"
+                                          : "w-2 bg-white/50 hover:bg-white/75"
+                                        }`}
+                                      aria-label={`Ir para imagem ${index + 1}`}
+                                    />
+                                  ))}
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        }
+                        <div className="mb-4 flex items-baseline justify-between">
+                          <div className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            {columns
+                              .filter((col) => col.type === 'title')
+                              .map((col) => `${renderCellContent(row, col)}`)
+                              .join(' | ')
+                            }
+                          </div>
+                          {renderDropdownActions(row)}
+                        </div>
+                        <div className="font-normal text-gray-500 dark:text-gray-400">
                           {columns
-                            .filter((col) => col.type === 'title')
-                            .map((col) => renderCellContent(row, col))
+                            .filter((col) => col.type === 'subtitle')
+                            .map((col) => (
+                              `${col.header}: ${renderCellContent(row, col)}`
+                            ))
+                            .join(' | ')
                           }
                         </div>
-                        {renderDropdownActions(row)}
-                      </div>
-                      {columns
-                        .filter((col) => col.type === 'subtitle')
-                        .map((col) => (
-                          <div className="font-normal text-gray-700 dark:text-gray-400">
-                            {col.header}: {renderCellContent(row, col)}
-                          </div>))
-                      }
-                    </KuCard>
-                  </div>
-                ))}
+                        <div className="text-xs dark:white">
+                          {columns
+                            .filter((col) => col.type === 'description')
+                            .map((col) => (
+                              <div>{col.header}: {renderCellContent(row, col)}</div>
+                            ))
+                          }
+                        </div>
+                      </KuCard>
+                    </div>
+                  );
+                })}
               </div>
             ) : (
               <Table className="!static !relative">
-                <Table.Head>
-                  {columns.map((col) => (
-                    <Table.HeadCell
-                      key={String(col.key)}
-                      onClick={() => col.sortable && handleSort(col.key)}
-                      className={col.sortable ? "cursor-pointer" : ""}
-                    >
-                      {col.header}
-                      {sortColumn === col.key && (
-                        <span>{sortDirection === "asc" ? " ▲" : " ▼"}</span>
-                      )}
-                    </Table.HeadCell>
-                  ))}
-                  {(actions.length > 0 || getActions) && <Table.HeadCell>Ações</Table.HeadCell>}
-                </Table.Head>
                 <Table.Body className="divide-y">
                   {data.map((row) => (
                     <Table.Row key={row._id}>

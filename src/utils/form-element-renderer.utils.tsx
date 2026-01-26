@@ -23,6 +23,7 @@ interface IFormElementRendererProps {
     t: (key: string) => string;
     apiRequestTimeouts: React.MutableRefObject<{ [key: string]: NodeJS.Timeout }>;
     handleApiRequest?: (element: any, value: string, context: string, itemValue?: any, index?: number) => Promise<void>;
+    isMobile?: boolean;
 }
 
 export const createHandleApiRequest = (
@@ -111,7 +112,8 @@ export const createRenderElement = (
         files,
         isPending = false,
         t,
-        handleApiRequest
+        handleApiRequest,
+        isMobile = false
     } = props;
 
     const errorContext = errors[element.name];
@@ -136,71 +138,75 @@ export const createRenderElement = (
 
     if (element.dataType === 'wysiwyg') {
         return (
-            <KuWysiwyg
-                key={element.name}
-                id={`field-${element.name}${index || index === 0 ? `-${index}` : ''}`}
-                testId={`field-${element.name}${index || index === 0 ? `-${index}` : ''}`}
-                label={element.label}
-                name={element.name}
-                value={currentValue}
-                onChange={(e: any, html: string) => {
-                    if (context === 'item') {
-                        const currentArrayValue = itemValue;
-                        currentArrayValue[index][element.name] = html;
-
-                        if (element.elementsToClearOnValueChange) {
-                            element.elementsToClearOnValueChange.forEach((elementName: string) => {
-                                currentArrayValue[index][elementName] = null;
-                            });
+            <div style={{ width: `${isMobile ? '100' : (element.space ?? 4) * 25}%`, marginTop: isMobile ? '10px' : '' }}>
+                <KuWysiwyg
+                    key={element.name}
+                    id={`field-${element.name}${index || index === 0 ? `-${index}` : ''}`}
+                    testId={`field-${element.name}${index || index === 0 ? `-${index}` : ''}`}
+                    label={element.label}
+                    name={element.name}
+                    value={currentValue}
+                    onChange={(e: any, html: string) => {
+                        if (context === 'item') {
+                            const currentArrayValue = itemValue;
+                            currentArrayValue[index][element.name] = html;
+    
+                            if (element.elementsToClearOnValueChange) {
+                                element.elementsToClearOnValueChange.forEach((elementName: string) => {
+                                    currentArrayValue[index][elementName] = null;
+                                });
+                            }
+                            handleInputChange(element.parentArrayName, currentArrayValue);
+                        } else {
+                            handleInputChange(element.name, html);
+    
+                            if (element.elementsToClearOnValueChange) {
+                                element.elementsToClearOnValueChange.forEach((elementName: string) => {
+                                    handleInputChange(elementName, null);
+                                });
+                            }
                         }
-                        handleInputChange(element.parentArrayName, currentArrayValue);
-                    } else {
-                        handleInputChange(element.name, html);
-
-                        if (element.elementsToClearOnValueChange) {
-                            element.elementsToClearOnValueChange.forEach((elementName: string) => {
-                                handleInputChange(elementName, null);
-                            });
-                        }
-                    }
-                }}
-            />
+                    }}
+                />
+            </div>
         );
     } else if (element.type === 'input') {
         return (
-            <KuInput
-                key={element.name}
-                id={`field-${element.name}${index || index === 0 ? `-${index}` : ''}`}
-                testId={`field-${element.name}${index || index === 0 ? `-${index}` : ''}`}
-                label={element.label}
-                name={element.name}
-                dataType={element.dataType}
-                placeholder={element.placeholder || ''}
-                value={currentValue}
-                onChange={async (e: any) => {
-                    const newValue = element.maskRegex ? applyMask(e.target.value, element.maskRegex) : e.target.value;
-
-                    if (context === 'item') {
-                        const currentArrayValue = itemValue;
-                        currentArrayValue[index][element.name] = newValue;
-                        handleInputChange(element.parentArrayName, currentArrayValue);
-
-                        if (element.apiRequest && handleApiRequest) {
-                            await handleApiRequest(element, newValue, context, currentArrayValue, index);
+            <div style={{ width: `${isMobile ? '100' : (element.space ?? 4) * 25}%`, marginTop: isMobile ? '10px' : '' }}>
+                <KuInput
+                    key={element.name}
+                    id={`field-${element.name}${index || index === 0 ? `-${index}` : ''}`}
+                    testId={`field-${element.name}${index || index === 0 ? `-${index}` : ''}`}
+                    label={element.label}
+                    name={element.name}
+                    dataType={element.dataType}
+                    placeholder={element.placeholder || ''}
+                    value={currentValue}
+                    onChange={async (e: any) => {
+                        const newValue = element.maskRegex ? applyMask(e.target.value, element.maskRegex) : e.target.value;
+    
+                        if (context === 'item') {
+                            const currentArrayValue = itemValue;
+                            currentArrayValue[index][element.name] = newValue;
+                            handleInputChange(element.parentArrayName, currentArrayValue);
+    
+                            if (element.apiRequest && handleApiRequest) {
+                                await handleApiRequest(element, newValue, context, currentArrayValue, index);
+                            }
+                        } else {
+                            handleInputChange(element.name, newValue);
+    
+                            if (element.apiRequest && handleApiRequest) {
+                                await handleApiRequest(element, newValue, context);
+                            }
                         }
-                    } else {
-                        handleInputChange(element.name, newValue);
-
-                        if (element.apiRequest && handleApiRequest) {
-                            await handleApiRequest(element, newValue, context);
-                        }
-                    }
-                }}
-                isRequired={element.isRequired || false}
-                error={errorContext}
-                tooltip={element.tooltip || ''}
-                isDisabled={isPending || element.isDisabled}
-            />
+                    }}
+                    isRequired={element.isRequired || false}
+                    error={errorContext}
+                    tooltip={element.tooltip || ''}
+                    isDisabled={isPending || element.isDisabled}
+                />
+            </div>
         );
     } else if (element.type === 'select') {
         const onChange = (name: string, value: any) => {
@@ -256,67 +262,71 @@ export const createRenderElement = (
             }, []);
 
             return (
-                <KuSelect
-                    key={element.name}
-                    id={`field-${element.name}${index || index === 0 ? `-${index}` : ''}`}
-                    testId={`field-${element.name}${index || index === 0 ? `-${index}` : ''}`}
-                    label={element.label}
-                    name={element.name}
-                    options={element.options || []}
-                    value={currentValue}
-                    onChange={onChange}
-                    isMultiple={element.isMultiple || false}
-                    isRequired={element.isRequired || false}
-                    error={errorContext}
-                    tooltip={element.tooltip || ''}
-                    isDisabled={isPending || element.isDisabled}
-                />
+                <div style={{ width: `${isMobile ? '100' : (element.space ?? 4) * 25}%`, marginTop: isMobile ? '10px' : '' }}>
+                    <KuSelect
+                        key={element.name}
+                        id={`field-${element.name}${index || index === 0 ? `-${index}` : ''}`}
+                        testId={`field-${element.name}${index || index === 0 ? `-${index}` : ''}`}
+                        label={element.label}
+                        name={element.name}
+                        options={element.options || []}
+                        value={currentValue}
+                        onChange={onChange}
+                        isMultiple={element.isMultiple || false}
+                        isRequired={element.isRequired || false}
+                        error={errorContext}
+                        tooltip={element.tooltip || ''}
+                        isDisabled={isPending || element.isDisabled}
+                    />
+                </div>
             );
         };
 
         return <SelectWithDefault />;
     } else if (element.type === 'autocomplete') {
         return (
-            <KuAutocomplete
-                key={element.name}
-                id={`field-${element.name}${index || index === 0 ? `-${index}` : ''}`}
-                testId={`field-${element.name}${index || index === 0 ? `-${index}` : ''}`}
-                label={element.label}
-                name={element.name}
-                optionsApi={element.optionsApi || {}}
-                value={currentValue}
-                onChange={(name: string, value: any) => {
-                    if (context === 'item') {
-                        const currentArrayValue = itemValue;
-                        currentArrayValue[index][element.name] =
-                            Array.isArray(value) ?
-                                value.map((item: any) => typeof item === 'object' ? item.value : item)
-                                : value?.value;
-
-                        if (element.elementsToClearOnValueChange) {
-                            element.elementsToClearOnValueChange.forEach((elementName: string) => {
-                                currentArrayValue[index][elementName] = null;
-                            });
+            <div style={{ width: `${isMobile ? '100' : (element.space ?? 4) * 25}%`, marginTop: isMobile ? '10px' : '' }}>
+                <KuAutocomplete
+                    key={element.name}
+                    id={`field-${element.name}${index || index === 0 ? `-${index}` : ''}`}
+                    testId={`field-${element.name}${index || index === 0 ? `-${index}` : ''}`}
+                    label={element.label}
+                    name={element.name}
+                    optionsApi={element.optionsApi || {}}
+                    value={currentValue}
+                    onChange={(name: string, value: any) => {
+                        if (context === 'item') {
+                            const currentArrayValue = itemValue;
+                            currentArrayValue[index][element.name] =
+                                Array.isArray(value) ?
+                                    value.map((item: any) => typeof item === 'object' ? item.value : item)
+                                    : value?.value;
+    
+                            if (element.elementsToClearOnValueChange) {
+                                element.elementsToClearOnValueChange.forEach((elementName: string) => {
+                                    currentArrayValue[index][elementName] = null;
+                                });
+                            }
+                            handleInputChange(element.parentArrayName, currentArrayValue);
+                        } else {
+                            handleInputChange(element.name, value);
+                            if (element.elementsToClearOnValueChange) {
+                                element.elementsToClearOnValueChange.forEach((elementName: string) => {
+                                    handleInputChange(elementName, null);
+                                });
+                            }
                         }
-                        handleInputChange(element.parentArrayName, currentArrayValue);
-                    } else {
-                        handleInputChange(element.name, value);
-                        if (element.elementsToClearOnValueChange) {
-                            element.elementsToClearOnValueChange.forEach((elementName: string) => {
-                                handleInputChange(elementName, null);
-                            });
-                        }
-                    }
-                }}
-                isMultiple={element.isMultiple || false}
-                isRequired={element.isRequired || false}
-                error={errorContext}
-                tooltip={element.tooltip || ''}
-                isDisabled={isPending || element.isDisabled}
-                formState={formData}
-                type={element.dataType}
-                dataType={element.dataType}
-            />
+                    }}
+                    isMultiple={element.isMultiple || false}
+                    isRequired={element.isRequired || false}
+                    error={errorContext}
+                    tooltip={element.tooltip || ''}
+                    isDisabled={isPending || element.isDisabled}
+                    formState={formData}
+                    type={element.dataType}
+                    dataType={element.dataType}
+                />
+            </div>
         );
     } else if (element.type === 'file') {
         if (!handleFilesChange || !handleFilesSelect || !files) {
@@ -324,20 +334,22 @@ export const createRenderElement = (
         }
 
         return (
-            <FileManager
-                key={`${element.name}${index || index === 0 ? `-${index}` : ''}`}
-                files={files[element.name]}
-                onFilesChange={(files: IFileItem[]) => handleFilesChange(element.name, files)}
-                onFilesSelect={(files: File[]) => handleFilesSelect(element.name, files)}
-                isUploading={isPending}
-                disabled={isPending || element.isDisabled}
-                label={element.label}
-                accept={element.storageConfig.visibility === 'public' ? 'image/*' : '*/*'}
-            />
+            <div style={{ width: `${isMobile ? '100' : (element.space ?? 4) * 25}%`, marginTop: isMobile ? '10px' : '' }}>
+                <FileManager
+                    key={`${element.name}${index || index === 0 ? `-${index}` : ''}`}
+                    files={files[element.name]}
+                    onFilesChange={(files: IFileItem[]) => handleFilesChange(element.name, files)}
+                    onFilesSelect={(files: File[]) => handleFilesSelect(element.name, files)}
+                    isUploading={isPending}
+                    disabled={isPending || element.isDisabled}
+                    label={element.label}
+                    accept={element.storageConfig.visibility === 'public' ? 'image/*' : '*/*'}
+                />
+            </div>
         );
     } else if (element.type === 'array') {
         const renderItem = (item: any, itemIndex: number, handleItemChange: any, handleRemoveItem: any) => (
-            <div className="space-y-4">
+            <div style={{ width: `${isMobile ? '100' : (element.space ?? 4) * 25}%`, marginTop: isMobile ? '10px' : '' }}>
                 {element.elements.map((el: any) =>
                     createRenderElement({
                         ...props,
@@ -365,36 +377,40 @@ export const createRenderElement = (
         );
 
         return (
-            <KuArray
-                key={element.id}
-                id={`array-${element.name}${index || index === 0 ? `-${index}` : ''}`}
-                testId={`array-${element.name}${index || index === 0 ? `-${index}` : ''}`}
-                title={element.label}
-                items={formData[element.name] || []}
-                onItemsChange={(items: any[]) => handleInputChange(element.name, items)}
-                addItem={(item: any) => formData[element.name] = [...(formData[element.name] ?? []), item]}
-                removeItem={(index: number) => formData[element.name].splice(index, 1)}
-                defaultNewItem={element.elements.reduce((acc: any, el: any) => {
-                    acc[el.name] = '';
-                    return acc;
-                }, {})}
-                renderItem={renderItem}
-            />
+            <div style={{ width: `${isMobile ? '100' : (element.space ?? 4) * 25}%`, marginTop: isMobile ? '10px' : '' }}>
+                <KuArray
+                    key={element.id}
+                    id={`array-${element.name}${index || index === 0 ? `-${index}` : ''}`}
+                    testId={`array-${element.name}${index || index === 0 ? `-${index}` : ''}`}
+                    title={element.label}
+                    items={formData[element.name] || []}
+                    onItemsChange={(items: any[]) => handleInputChange(element.name, items)}
+                    addItem={(item: any) => formData[element.name] = [...(formData[element.name] ?? []), item]}
+                    removeItem={(index: number) => formData[element.name].splice(index, 1)}
+                    defaultNewItem={element.elements.reduce((acc: any, el: any) => {
+                        acc[el.name] = '';
+                        return acc;
+                    }, {})}
+                    renderItem={renderItem}
+                />
+            </div>
         );
     } else if (element.type === 'fieldset') {
         return (
-            <fieldset className="border p-4 rounded-md">
-                <legend className="text-xs text-gray-500 dark:text-white">{element.title}</legend>
-                {element.elements.map((el: any) =>
-                    createRenderElement({
-                        ...props,
-                        element: el,
-                        context: context,
-                        itemValue: itemValue || formData,
-                        index
-                    })
-                )}
-            </fieldset>
+            <div style={{ width: `${isMobile ? '100' : (element.space ?? 4) * 25}%`, marginTop: isMobile ? '10px' : '' }}>
+                <fieldset className="border p-4 rounded-md">
+                    <legend className="text-xs text-gray-500 dark:text-white">{element.title}</legend>
+                    {element.elements.map((el: any) =>
+                        createRenderElement({
+                            ...props,
+                            element: el,
+                            context: context,
+                            itemValue: itemValue || formData,
+                            index
+                        })
+                    )}
+                </fieldset>
+            </div>
         );
     }
 

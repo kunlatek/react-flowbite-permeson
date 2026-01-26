@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import { Table, Dropdown, Button } from "flowbite-react";
 import { HiDotsVertical, HiSearch } from "react-icons/hi";
 import { useTranslation } from "react-i18next";
-import { KuPagination } from "@/components/ku-components/flowbite";
+import { KuCard, KuPagination } from "@/components/ku-components/flowbite";
 import { KuButton } from "@/components/ku-components/flowbite/form";
 import axios from "axios";
 import { IColumn, IKuDataTableProps } from "@/interfaces/ku-components";
 import { KuSpinner } from "@/components/ku-components";
+import { useIsMobileOrTablet } from "@/hooks/use-is-mobile";
 
 export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<T>) => {
   const { t } = useTranslation();
@@ -15,12 +16,11 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [sortColumn, setSortColumn] = useState<keyof T | string | null>(
-    "createdAt"
-  );
+  const [sortColumn, setSortColumn] = useState<keyof T | string | null>("createdAt");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
   const [searchInput, setSearchInput] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const isMobile = useIsMobileOrTablet();
 
   const { id, testId, title, columns, dataSource, actions = [], getActions, headerActions = [], pageSize = 10, refreshTrigger } = props;
 
@@ -60,7 +60,7 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
         setLoading(false);
       }
     };
-    
+
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage, pageSize, sortColumn, sortDirection, refreshTrigger, searchTerm]);
@@ -142,7 +142,7 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
     if (Array.isArray(value) && value.length > 0 && value[0]?.url) {
       return <img src={value[0].url} alt={value[0].name} width={100} />;
     }
-    
+
     if (column.formatValue) {
       return column.formatValue(value, row);
     }
@@ -151,6 +151,44 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
     }
     return String(value);
   };
+
+  const renderDropdownActions = (row: T) => {
+    return (
+      <Dropdown
+        arrowIcon={false}
+        inline
+        placement="right-start"
+        label={
+          <Button
+            size="xs"
+            color="gray"
+            className="p-1.5"
+            id={`row-${row._id}-actions-menu`}
+            data-testid={`row-${row._id}-actions-menu`}
+          >
+            <HiDotsVertical className="h-4 w-4" />
+          </Button>
+        }
+      >
+        {(getActions ? getActions(row) : actions).map((action, index) => (
+          <Dropdown.Item
+            key={action.label}
+            id={`row-${row._id}-action-${index}`}
+            onClick={() => action.handler(row)}
+            className={
+              action.color === "danger"
+                ? "text-red-600 dark:text-red-400"
+                : action.color === "warning"
+                  ? "text-yellow-600 dark:text-yellow-400"
+                  : "dark:text-white"
+            }
+          >
+            {action.label}
+          </Dropdown.Item>
+        ))}
+      </Dropdown>
+    );
+  }
 
   return (
     <>
@@ -205,71 +243,68 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
               </Button>
             </div>
           </div>
-          <Table className="!static !relative">
-            <Table.Head>
-              {columns.map((col) => (
-                <Table.HeadCell
-                  key={String(col.key)}
-                  onClick={() => col.sortable && handleSort(col.key)}
-                  className={col.sortable ? "cursor-pointer" : ""}
-                >
-                  {col.header}
-                  {sortColumn === col.key && (
-                    <span>{sortDirection === "asc" ? " ▲" : " ▼"}</span>
-                  )}
-                </Table.HeadCell>
-              ))}
-              {(actions.length > 0 || getActions) && <Table.HeadCell>Ações</Table.HeadCell>}
-            </Table.Head>
-            <Table.Body className="divide-y">
-              {data.map((row) => (
-                <Table.Row key={row._id}>
+          {
+            isMobile ? (
+              <div>
+                {data.map((row) => (
+                  <div className="w-full">
+                    <KuCard key={row._id} id={`row-${row._id}`} testId={`row-${row._id}`}>
+                      <div className="mb-4 flex items-baseline justify-between">
+                        <div className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+                          {columns
+                            .filter((col) => col.type === 'title')
+                            .map((col) => renderCellContent(row, col))
+                          }
+                        </div>
+                        {renderDropdownActions(row)}
+                      </div>
+                      {columns
+                        .filter((col) => col.type === 'subtitle')
+                        .map((col) => (
+                          <div className="font-normal text-gray-700 dark:text-gray-400">
+                            {col.header}: {renderCellContent(row, col)}
+                          </div>))
+                      }
+                    </KuCard>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <Table className="!static !relative">
+                <Table.Head>
                   {columns.map((col) => (
-                    <Table.Cell key={`${row._id}-${String(col.key)}`}>
-                      {renderCellContent(row, col)}
-                    </Table.Cell>
+                    <Table.HeadCell
+                      key={String(col.key)}
+                      onClick={() => col.sortable && handleSort(col.key)}
+                      className={col.sortable ? "cursor-pointer" : ""}
+                    >
+                      {col.header}
+                      {sortColumn === col.key && (
+                        <span>{sortDirection === "asc" ? " ▲" : " ▼"}</span>
+                      )}
+                    </Table.HeadCell>
                   ))}
-                  {(actions.length > 0 || getActions) && (
-                    <Table.Cell>
-                      <Dropdown
-                        arrowIcon={false}
-                        inline
-                        placement="right-start"
-                        label={
-                          <Button
-                            size="xs"
-                            color="gray"
-                            className="p-1.5"
-                            id={`row-${row._id}-actions-menu`}
-                            data-testid={`row-${row._id}-actions-menu`}
-                          >
-                            <HiDotsVertical className="h-4 w-4" />
-                          </Button>
-                        }
-                      >
-                        {(getActions ? getActions(row) : actions).map((action, index) => (
-                          <Dropdown.Item
-                            key={action.label}
-                            id={`row-${row._id}-action-${index}`}
-                            onClick={() => action.handler(row)}
-                            className={
-                              action.color === "danger"
-                                ? "text-red-600 dark:text-red-400"
-                                : action.color === "warning"
-                                ? "text-yellow-600 dark:text-yellow-400"
-                                : "dark:text-white"
-                            }
-                          >
-                            {action.label}
-                          </Dropdown.Item>
-                        ))}
-                      </Dropdown>
-                    </Table.Cell>
-                  )}
-                </Table.Row>
-              ))}
-            </Table.Body>
-          </Table>
+                  {(actions.length > 0 || getActions) && <Table.HeadCell>Ações</Table.HeadCell>}
+                </Table.Head>
+                <Table.Body className="divide-y">
+                  {data.map((row) => (
+                    <Table.Row key={row._id}>
+                      {columns.map((col) => (
+                        <Table.Cell key={`${row._id}-${String(col.key)}`}>
+                          {renderCellContent(row, col)}
+                        </Table.Cell>
+                      ))}
+                      {(actions.length > 0 || getActions) && (
+                        <Table.Cell>
+                          {renderDropdownActions(row)}
+                        </Table.Cell>
+                      )}
+                    </Table.Row>
+                  ))}
+                </Table.Body>
+              </Table>
+            )
+          }
           {totalPages > 1 && (
             <div className="mt-4">
               <KuPagination

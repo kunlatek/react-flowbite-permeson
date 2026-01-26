@@ -358,6 +358,21 @@ export const KuDataTable = <T extends { _id: string }>(props: IKuDataTableProps<
               </div>
             ) : (
               <Table className="!static !relative">
+                <Table.Head>
+                  {columns.map((col) => (
+                    <Table.HeadCell
+                      key={String(col.key)}
+                      onClick={() => col.sortable && handleSort(col.key)}
+                      className={col.sortable ? "cursor-pointer" : ""}
+                    >
+                      {col.header}
+                      {sortColumn === col.key && (
+                        <span>{sortDirection === "asc" ? " ▲" : " ▼"}</span>
+                      )}
+                    </Table.HeadCell>
+                  ))}
+                  {(actions.length > 0 || getActions) && <Table.HeadCell>Ações</Table.HeadCell>}
+                </Table.Head>
                 <Table.Body className="divide-y">
                   {data.map((row) => (
                     <Table.Row key={row._id}>

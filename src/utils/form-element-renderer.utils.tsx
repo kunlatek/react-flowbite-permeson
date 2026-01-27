@@ -334,7 +334,7 @@ export const createRenderElement = (
         }
 
         return (
-            <div style={{ width: `${isMobile ? '100' : (element.space ?? 4) * 25}%`, marginTop: isMobile ? '10px' : '' }}>
+            <div style={{ width: `${isMobile ? '100' : (element.space ?? 4) * 25}%`, marginTop: '10px' }}>
                 <FileManager
                     key={`${element.name}${index || index === 0 ? `-${index}` : ''}`}
                     files={files[element.name]}

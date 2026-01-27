@@ -40,9 +40,9 @@ export const FileModal = ({
 
   const getCurrentFile = () => {
     if (currentFileType === 'existing') {
-      return files[currentFileIndex];
+      return files?.[currentFileIndex];
     } else {
-      return selectedFiles[currentFileIndex];
+      return selectedFiles?.[currentFileIndex];
     }
   };
 

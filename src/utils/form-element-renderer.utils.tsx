@@ -38,7 +38,7 @@ export const createHandleApiRequest = (
         const dataForCondition = context === 'item' && itemValue && (index !== undefined && index !== null)
             ? itemValue[index]
             : formData;
-        
+
         if (element.apiRequest.conditions?.form) {
             const condition = element.apiRequest.conditions.form;
             if (condition.elements && !showField(dataForCondition, condition.elements)) {
@@ -150,7 +150,7 @@ export const createRenderElement = (
                         if (context === 'item') {
                             const currentArrayValue = itemValue;
                             currentArrayValue[index][element.name] = html;
-    
+
                             if (element.elementsToClearOnValueChange) {
                                 element.elementsToClearOnValueChange.forEach((elementName: string) => {
                                     currentArrayValue[index][elementName] = null;
@@ -159,7 +159,7 @@ export const createRenderElement = (
                             handleInputChange(element.parentArrayName, currentArrayValue);
                         } else {
                             handleInputChange(element.name, html);
-    
+
                             if (element.elementsToClearOnValueChange) {
                                 element.elementsToClearOnValueChange.forEach((elementName: string) => {
                                     handleInputChange(elementName, null);
@@ -184,18 +184,18 @@ export const createRenderElement = (
                     value={currentValue}
                     onChange={async (e: any) => {
                         const newValue = element.maskRegex ? applyMask(e.target.value, element.maskRegex) : e.target.value;
-    
+
                         if (context === 'item') {
                             const currentArrayValue = itemValue;
                             currentArrayValue[index][element.name] = newValue;
                             handleInputChange(element.parentArrayName, currentArrayValue);
-    
+
                             if (element.apiRequest && handleApiRequest) {
                                 await handleApiRequest(element, newValue, context, currentArrayValue, index);
                             }
                         } else {
                             handleInputChange(element.name, newValue);
-    
+
                             if (element.apiRequest && handleApiRequest) {
                                 await handleApiRequest(element, newValue, context);
                             }
@@ -240,16 +240,16 @@ export const createRenderElement = (
                     const value = context === 'item'
                         ? itemValue?.[index]?.[element.name]
                         : formData[element.name];
-                    
+
                     const fieldExists = context === 'item'
                         ? (itemValue?.[index]?.hasOwnProperty(element.name))
                         : formData.hasOwnProperty(element.name);
-                    
+
                     if (!fieldExists) {
                         const computedValue = (element.dataType === 'integer' || element.dataType === 'number' || element.dataType === 'decimal' || element.dataType === 'numeric' || element.dataType === 'float' || element.dataType === 'double' || element.dataType === 'real')
                             ? (value ?? null)
                             : (value ?? '');
-                        
+
                         if (!computedValue && computedValue !== 0 && computedValue !== false) {
                             const selectedOption = element.options?.find((option: any) => option.isSelected);
                             if (selectedOption && !hasSetDefault.current) {
@@ -301,7 +301,7 @@ export const createRenderElement = (
                                 Array.isArray(value) ?
                                     value.map((item: any) => typeof item === 'object' ? item.value : item)
                                     : value?.value;
-    
+
                             if (element.elementsToClearOnValueChange) {
                                 element.elementsToClearOnValueChange.forEach((elementName: string) => {
                                     currentArrayValue[index][elementName] = null;
@@ -351,7 +351,7 @@ export const createRenderElement = (
         const lastElementsOfRowIndex: any[] = []
         element.elements.forEach((el: any, index: number) => (el.isLastElementOfRow ? lastElementsOfRowIndex.push(index) : null));
         const elements = new Array(lastElementsOfRowIndex.length).fill([]).map((el: any, index: number) => element.elements.slice((lastElementsOfRowIndex[index - 1] ?? -1) + 1, lastElementsOfRowIndex[index] + 1));
-        
+
         const renderItem = (item: any, itemIndex: number, handleItemChange: any, handleRemoveItem: any) => (
             <div style={{ width: `${isMobile ? '100' : (element.space ?? 4) * 25}%`, marginTop: isMobile ? '10px' : '' }}>
                 {elements.map((el: any) => (
@@ -368,19 +368,21 @@ export const createRenderElement = (
                         ))}
                     </div>
                 ))}
-                <KuButton
-                    id={`remove-${element.name}-item-${itemIndex}`}
-                    testId={`btn-remove-${element.name}-${itemIndex}`}
-                    size="xs"
-                    variant="danger"
-                    onClick={() => handleRemoveItem(itemIndex)}
-                    isDisabled={isPending || element.isDisabled}
-                    type="button"
-                    label={t("kuArray.remove_item")}
-                    actionType="button"
-                >
-                    {t("kuArray.remove_item")}
-                </KuButton>
+                <div className="mt-4">
+                    <KuButton
+                        id={`remove-${element.name}-item-${itemIndex}`}
+                        testId={`btn-remove-${element.name}-${itemIndex}`}
+                        size="xs"
+                        variant="danger"
+                        onClick={() => handleRemoveItem(itemIndex)}
+                        isDisabled={isPending || element.isDisabled}
+                        type="button"
+                        label={t("kuArray.remove_item")}
+                        actionType="button"
+                    >
+                        {t("kuArray.remove_item")}
+                    </KuButton>
+                </div>
             </div>
         );
 

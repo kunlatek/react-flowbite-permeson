@@ -176,7 +176,7 @@ export const FileManager = ({
         pasteHandlerRef.current = null;
       }
     };
-  }, [isWaitingForPaste, disabled, isUploading, maxFiles, files.length, selectedFiles, previewUrls, showPreview, onFilesSelect]);
+  }, [isWaitingForPaste, disabled, isUploading, maxFiles, files?.length, selectedFiles, previewUrls, showPreview, onFilesSelect]);
 
   const handlePasteFromClipboard = async () => {
     if (disabled || isUploading) return;
@@ -407,7 +407,7 @@ export const FileManager = ({
       />
 
       {/* Existing Files */}
-      {files.length > 0 && (
+      {files?.length > 0 && (
         <div className="space-y-2">
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {files.map((file, index) => renderFilePreview(file, index, false))}
@@ -461,7 +461,7 @@ export const FileManager = ({
         </div>
       )}
 
-      {files.length === 0 && selectedFiles.length === 0 && (
+      {files?.length === 0 && selectedFiles?.length === 0 && (
         <div className="text-center py-8 text-gray-500 dark:text-gray-400">
           <p className="text-sm">{emptyMessage || t("fileManager.emptyMessage")}</p>
           <p className="text-xs mt-1">{emptySubMessage || t("fileManager.emptySubMessage")}</p>

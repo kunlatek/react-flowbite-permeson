@@ -348,18 +348,26 @@ export const createRenderElement = (
             </div>
         );
     } else if (element.type === 'array') {
+        const lastElementsOfRowIndex: any[] = []
+        element.elements.forEach((el: any, index: number) => (el.isLastElementOfRow ? lastElementsOfRowIndex.push(index) : null));
+        const elements = new Array(lastElementsOfRowIndex.length).fill([]).map((el: any, index: number) => element.elements.slice((lastElementsOfRowIndex[index - 1] ?? -1) + 1, lastElementsOfRowIndex[index] + 1));
+        
         const renderItem = (item: any, itemIndex: number, handleItemChange: any, handleRemoveItem: any) => (
             <div style={{ width: `${isMobile ? '100' : (element.space ?? 4) * 25}%`, marginTop: isMobile ? '10px' : '' }}>
-                {element.elements.map((el: any) =>
-                    createRenderElement({
-                        ...props,
-                        element: el,
-                        context: 'item',
-                        itemValue: formData[element.name],
-                        index: itemIndex,
-                        formData: formData[element.name][itemIndex]
-                    })
-                )}
+                {elements.map((el: any) => (
+                    <div key={el.name} className={`${isMobile ? '' : 'flex'} gap-4`}>
+                        {el.map((el: any) => (
+                            createRenderElement({
+                                ...props,
+                                element: el,
+                                context: 'item',
+                                itemValue: formData[element.name],
+                                index: itemIndex,
+                                formData: formData[element.name][itemIndex]
+                            })
+                        ))}
+                    </div>
+                ))}
                 <KuButton
                     id={`remove-${element.name}-item-${itemIndex}`}
                     testId={`btn-remove-${element.name}-${itemIndex}`}
@@ -396,19 +404,26 @@ export const createRenderElement = (
             </div>
         );
     } else if (element.type === 'fieldset') {
+        const lastElementsOfRowIndex: any[] = []
+        element.elements.forEach((el: any, index: number) => (el.isLastElementOfRow ? lastElementsOfRowIndex.push(index) : null));
+        const elements = new Array(lastElementsOfRowIndex.length).fill([]).map((el: any, index: number) => element.elements.slice((lastElementsOfRowIndex[index - 1] ?? -1) + 1, lastElementsOfRowIndex[index] + 1));
         return (
             <div style={{ width: `${isMobile ? '100' : (element.space ?? 4) * 25}%`, marginTop: isMobile ? '10px' : '' }}>
                 <fieldset className="border p-4 rounded-md">
                     <legend className="text-xs text-gray-500 dark:text-white">{element.title}</legend>
-                    {element.elements.map((el: any) =>
-                        createRenderElement({
-                            ...props,
-                            element: el,
-                            context: context,
-                            itemValue: itemValue || formData,
-                            index
-                        })
-                    )}
+                    {elements.map((el: any) => (
+                        <div key={el.name} className={`${isMobile ? '' : 'flex'} gap-4`}>
+                            {el.map((el: any) => (
+                                createRenderElement({
+                                    ...props,
+                                    element: el,
+                                    context: context,
+                                    itemValue: itemValue || formData,
+                                    index
+                                })
+                            ))}
+                        </div>
+                    ))}
                 </fieldset>
             </div>
         );

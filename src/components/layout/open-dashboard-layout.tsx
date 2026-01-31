@@ -59,7 +59,10 @@ export const OpenDashboardLayout = () => {
     await switchWorkspace(workspaceId);
   };
 
-  return (
+  return workspacesLoading && permissions ? 
+    <div className="loading-container">
+      {t("common.loading")}<span className="dots">...</span>
+    </div> :
     <div className="flex h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden">
       {/* Sidebar */}
       <Sidebar
@@ -263,6 +266,5 @@ export const OpenDashboardLayout = () => {
           onClick={toggleSidebar}
         />
       )}
-    </div>
-  );
+    </div>;
 };

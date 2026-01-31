@@ -72,8 +72,6 @@ export const useMyWorkspaces = () => {
     setSelectedWorkspaceId(workspaceId);
     localStorage.setItem('selectedWorkspaceId', workspaceId);
     
-    toast.success("Workspace alterado com sucesso! Redirecionando...");
-    
     // Redirecionar para dashboard e depois recarregar
     setTimeout(() => {
       window.location.href = '/dashboard';
@@ -85,8 +83,6 @@ export const useMyWorkspaces = () => {
       setError(errorMessage);
       toast.error(errorMessage);
       return false;
-    } finally {
-      setLoading(false);
     }
   };
 

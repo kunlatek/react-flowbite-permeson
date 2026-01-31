@@ -11,6 +11,7 @@ import { fetchCurrentUserProfile } from "../api/fetch-current-user-profile";
 import { fetchProfilesByIds } from "../api/fetch-profiles-by-ids";
 import { addTeamMember } from "../api/add-team-user";
 import { removeTeamMember } from "../api/remove-team-user";
+import { logout } from "@/api/auth";
 
 export const useWorkspace = () => {
   const { t } = useTranslation();
@@ -62,8 +63,13 @@ export const useWorkspace = () => {
       setWorkspace(data);
     } catch (err: any) {
       const errorMessage = err.response?.data?.message || err.message || "Erro ao carregar workspace";
-      setError(errorMessage);
-      toast.error(errorMessage);
+      if (errorMessage === "Erro ao encontrar os workspaces por dono") {
+        logout();
+        navigate("/auth/login");
+      } else {
+        setError(errorMessage);
+        toast.error(errorMessage);
+      }
     } finally {
       setLoading(false);
     }

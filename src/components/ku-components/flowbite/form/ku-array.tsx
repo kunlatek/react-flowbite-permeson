@@ -74,6 +74,7 @@ export const KuArray = <T extends { _id: string }>(props: IKuArrayProps<T>) => {
         </p>
       ) : (
         <div className="space-y-4">
+          {/* Me ajude a implementar abaixo um drag para mudar a posição dos itens */}
           {items.map((item, index) => {
             const isExpanded = expandedItems[index] === undefined ? false : expandedItems[index];
             const elementNumber = index + 1;
@@ -81,11 +82,28 @@ export const KuArray = <T extends { _id: string }>(props: IKuArrayProps<T>) => {
             
             return (
               <div
+                draggable
+                onDragStart={(e) => {
+                  e.dataTransfer.setData("text/plain", index.toString());
+                }}
+                onDragOver={(e) => {
+                  e.preventDefault();
+                }}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  const draggedIndex = parseInt(e.dataTransfer.getData("text/plain"));
+                  if (draggedIndex !== index) {
+                    const newItems = [...items];
+                    const draggedItem = newItems[draggedIndex];
+                    newItems.splice(draggedIndex, 1);
+                    newItems.splice(index, 0, draggedItem);
+                    onItemsChange(newItems);
+                  }
+                }}
                 key={index}
-                className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden"
+                className="border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden cursor-grab"
               >
-                <button
-                  type="button"
+                <div
                   onClick={() => toggleExpanded(index)}
                   className="w-full flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                 >
@@ -97,7 +115,7 @@ export const KuArray = <T extends { _id: string }>(props: IKuArrayProps<T>) => {
                   ) : (
                     <HiChevronDown className="h-5 w-5 text-gray-500 dark:text-gray-400" />
                   )}
-                </button>
+                </div>
                 {isExpanded && (
                   <div className="p-4">
                     {renderItem(item, index, handleItemChange, handleRemoveItem)}
